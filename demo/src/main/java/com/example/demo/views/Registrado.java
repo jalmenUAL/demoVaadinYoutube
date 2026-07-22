@@ -5,10 +5,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import com.example.demo.service.iRegistrado;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinServletRequest;
 import com.vaadin.flow.server.VaadinSession;
@@ -16,49 +14,54 @@ import com.vaadin.flow.server.VaadinSession;
 @Route("Registrado")
 
 public abstract class Registrado extends Inicio {
-    public iRegistrado _iRegistrado;
+
+    protected final iRegistrado iRegistrado;
+
+    protected Button logoutButton;
 
     public Registrado(iRegistrado iRegistrado) {
         super(iRegistrado);
-        this._iRegistrado = iRegistrado;
-
-        
-        Button logoutButton = new Button("Cerrar sesión", new Icon(VaadinIcon.SIGN_OUT));
-        logoutButton.addThemeVariants(ButtonVariant.LUMO_ERROR); // Estilo rojo
-        logoutButton.getStyle()
-                .set("margin-left", "auto") // Lo empuja a la derecha
-                .set("font-weight", "bold");
-
-        logoutButton.addClickListener(e -> Logout());
-
-        if (header != null) {
-            header.add(logoutButton);
-        } else {
-            HorizontalLayout headerConLogout = new HorizontalLayout();
-            headerConLogout.setWidthFull();
-            headerConLogout.setAlignItems(Alignment.CENTER);
-
-            H1 titulo = new H1("Youtube");
-            titulo.getStyle()
-                    .set("color", "white")
-                    .set("background-color", "red")
-                    .set("padding", "0.5em 1em")
-                    .set("border-radius", "8px");
-
-            headerConLogout.add(titulo, logoutButton);
-            add(headerConLogout);
-        }
+        this.iRegistrado = iRegistrado;
     }
 
-    public void Logout() {
+    @Override
+    protected void build() {
+        super.build();
+
+        logoutButton = new Button(
+                "Cerrar sesión",
+                new Icon(VaadinIcon.SIGN_OUT));
+
+        logoutButton.addThemeVariants(
+                ButtonVariant.LUMO_ERROR);
+
+        logoutButton.getStyle()
+                .set("margin-left", "auto")
+                .set("font-weight", "bold");
+
+        header.add(logoutButton);
+    }
+
+    @Override
+    protected void bindEvents() {
+        super.bindEvents();
+
+        logoutButton.addClickListener(e -> logout());
+    }
+
+    protected void logout() {
         new SecurityContextLogoutHandler().logout(
-                VaadinServletRequest.getCurrent().getHttpServletRequest(),
+                VaadinServletRequest.getCurrent()
+                        .getHttpServletRequest(),
                 null,
                 null);
+
         VaadinSession.getCurrent().close();
-        VaadinSession.getCurrent().setAttribute("Registrado", null);
-        getUI().ifPresent(ui -> ui.navigate("NoLogueado"));
-       
+        VaadinSession.getCurrent()
+                .setAttribute("Registrado", null);
+
+        getUI().ifPresent(
+                ui -> ui.navigate("NoLogueado"));
     }
 
 }

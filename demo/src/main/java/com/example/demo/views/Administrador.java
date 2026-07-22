@@ -13,32 +13,42 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_ADMINISTRADOR")
 
 public class Administrador extends Registrado {
-	public iAdministrador _iAdministrador;
-	public Usuariosdenunciados _usuariosdenunciados;
 
-	public Administrador(iAdministrador iAdministrador) {
-		super(iAdministrador);
-		_iAdministrador = iAdministrador;
+    private final iAdministrador iAdministrador;
 
-	}
+    private Usuariosdenunciados usuariosDenunciados;
 
-	public void Usuariosdenunciados() {
-		List<com.example.demo.domain.Youtuber> denunciados = _iAdministrador.buscarDenunciados();
-		_usuariosdenunciados = new Usuariosdenunciados(denunciados);
-		body.add(_usuariosdenunciados);
-	}
+    public Administrador(iAdministrador iAdministrador) {
+        super(iAdministrador);
+        this.iAdministrador = iAdministrador;
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        UsuariosDenunciados();
+    }
+
+    private void UsuariosDenunciados() {
+       List<com.example.demo.domain.Youtuber> denunciados =
+                iAdministrador.buscarDenunciados();
+
+        usuariosDenunciados =
+                new Usuariosdenunciados(denunciados);
+
+        body.add(usuariosDenunciados);
+    }
+ 
 
 	@Override
-	protected void onAttach(AttachEvent attachEvent) {
-		super.onAttach(attachEvent);
-		Usuariosdenunciados();
+	protected void UltimosVideos() {
+		 List<Video> ultimosVideos =
+                iAdministrador.getAllVideos();
 
+        this._ultimosVideos =
+                new UltimosVideos(ultimosVideos);
+
+        body.add(this._ultimosVideos);
 	}
 
-	@Override
-	public void UltimosVideos() {
-		List<Video> ultimosVideos = _iAdministrador.getAllVideos();
-		_ultimosVideos = new UltimosVideos(ultimosVideos);
-		body.add(_ultimosVideos);
-	}
 }

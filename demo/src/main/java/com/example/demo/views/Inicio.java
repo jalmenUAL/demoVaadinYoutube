@@ -11,25 +11,38 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route("Inicio")
 @AnonymousAllowed
 
-public abstract class Inicio extends VerticalLayout {
-    public iInicio _iInicio;
-    public Buscar _buscar;
-    public UltimosVideos _ultimosVideos;
+public abstract class Inicio extends BaseView {
 
-    public HorizontalLayout header = new HorizontalLayout();
-    public VerticalLayout body = new VerticalLayout();
+    protected final iInicio iInicio;
+
+    protected Buscar buscar;
+    protected UltimosVideos _ultimosVideos;
+
+    protected HorizontalLayout header;
+    protected VerticalLayout body;
 
     public Inicio(iInicio iInicio) {
-        this._iInicio = iInicio;
+        super();
+        this.iInicio = iInicio;
+       
+    }
 
+    @Override
+    protected void configure() {
         setWidthFull();
         setPadding(true);
         setSpacing(true);
         setAlignItems(Alignment.CENTER);
+    }
+
+    @Override
+    protected void build() {
+        header = new HorizontalLayout();
+        body = new VerticalLayout();
 
         H1 heading = new H1("YouTube");
         heading.getStyle()
-                .set("background-color", "#FF0000") // Rojo YouTube
+                .set("background-color", "#FF0000")
                 .set("color", "white")
                 .set("padding", "0.5em 1.5em")
                 .set("border-radius", "10px")
@@ -37,14 +50,29 @@ public abstract class Inicio extends VerticalLayout {
                 .set("box-shadow", "0 4px 8px rgba(0,0,0,0.2)");
 
         header.setWidthFull();
-        header.setJustifyContentMode(JustifyContentMode.CENTER);
+        header.setJustifyContentMode(
+                JustifyContentMode.CENTER);
+
         header.add(heading);
 
-        add(header);
-        add(body);
+        add(header, body);
 
-        Buscar();
+         buscar = new Buscar(iInicio);
+        header.add(buscar);
+    }
+ 
 
+    @Override
+    protected void bindEvents() {
+        buscar.botonbuscar.addClickListener(e -> {
+            body.removeAll();
+            body.add(buscar._resultadodeBusqueda);
+        });
+    }
+
+    @Override
+    protected void configureNavigation() {
+        // No es necesario en esta vista.
     }
 
     @Override
@@ -53,15 +81,6 @@ public abstract class Inicio extends VerticalLayout {
         UltimosVideos();
     }
 
-    public void Buscar() {
-        _buscar = new Buscar(_iInicio);
-        header.add(_buscar);
-        _buscar.botonbuscar.addClickListener(e -> {
-            body.removeAll();
-            body.add(_buscar._resultadodeBusqueda);
-        });
-    }
-
-    public abstract void UltimosVideos();
+    protected abstract void UltimosVideos();
 
 }
