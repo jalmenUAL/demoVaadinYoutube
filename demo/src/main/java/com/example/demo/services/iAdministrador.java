@@ -1,14 +1,14 @@
-package com.example.demo.service;
+package com.example.demo.services;
 
 import java.util.List;
 
-import com.example.demo.domain.Video;
+import com.example.demo.tables.Video;
 
 public interface iAdministrador extends iRegistrado {
 
     void eliminarComentario(Integer idComentario);
 
-    List<com.example.demo.domain.Youtuber> buscarDenunciados();
+    List<com.example.demo.tables.Youtuber> buscarDenunciados();
 
     List<Video> getAllVideos();
 

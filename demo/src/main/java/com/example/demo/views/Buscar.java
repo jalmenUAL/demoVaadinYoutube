@@ -1,7 +1,7 @@
 package com.example.demo.views;
 
-import com.example.demo.domain.Video;
-import com.example.demo.service.iInicio;
+import com.example.demo.services.iInicio;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -50,4 +50,7 @@ public class Buscar extends VerticalLayout {
 		_resultadodeBusqueda = new ResultadodeBusqueda(resultados);
 
 	}
+
+
+	
 };

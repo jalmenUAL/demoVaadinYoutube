@@ -1,13 +1,22 @@
-package com.example.demo.service;
+package com.example.demo.facade;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Comentario;
-import com.example.demo.domain.Registrado;
-import com.example.demo.domain.Video;
-import com.example.demo.domain.Youtuber;
+import com.example.demo.components.BD_Administradores;
+import com.example.demo.components.BD_Comentarios;
+import com.example.demo.components.BD_Videos;
+import com.example.demo.components.BD_Youtubers;
+import com.example.demo.services.iAdministrador;
+import com.example.demo.services.iInicio;
+import com.example.demo.services.iNoLogueado;
+import com.example.demo.services.iRegistrado;
+import com.example.demo.services.iYoutuber;
+import com.example.demo.tables.Comentario;
+import com.example.demo.tables.Registrado;
+import com.example.demo.tables.Video;
+import com.example.demo.tables.Youtuber;
 
 import jakarta.transaction.Transactional;
 
@@ -48,8 +57,9 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
     }
 
     @Override
-    public void publicarComentario(String login, Video video, String contenido) {
+    public void publicarComentario(String login, String idVideo, String contenido) {
         Youtuber usuario = _youtubers.findYoutuberById(login);
+        Video video = _videos.findVideoById(Integer.valueOf(idVideo));
         _comentarios.publicarComentario(usuario, video, contenido);
     }
 

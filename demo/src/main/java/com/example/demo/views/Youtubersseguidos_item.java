@@ -16,9 +16,9 @@ import com.vaadin.flow.router.Route;
 public class Youtubersseguidos_item extends VerticalLayout {
     public Youtubersseguidos _youtubersseguidos;
     public PerfilAjeno _perfilAjeno;
-    com.example.demo.domain.Youtuber youtuber;
+    com.example.demo.tables.Youtuber youtuber;
 
-    public Youtubersseguidos_item(com.example.demo.domain.Youtuber youtuber) {
+    public Youtubersseguidos_item(com.example.demo.tables.Youtuber youtuber) {
         this.youtuber = youtuber;
        
         String nombreUsuario = youtuber.getLogin();

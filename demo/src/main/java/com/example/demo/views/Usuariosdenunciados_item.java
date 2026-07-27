@@ -12,7 +12,7 @@ public class Usuariosdenunciados_item extends VerticalLayout {
 
     
 
-    public Usuariosdenunciados_item(com.example.demo.domain.Youtuber youtuber) {
+    public Usuariosdenunciados_item(com.example.demo.tables.Youtuber youtuber) {
 
         String nombreUsuario = youtuber.getLogin();
         String avatarUrl = youtuber.getFotoPerfil();

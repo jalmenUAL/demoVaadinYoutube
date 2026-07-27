@@ -2,7 +2,7 @@ package com.example.demo.views;
 
 import java.util.Set;
 
-import com.example.demo.domain.Comentario;
+import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;

@@ -14,7 +14,7 @@ public class Usuariosdenunciados extends VerticalLayout {
     public Administrador _administrador;
     public Vector<Usuariosdenunciados_item> _item = new Vector<Usuariosdenunciados_item>();
 
-    public Usuariosdenunciados(List<com.example.demo.domain.Youtuber> youtubers) {
+    public Usuariosdenunciados(List<com.example.demo.tables.Youtuber> youtubers) {
 
         Span titulo = new Span("Usuarios denunciados");
         titulo.getStyle().set("font-weight", "bold").set("font-size", "1.5em");

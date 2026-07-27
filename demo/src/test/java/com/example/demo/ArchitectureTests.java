@@ -1,10 +1,13 @@
 package com.example.demo;
 
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.demo.facade.BDPrincipal;
 import com.example.demo.views.Administrador;
 import com.example.demo.views.BaseView;
 import com.example.demo.views.Buscar;
@@ -36,10 +40,29 @@ import com.example.demo.views.VerVideodeYoutuber;
 import com.example.demo.views.Videosrelacionados_item;
 import com.example.demo.views.Youtuber;
 import com.example.demo.views.Youtubersseguidos_item;
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.lang.ArchRule;
 
 public class ArchitectureTests {
 
-     private static final Set<String> METODOS_PATRON = Set.of(
+    private static final Set<Class<?>> TIPOS_BASICOS = Set.of(
+        String.class,
+        int.class,
+        Integer.class,
+        long.class,
+        Long.class,
+        double.class,
+        Double.class,
+        float.class,
+        Float.class,
+        boolean.class,
+        Boolean.class,
+        char.class,
+        Character.class
+);
+
+    private static final Set<String> METODOS_PATRON = Set.of(
             "configure",
             "build",
             "bindEvents",
@@ -51,107 +74,104 @@ public class ArchitectureTests {
 
     private static final Set<String> CLASES_UML = Set.of(
 
-        "Administrador",
-        "Buscar",
-        "Comentar",
-        "Configuracion",
-        "GaleradeVideos",
-        "GaleradeVideos_item",
-        "Inicio",
-        "ListadeVideos",
-        "ListadeVideos_item",
-        "Login",
-        "NoLogueado",
-        "Perfil",
-        "PerfilAjeno",
-        "PerfilAjenodeAdministrador",
-        "PerfilAjenodeYoutuber",
-        "PerfilPropio",
-        "PublicarVideo",
-        "Registrado",
-        "Registrar",
-        "ResultadodeBusqueda",
-        "ServidordeCorreo",
-        "UltimosVideos",
-        "UltimosVideos_item",
-        "UltimosVideosdeAdministrador",
-        "UltimosVideosdeAdministrador_item",
-        "UltimosVideosdeYoutuber",
-        "UltimosVideosdeYoutuber_item",
-        "Usuariosdenunciados",
-        "Usuariosdenunciados_item",
-        "VerComentarios",
-        "VerComentarios_item",
-        "VerComentariosdeAdministrador",
-        "VerComentariosdeAdministrador_item",
-        "VerComentariosdeYoutuber",
-        "VerComentariosdeYoutuber_item",
-        "VerVideo",
-        "VerVideodeAdministrador",
-        "VerVideodeYoutuber",
-        "Videosgustados",
-        "Videosgustados_item",
-        "Videospublicados",
-        "Videospublicados_item",
-        "Videosrelacionados",
-        "Videosrelacionados_item",
-        "Youtuber",
-        "Youtubersseguidos",
-        "Youtubersseguidos_item"
+            "Administrador",
+            "Buscar",
+            "Comentar",
+            "Configuracion",
+            "GaleradeVideos",
+            "GaleradeVideos_item",
+            "Inicio",
+            "ListadeVideos",
+            "ListadeVideos_item",
+            "Login",
+            "NoLogueado",
+            "Perfil",
+            "PerfilAjeno",
+            "PerfilAjenodeAdministrador",
+            "PerfilAjenodeYoutuber",
+            "PerfilPropio",
+            "PublicarVideo",
+            "Registrado",
+            "Registrar",
+            "ResultadodeBusqueda",
+            "ServidordeCorreo",
+            "UltimosVideos",
+            "UltimosVideos_item",
+            "UltimosVideosdeAdministrador",
+            "UltimosVideosdeAdministrador_item",
+            "UltimosVideosdeYoutuber",
+            "UltimosVideosdeYoutuber_item",
+            "Usuariosdenunciados",
+            "Usuariosdenunciados_item",
+            "VerComentarios",
+            "VerComentarios_item",
+            "VerComentariosdeAdministrador",
+            "VerComentariosdeAdministrador_item",
+            "VerComentariosdeYoutuber",
+            "VerComentariosdeYoutuber_item",
+            "VerVideo",
+            "VerVideodeAdministrador",
+            "VerVideodeYoutuber",
+            "Videosgustados",
+            "Videosgustados_item",
+            "Videospublicados",
+            "Videospublicados_item",
+            "Videosrelacionados",
+            "Videosrelacionados_item",
+            "Youtuber",
+            "Youtubersseguidos",
+            "Youtubersseguidos_item"
 
-);
+    );
 
-private static final Map<String, String> HERENCIA_UML =
-        Map.ofEntries(
+    private static final Map<String, String> HERENCIA_UML = Map.ofEntries(
 
-                Map.entry("Registrado", "Inicio"),
-                Map.entry("NoLogueado", "Inicio"),
+            Map.entry("Registrado", "Inicio"),
+            Map.entry("NoLogueado", "Inicio"),
 
-                Map.entry("Administrador", "Registrado"),
-                Map.entry("Youtuber", "Registrado"),
+            Map.entry("Administrador", "Registrado"),
+            Map.entry("Youtuber", "Registrado"),
 
-                Map.entry("PerfilPropio", "Perfil"),
-                Map.entry("PerfilAjeno", "Perfil"),
+            Map.entry("PerfilPropio", "Perfil"),
+            Map.entry("PerfilAjeno", "Perfil"),
 
-                Map.entry("PerfilAjenodeAdministrador", "PerfilAjeno"),
-                Map.entry("PerfilAjenodeYoutuber", "PerfilAjeno"),
+            Map.entry("PerfilAjenodeAdministrador", "PerfilAjeno"),
+            Map.entry("PerfilAjenodeYoutuber", "PerfilAjeno"),
 
-                Map.entry("UltimosVideos", "GaleradeVideos"),
-                Map.entry("ResultadodeBusqueda", "GaleradeVideos"),
+            Map.entry("UltimosVideos", "GaleradeVideos"),
+            Map.entry("ResultadodeBusqueda", "GaleradeVideos"),
 
-                Map.entry("UltimosVideos_item", "GaleradeVideos_item"),
-                Map.entry("ResultadodeBusqueda_item", "GaleradeVideos_item"),
+            Map.entry("UltimosVideos_item", "GaleradeVideos_item"),
+            Map.entry("ResultadodeBusqueda_item", "GaleradeVideos_item"),
 
-                Map.entry("Videosgustados", "ListadeVideos"),
-                Map.entry("Videospublicados", "ListadeVideos"),
+            Map.entry("Videosgustados", "ListadeVideos"),
+            Map.entry("Videospublicados", "ListadeVideos"),
 
-                Map.entry("Videosgustados_item", "ListadeVideos_item"),
-                Map.entry("Videospublicados_item", "ListadeVideos_item"),
+            Map.entry("Videosgustados_item", "ListadeVideos_item"),
+            Map.entry("Videospublicados_item", "ListadeVideos_item"),
 
-                Map.entry("UltimosVideosdeAdministrador", "UltimosVideos"),
-                Map.entry("UltimosVideosdeYoutuber", "UltimosVideos"),
+            Map.entry("UltimosVideosdeAdministrador", "UltimosVideos"),
+            Map.entry("UltimosVideosdeYoutuber", "UltimosVideos"),
 
-                Map.entry("UltimosVideosdeAdministrador_item",
-                        "UltimosVideos_item"),
-                Map.entry("UltimosVideosdeYoutuber_item",
-                        "UltimosVideos_item"),
+            Map.entry("UltimosVideosdeAdministrador_item",
+                    "UltimosVideos_item"),
+            Map.entry("UltimosVideosdeYoutuber_item",
+                    "UltimosVideos_item"),
 
-                Map.entry("VerComentariosdeAdministrador",
-                        "VerComentarios"),
-                Map.entry("VerComentariosdeYoutuber",
-                        "VerComentarios"),
+            Map.entry("VerComentariosdeAdministrador",
+                    "VerComentarios"),
+            Map.entry("VerComentariosdeYoutuber",
+                    "VerComentarios"),
 
-                Map.entry("VerComentariosdeAdministrador_item",
-                        "VerComentarios_item"),
-                Map.entry("VerComentariosdeYoutuber_item",
-                        "VerComentarios_item"),
+            Map.entry("VerComentariosdeAdministrador_item",
+                    "VerComentarios_item"),
+            Map.entry("VerComentariosdeYoutuber_item",
+                    "VerComentarios_item"),
 
-                Map.entry("VerVideodeAdministrador", "VerVideo"),
-                Map.entry("VerVideodeYoutuber", "VerVideo")
+            Map.entry("VerVideodeAdministrador", "VerVideo"),
+            Map.entry("VerVideodeYoutuber", "VerVideo")
 
-        );
-
-   
+    );
 
     private static final Map<Class<?>, Set<String>> METODOS_UML = Map.ofEntries(
 
@@ -253,36 +273,55 @@ private static final Map<String, String> HERENCIA_UML =
 
     );
 
-    private static final Map<Class<?>, Set<String>> ATRIBUTOS_UML =
-        Map.ofEntries(
+    private static final Map<Class<?>, Set<String>> ATRIBUTOS_UML = Map.ofEntries(
 
-                Map.entry(
-                        Inicio.class,
-                        Set.of("_buscar",
-                                "_ultimosVideos")
-                ),
+            Map.entry(
+                    Inicio.class,
+                    Set.of("_buscar",
+                            "_ultimosVideos")),
 
-                
+            Map.entry(
+                    Administrador.class,
+                    Set.of("_usuariosdenunciados")),
 
-                Map.entry(
-                        Administrador.class,
-                        Set.of("_usuariosdenunciados")
-                ),
+            Map.entry(
+                    NoLogueado.class,
+                    Set.of("_login",
+                            "_registrar")),
 
-                Map.entry(
-                        NoLogueado.class,
-                        Set.of("_login",
-                                "_registrar")
-                ),
+            Map.entry(
+                    Perfil.class,
+                    Set.of("_videosgustados",
+                            "_videospublicados")),
 
-                Map.entry(
-                        Perfil.class,
-                        Set.of("_videosgustados",
-                                "_videospublicados" )
-                )
+            Map.entry(
+                    PerfilPropio.class,
+                    Set.of("_configuracion",
+                            "_publicarVideo")),
 
-                // etc...
-        );
+            Map.entry(
+                    Buscar.class,
+                    Set.of("_resultadodeBusqueda")),
+
+            Map.entry(
+                    Registrar.class,
+                    Set.of("_servidordeCorreo")),
+
+            Map.entry(
+                    VerComentarios_item.class,
+                    Set.of("_perfilAjeno")),
+
+            Map.entry(
+                    VerVideo.class,
+                    Set.of("_verComentarios",
+                            "_perfilAjeno",
+                            "_videosrelacionados")),
+
+            Map.entry(
+                    Youtuber.class,
+                    Set.of("_PerfilPropio"))
+
+    );
 
     @Test
     void comprobarArquitecturaDeLasVistas() {
@@ -332,121 +371,205 @@ private static final Map<String, String> HERENCIA_UML =
     }
 
     private void comprobarAtributos(
-        Class<?> clase,
-        Set<String> atributosObligatorios) {
+            Class<?> clase,
+            Set<String> atributosObligatorios) {
 
-    List<String> atributosDeclarados =
-            Arrays.stream(clase.getDeclaredFields())
-                    .map(Field::getName)
-                    .toList();
+        List<String> atributosDeclarados = Arrays.stream(clase.getDeclaredFields())
+                .map(Field::getName)
+                .toList();
 
-    for (String atributo : atributosObligatorios) {
+        for (String atributo : atributosObligatorios) {
 
-        if (!atributosDeclarados.contains(atributo)) {
+            if (!atributosDeclarados.contains(atributo)) {
 
-            fail("Falta el atributo '" + atributo
-                    + "' en "
-                    + clase.getSimpleName());
+                fail("Falta el atributo '" + atributo
+                        + "' en "
+                        + clase.getSimpleName());
+
+            }
+        }
+    }
+
+    @Test
+    void comprobarAtributosUML() {
+
+        for (Class<?> clase : ATRIBUTOS_UML.keySet()) {
+
+            comprobarAtributos(
+                    clase,
+                    ATRIBUTOS_UML.get(clase));
 
         }
     }
-}
 
-@Test
-void comprobarAtributosUML() {
+    @Test
+    void comprobarClasesDelModelo() {
 
-    for (Class<?> clase : ATRIBUTOS_UML.keySet()) {
+        for (String nombreClase : CLASES_UML) {
 
-        comprobarAtributos(
-                clase,
-                ATRIBUTOS_UML.get(clase));
+            try {
 
-    }
-}
-@Test
-void comprobarClasesDelModelo() {
+                Class.forName(
+                        "com.example.demo.views."
+                                + nombreClase);
 
-    for (String nombreClase : CLASES_UML) {
+            } catch (ClassNotFoundException e) {
 
-        try {
+                fail("Falta la clase "
+                        + nombreClase);
 
-            Class.forName(
-                    "com.example.demo.views."
-                            + nombreClase);
-
-        } catch (ClassNotFoundException e) {
-
-            fail("Falta la clase "
-                    + nombreClase);
-
-        }
-
-    }
-
-}
-
-
-
-        @Test
-void comprobarHerenciaDelModelo() throws Exception {
-
-    for (Map.Entry<String, String> entry : HERENCIA_UML.entrySet()) {
-
-        String hija = entry.getKey();
-        String padre = entry.getValue();
-
-        Class<?> claseHija =
-                Class.forName("com.example.demo.views." + hija);
-
-        Class<?> clasePadre =
-                Class.forName("com.example.demo.views." + padre);
-
-        if (!claseHija.getSuperclass().equals(clasePadre)) {
-
-            fail("La clase " + hija
-                    + " debe heredar de "
-                    + padre);
-
-        }
-    }
-}
-
-@Test
-void comprobarConstructores() throws Exception {
-
-   
-    for (String nombreClase : CLASES_UML) {
-
-        Class<?> clase =
-                Class.forName("com.example.demo.views." + nombreClase);
-
-         // Es una vista
-        if (BaseView.class.isAssignableFrom(clase)) {
-
-                 if (clase.getDeclaredConstructors().length != 1) {
-    fail("La clase " + nombreClase
-            + " debe declarar exactamente un constructor.");
-}
-
-
-        boolean constructorValido = false;
-
-        for (Constructor<?> constructor : clase.getDeclaredConstructors()) {
-
-            // Solo permitimos constructores con al menos un parámetro
-            if (constructor.getParameterCount() >= 1) {
-                constructorValido = true;
-               
             }
 
-            
         }
 
-        if (!constructorValido) {
-            fail("La clase " + nombreClase
-                    + " debe tener un constructor con un único parámetro de tipo interfaz.");
+    }
+
+    @Test
+    void comprobarHerenciaDelModelo() throws Exception {
+
+        for (Map.Entry<String, String> entry : HERENCIA_UML.entrySet()) {
+
+            String hija = entry.getKey();
+            String padre = entry.getValue();
+
+            Class<?> claseHija = Class.forName("com.example.demo.views." + hija);
+
+            Class<?> clasePadre = Class.forName("com.example.demo.views." + padre);
+
+            if (!claseHija.getSuperclass().equals(clasePadre)) {
+
+                fail("La clase " + hija
+                        + " debe heredar de "
+                        + padre);
+
+            }
         }
     }
+
+    @Test
+    void comprobarConstructores() throws Exception {
+
+        for (String nombreClase : CLASES_UML) {
+
+            Class<?> clase = Class.forName("com.example.demo.views." + nombreClase);
+
+            if (!BaseView.class.isAssignableFrom(clase)) {
+                continue;
+            }
+
+            if (clase.getDeclaredConstructors().length != 1) {
+                fail("La clase " + nombreClase
+                        + " debe declarar exactamente un constructor.");
+            }
+
+            boolean constructorValido = false;
+
+            Constructor<?> constructor = clase.getDeclaredConstructors()[0];
+
+            // Debe tener exactamente un parámetro
+            if (constructor.getParameterCount() != 1) {
+                fail("El constructor de " + nombreClase
+                        + " debe tener exactamente un parámetro.");
+            }
+
+            Class<?> parametro = constructor.getParameterTypes()[0];
+
+            // Interfaz (servicio)
+            if (parametro.isInterface()) {
+                constructorValido = true;
+            }
+
+            // Objeto del dominio
+            else if (parametro.getPackageName()
+                    .equals("com.example.demo.domain")) {
+                constructorValido = true;
+            }
+
+            // Set<T> donde T pertenece al dominio
+            else if (Set.class.isAssignableFrom(parametro)) {
+
+                Type tipo = constructor.getGenericParameterTypes()[0];
+
+                if (tipo instanceof ParameterizedType parameterizedType) {
+
+                    Type tipoGenerico = parameterizedType.getActualTypeArguments()[0];
+
+                    if (tipoGenerico instanceof Class<?> claseGenerica
+                            && claseGenerica.getPackageName()
+                                    .equals("com.example.demo.domain")) {
+
+                        constructorValido = true;
+                    }
+                }
+            }
+
+            if (!constructorValido) {
+                fail("El constructor de " + nombreClase
+                        + " debe recibir una interfaz, un objeto del dominio o un Set de objetos del dominio.");
+            }
+        }
+    }
+
+
+    @Test
+void comprobarParametrosBDPrincipal() {
+
+    for (Method metodo : BDPrincipal.class.getDeclaredMethods()) {
+
+        for (Class<?> parametro : metodo.getParameterTypes()) {
+
+            if (!TIPOS_BASICOS.contains(parametro)) {
+                fail("El método '" + metodo.getName()
+                        + "' tiene un parámetro no permitido: "
+                        + parametro.getSimpleName());
+            }
+        }
     }
 }
+
+    @Test
+    void lasVistasNoPuedenDependerDeLosComponents() {
+
+        JavaClasses importedClasses = new ClassFileImporter()
+                .importPackages("com.example.demo");
+
+        ArchRule rule = noClasses()
+                .that()
+                .resideInAPackage("..views..")
+                .should()
+                .dependOnClassesThat()
+                .resideInAPackage("..components..");
+
+        ArchRule rule2 = noClasses()
+                .that()
+                .resideInAPackage("..views..")
+                .should()
+                .dependOnClassesThat()
+                .resideInAPackage("..repositories..");
+          ArchRule rule3 = noClasses()
+                .that()
+                .resideInAPackage("..views..")
+                .should()
+                .dependOnClassesThat()
+                .resideInAPackage("..facade..");
+        ArchRule rule4 = noClasses()
+                .that()
+                .resideInAPackage("..facade..")
+                .should()
+                .dependOnClassesThat()
+                .resideInAPackage("..repositories..");
+        ArchRule rule5 = noClasses()
+                .that()
+                .resideInAPackage("..components..")
+                .should()
+                .dependOnClassesThat()
+                .resideInAPackage("..services..");
+
+
+        rule.check(importedClasses);
+        rule2.check(importedClasses);
+        rule3.check(importedClasses);
+        rule4.check(importedClasses);
+        rule5.check(importedClasses);
+    }
 }

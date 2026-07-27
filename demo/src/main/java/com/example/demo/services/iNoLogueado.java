@@ -1,6 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.services;
 
-import com.example.demo.domain.Registrado;
+import com.example.demo.tables.Registrado;
 
 public interface iNoLogueado extends iInicio {
 

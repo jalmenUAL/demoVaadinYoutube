@@ -1,9 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.services;
 
-import java.util.List;
-
-import com.example.demo.domain.Video;
-import com.example.demo.domain.Youtuber;
+import com.example.demo.tables.Video;
 
 public interface iYoutuber extends iRegistrado {
 
@@ -11,7 +8,7 @@ public interface iYoutuber extends iRegistrado {
 
     void publicarVideo(String loginYoutuber, String titulo, String url);
 
-    void publicarComentario(String loginYoutuber, Video video, String value);
+    void publicarComentario(String loginYoutuber, String idVideo, String contenido);
 
     void actualizarConfiguracion(String loginYoutuber, String password, String avatar, String imagenFondo);
 

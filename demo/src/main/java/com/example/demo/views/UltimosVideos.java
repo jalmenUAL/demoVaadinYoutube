@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.domain.Video;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
 @Route("UltimosVideos")

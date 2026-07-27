@@ -2,8 +2,8 @@ package com.example.demo.views;
 
 import java.util.Set;
 
-import com.example.demo.domain.Comentario;
-import com.example.demo.service.iAdministrador;
+import com.example.demo.services.iAdministrador;
+import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;

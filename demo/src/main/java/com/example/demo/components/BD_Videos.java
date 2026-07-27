@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.components;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,9 +6,10 @@ import java.util.Vector;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.RepositorioVideo;
-import com.example.demo.domain.Video;
-import com.example.demo.domain.Youtuber;
+import com.example.demo.facade.BDPrincipal;
+import com.example.demo.repositories.RepositorioVideo;
+import com.example.demo.tables.Video;
+import com.example.demo.tables.Youtuber;
 
 @Service
 

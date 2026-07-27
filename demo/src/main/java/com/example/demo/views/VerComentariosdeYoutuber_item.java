@@ -1,6 +1,6 @@
 package com.example.demo.views;
 
-import com.example.demo.domain.Comentario;
+import com.example.demo.tables.Comentario;
 import com.vaadin.flow.router.Route;
 
 @Route("VerComentariosdeYoutuber_item")

@@ -2,8 +2,8 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import com.example.demo.domain.Video;
-import com.example.demo.service.iAdministrador;
+import com.example.demo.services.iAdministrador;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.router.Route;
 
@@ -21,6 +21,7 @@ public class Administrador extends Registrado {
     public Administrador(iAdministrador iAdministrador) {
         super(iAdministrador);
         this.iAdministrador = iAdministrador;
+		 
     }
 
 
@@ -42,7 +43,7 @@ public class Administrador extends Registrado {
     }
 
     private void Usuariosdenunciados() {
-       List<com.example.demo.domain.Youtuber> denunciados =
+       List<com.example.demo.tables.Youtuber> denunciados =
                 iAdministrador.buscarDenunciados();
 
         _usuariosdenunciados =

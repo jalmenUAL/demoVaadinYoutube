@@ -1,6 +1,6 @@
 package com.example.demo.views;
 
-import com.example.demo.service.iInicio;
+import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -22,7 +22,7 @@ public class Perfil extends VerticalLayout implements HasUrlParameter<String> {
     public Videospublicados _videospublicados;
 
     HorizontalLayout topLayout = new HorizontalLayout();
-    com.example.demo.domain.Youtuber _usuario;
+    com.example.demo.tables.Youtuber _usuario;
     iInicio _iInicio;
 
     public Perfil(iInicio iInicio) {

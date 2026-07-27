@@ -11,7 +11,7 @@
  * Licensee: jalmen(University of Almeria)
  * License Type: Academic
  */
-package com.example.demo.domain;
+package com.example.demo.tables;
 
 import java.io.Serializable;
 import jakarta.persistence.*;

@@ -3,7 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.domain.Comentario;
+import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
@@ -59,7 +59,7 @@ public class VerComentarios_item extends VerticalLayout {
     public void PerfilAjeno() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
         if (auth != null && auth.isAuthenticated()) {
             boolean esAdmin = auth.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));

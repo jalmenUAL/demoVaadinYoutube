@@ -2,7 +2,7 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import com.example.demo.domain.Video;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
 @Route("UltimosVideosdeAdministrador")

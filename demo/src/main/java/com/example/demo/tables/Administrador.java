@@ -11,7 +11,7 @@
  * Licensee: jalmen(University of Almeria)
  * License Type: Academic
  */
-package com.example.demo.domain;
+package com.example.demo.tables;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
@@ -19,7 +19,7 @@ import jakarta.persistence.*;
 @org.hibernate.annotations.Proxy(lazy=false)
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("Administrador")
-public class Administrador extends com.example.demo.domain.Registrado implements Serializable {
+public class Administrador extends com.example.demo.tables.Registrado implements Serializable {
 	public Administrador() {
 	}
 	

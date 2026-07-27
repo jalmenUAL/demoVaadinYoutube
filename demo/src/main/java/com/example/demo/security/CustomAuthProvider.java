@@ -11,8 +11,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.domain.Registrado;
-import com.example.demo.service.iNoLogueado;
+import com.example.demo.services.iNoLogueado;
+import com.example.demo.tables.Registrado;
 
 @Component
 public class CustomAuthProvider implements AuthenticationProvider {
@@ -37,7 +37,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
         }
 
         // 🚨 Bloquear si es un Youtuber y está marcado como bloqueado
-        if (r instanceof com.example.demo.domain.Youtuber youtuber) {
+        if (r instanceof com.example.demo.tables.Youtuber youtuber) {
             if (Boolean.TRUE.equals(youtuber.getBloqueado())) {
                 throw new DisabledException(
                         "Usuario o contraseña incorrectos o Tu cuenta está bloqueada, contacta con el administrador");
@@ -45,10 +45,10 @@ public class CustomAuthProvider implements AuthenticationProvider {
         }
 
         String role;
-        if (r instanceof com.example.demo.domain.Administrador) {
+        if (r instanceof com.example.demo.tables.Administrador) {
             role = "ROLE_ADMINISTRADOR";
 
-        } else if (r instanceof com.example.demo.domain.Youtuber) {
+        } else if (r instanceof com.example.demo.tables.Youtuber) {
             role = "ROLE_YOUTUBER";
 
         } else {

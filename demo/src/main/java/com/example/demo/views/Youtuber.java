@@ -5,8 +5,8 @@ import java.util.Vector;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.domain.Video;
-import com.example.demo.service.iYoutuber;
+import com.example.demo.services.iYoutuber;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -40,12 +40,12 @@ public class Youtuber extends Registrado {
                 .getContext()
                 .getAuthentication();
 
-        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
         Vector<Video> videos = new Vector<>();
 
         for (Object obj : usuario.getSeguidor_de()) {
-            com.example.demo.domain.Youtuber seguido = (com.example.demo.domain.Youtuber) obj;
+            com.example.demo.tables.Youtuber seguido = (com.example.demo.tables.Youtuber) obj;
 
             videos.addAll(seguido.getHa_publicado());
         }
@@ -63,7 +63,7 @@ public class Youtuber extends Registrado {
                 .getContext()
                 .getAuthentication();
 
-        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
         UI.getCurrent().navigate(
                 PerfilPropio.class,

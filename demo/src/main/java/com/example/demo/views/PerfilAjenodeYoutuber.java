@@ -3,8 +3,8 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.domain.Youtuber;
-import com.example.demo.service.iYoutuber;
+import com.example.demo.services.iYoutuber;
+import com.example.demo.tables.Youtuber;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.router.BeforeEvent;
@@ -63,7 +63,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
             throw new RuntimeException("Usuario no autenticado");
         }
 
-        com.example.demo.domain.Youtuber seguidor = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber seguidor = (com.example.demo.tables.Youtuber) auth.getPrincipal();
         if (btnSeguir.getText().equals("Seguir")) {
             _iYoutuber.seguirUsuario(_usuario.getLogin(), seguidor.getLogin());
             btnSeguir.setText("Dejar de seguir"); // Cambiar el texto del botón
@@ -83,7 +83,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
             throw new RuntimeException("Usuario no autenticado");
         }
 
-        com.example.demo.domain.Youtuber seguidor = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber seguidor = (com.example.demo.tables.Youtuber) auth.getPrincipal();
         if (btnDenunciar.getText().equals("Denunciar")) {
             _iYoutuber.denunciarUsuario(_usuario.getLogin(), seguidor.getLogin());
             btnDenunciar.setText("Quitar denuncia"); // Cambiar el texto del botón

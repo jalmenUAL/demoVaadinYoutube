@@ -1,12 +1,13 @@
-package com.example.demo.service;
+package com.example.demo.components;
 
 import java.util.Vector;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Administrador;
-import com.example.demo.domain.RepositorioAdministrador;
+import com.example.demo.facade.BDPrincipal;
+import com.example.demo.repositories.RepositorioAdministrador;
+import com.example.demo.tables.Administrador;
 
 @Service
 public class BD_Administradores {

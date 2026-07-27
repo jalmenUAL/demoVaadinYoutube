@@ -1,6 +1,6 @@
 package com.example.demo.views;
 
-import com.example.demo.service.iYoutuber;
+import com.example.demo.services.iYoutuber;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -12,7 +12,7 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_YOUTUBER")
 public class PerfilPropio extends Perfil {
 
-    public com.example.demo.domain.Youtuber _youtuber;
+    public com.example.demo.tables.Youtuber _youtuber;
     public PublicarVideo _publicarVideo;
     public Configuracion _configuracion;
 

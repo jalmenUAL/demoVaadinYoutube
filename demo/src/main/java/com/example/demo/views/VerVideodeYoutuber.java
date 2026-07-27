@@ -3,8 +3,8 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.domain.Video;
-import com.example.demo.service.iYoutuber;
+import com.example.demo.services.iYoutuber;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -20,7 +20,7 @@ public class VerVideodeYoutuber extends VerVideo {
 
     Boolean legusta;
 
-    public VerVideodeYoutuber(com.example.demo.service.iYoutuber iYoutuber) {
+    public VerVideodeYoutuber(com.example.demo.services.iYoutuber iYoutuber) {
         super(iYoutuber);
         this.iYoutuber = iYoutuber;
 
@@ -32,7 +32,7 @@ public class VerVideodeYoutuber extends VerVideo {
             throw new RuntimeException("Usuario no autenticado");
         }
 
-        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
         if (likeButton.getText().equals("Me Gusta")) {
             likeButton.setText("Quitar Me Gusta");
 
@@ -72,7 +72,7 @@ public class VerVideodeYoutuber extends VerVideo {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
         usuario = iYoutuber.findYoutuberById(usuario.getLogin());
 

@@ -3,7 +3,7 @@ package com.example.demo.views;
 import java.util.Set;
 import java.util.Vector;
 
-import com.example.demo.service.iInicio;
+import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -21,7 +21,7 @@ public class Youtubersseguidos extends VerticalLayout implements HasUrlParameter
     public Perfil _perfil;
     public Vector<Youtubersseguidos_item> _item = new Vector<Youtubersseguidos_item>();
 
-    Set<com.example.demo.domain.Youtuber> youtubers;
+    Set<com.example.demo.tables.Youtuber> youtubers;
 
     iInicio _iInicio;
 
@@ -40,7 +40,7 @@ public class Youtubersseguidos extends VerticalLayout implements HasUrlParameter
     @Override
     public void setParameter(BeforeEvent event, String parameter) {
 
-        com.example.demo.domain.Youtuber usuario = _iInicio.findYoutuberById(parameter);
+        com.example.demo.tables.Youtuber usuario = _iInicio.findYoutuberById(parameter);
         youtubers = usuario.getSeguidor_de();
 
         Notification.show(Integer.toString(youtubers.size()));
@@ -55,7 +55,7 @@ public class Youtubersseguidos extends VerticalLayout implements HasUrlParameter
 
             gridContainer.getStyle().set("gap", "1em");
 
-            for (com.example.demo.domain.Youtuber youtuber : youtubers) {
+            for (com.example.demo.tables.Youtuber youtuber : youtubers) {
 
                 Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber);
 

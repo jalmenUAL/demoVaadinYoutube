@@ -11,7 +11,7 @@
  * Licensee: jalmen(University of Almeria)
  * License Type: Academic
  */
-package com.example.demo.domain;
+package com.example.demo.tables;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
@@ -28,15 +28,15 @@ public class Comentario implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="COM_EXAMPLE_DEMO_DOMAIN_COMENTARIO_ID_GENERATOR", strategy="native")	
 	private int id;
 	
-	@ManyToOne(targetEntity=com.example.demo.domain.Youtuber.class)	
+	@ManyToOne(targetEntity=com.example.demo.tables.Youtuber.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="RegistradoLogin", referencedColumnName="Login", nullable=false) }, foreignKey=@ForeignKey(name="FKComentario549922"))	
-	private com.example.demo.domain.Youtuber escrito_por;
+	private com.example.demo.tables.Youtuber escrito_por;
 	
-	@ManyToOne(targetEntity=com.example.demo.domain.Video.class)	
+	@ManyToOne(targetEntity=com.example.demo.tables.Video.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="VideoId", referencedColumnName="Id", nullable=false) }, foreignKey=@ForeignKey(name="FKComentario671331"))	
-	private com.example.demo.domain.Video sobre;
+	private com.example.demo.tables.Video sobre;
 	
 	@Column(name="Texto", nullable=true, length=255)	
 	private String texto;
@@ -61,19 +61,19 @@ public class Comentario implements Serializable {
 		return getId();
 	}
 	
-	public void setSobre(com.example.demo.domain.Video value) {
+	public void setSobre(com.example.demo.tables.Video value) {
 		this.sobre = value;
 	}
 	
-	public com.example.demo.domain.Video getSobre() {
+	public com.example.demo.tables.Video getSobre() {
 		return sobre;
 	}
 	
-	public void setEscrito_por(com.example.demo.domain.Youtuber value) {
+	public void setEscrito_por(com.example.demo.tables.Youtuber value) {
 		this.escrito_por = value;
 	}
 	
-	public com.example.demo.domain.Youtuber getEscrito_por() {
+	public com.example.demo.tables.Youtuber getEscrito_por() {
 		return escrito_por;
 	}
 	

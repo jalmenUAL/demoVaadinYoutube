@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import com.example.demo.domain.Video;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;

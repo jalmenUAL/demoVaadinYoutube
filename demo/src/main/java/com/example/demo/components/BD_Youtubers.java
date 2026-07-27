@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.components;
 
 import java.util.List;
 import java.util.Vector;
@@ -6,8 +6,9 @@ import java.util.Vector;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.RepositorioYoutuber;
-import com.example.demo.domain.Youtuber;
+import com.example.demo.facade.BDPrincipal;
+import com.example.demo.repositories.RepositorioYoutuber;
+import com.example.demo.tables.Youtuber;
 
 @Service
 public class BD_Youtubers {

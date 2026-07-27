@@ -5,7 +5,7 @@ import java.io.InputStream;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.service.iYoutuber;
+import com.example.demo.services.iYoutuber;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -117,7 +117,7 @@ public class Configuracion extends VerticalLayout {
             throw new RuntimeException("Usuario no autenticado");
         }
 
-        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
         _iYoutuber.actualizarConfiguracion(usuario.getLogin(), password.getValue(), avatar.getSrc(), imagenDeFondo.getSrc());
         

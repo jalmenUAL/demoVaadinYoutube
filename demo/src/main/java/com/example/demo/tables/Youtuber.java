@@ -11,7 +11,7 @@
  * Licensee: jalmen(University of Almeria)
  * License Type: Academic
  */
-package com.example.demo.domain;
+package com.example.demo.tables;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
@@ -19,7 +19,7 @@ import jakarta.persistence.*;
 @org.hibernate.annotations.Proxy(lazy=false)
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("Youtuber")
-public class Youtuber extends com.example.demo.domain.Registrado implements Serializable {
+public class Youtuber extends com.example.demo.tables.Registrado implements Serializable {
 	public Youtuber() {
 	}
 	
@@ -29,40 +29,40 @@ public class Youtuber extends com.example.demo.domain.Registrado implements Seri
 	@Column(name="Banner", nullable=true, length=255)	
 	private String banner;
 	
-	@OneToMany(mappedBy="es_de", targetEntity=com.example.demo.domain.Video.class)	
+	@OneToMany(mappedBy="es_de", targetEntity=com.example.demo.tables.Video.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set ha_publicado = new java.util.HashSet();
 	
-	@OneToMany(mappedBy="escrito_por", targetEntity=com.example.demo.domain.Comentario.class)	
+	@OneToMany(mappedBy="escrito_por", targetEntity=com.example.demo.tables.Comentario.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set ha_comentado = new java.util.HashSet();
 	
-	@ManyToMany(targetEntity=com.example.demo.domain.Youtuber.class)	
+	@ManyToMany(targetEntity=com.example.demo.tables.Youtuber.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="Registrado_Registrado", joinColumns={ @JoinColumn(name="RegistradoLogin2") }, inverseJoinColumns={ @JoinColumn(name="RegistradoLogin") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set seguido_por = new java.util.HashSet();
 	
-	@ManyToMany(targetEntity=com.example.demo.domain.Youtuber.class)	
+	@ManyToMany(targetEntity=com.example.demo.tables.Youtuber.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="Registrado_Registrado2", joinColumns={ @JoinColumn(name="RegistradoLogin2") }, inverseJoinColumns={ @JoinColumn(name="RegistradoLogin") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set denunciado_por = new java.util.HashSet();
 	
-	@ManyToMany(targetEntity=com.example.demo.domain.Video.class)	
+	@ManyToMany(targetEntity=com.example.demo.tables.Video.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="Video_Registrado", joinColumns={ @JoinColumn(name="RegistradoLogin") }, inverseJoinColumns={ @JoinColumn(name="VideoId") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set le_gusta = new java.util.HashSet();
 	
-	@ManyToMany(mappedBy="seguido_por", targetEntity=com.example.demo.domain.Youtuber.class)	
+	@ManyToMany(mappedBy="seguido_por", targetEntity=com.example.demo.tables.Youtuber.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set seguidor_de = new java.util.HashSet();
 	
-	@ManyToMany(mappedBy="denunciado_por", targetEntity=com.example.demo.domain.Youtuber.class)	
+	@ManyToMany(mappedBy="denunciado_por", targetEntity=com.example.demo.tables.Youtuber.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
 	private java.util.Set ha_denunciado_a = new java.util.HashSet();

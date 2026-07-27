@@ -1,10 +1,10 @@
-package com.example.demo.service;
+package com.example.demo.services;
 
 import java.util.List;
 import java.util.Set;
 
-import com.example.demo.domain.Video;
-import com.example.demo.domain.Youtuber;
+import com.example.demo.tables.Video;
+import com.example.demo.tables.Youtuber;
 
 public interface iInicio {
 

@@ -3,10 +3,10 @@ package com.example.demo.security;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.domain.Administrador;
-import com.example.demo.domain.RepositorioAdministrador;
-import com.example.demo.domain.RepositorioYoutuber;
-import com.example.demo.domain.Youtuber;
+import com.example.demo.repositories.RepositorioAdministrador;
+import com.example.demo.repositories.RepositorioYoutuber;
+import com.example.demo.tables.Administrador;
+import com.example.demo.tables.Youtuber;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

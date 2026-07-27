@@ -1,7 +1,7 @@
 package com.example.demo.views;
 
-import com.example.demo.domain.Comentario;
-import com.example.demo.service.iAdministrador;
+import com.example.demo.services.iAdministrador;
+import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
