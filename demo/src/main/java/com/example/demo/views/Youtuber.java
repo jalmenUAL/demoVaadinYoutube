@@ -21,16 +21,53 @@ import jakarta.annotation.security.RolesAllowed;
 
 public class Youtuber extends Registrado {
 
-    private final iYoutuber iYoutuber;
+    protected final iYoutuber iYoutuber;
 
-    private PerfilPropio perfilPropio;
-    private UltimosVideosdeYoutuber ultimosVideos;
+    protected PerfilPropio _PerfilPropio;
+     
 
     private Button perfilBtn;
 
     public Youtuber(iYoutuber iYoutuber) {
         super(iYoutuber);
         this.iYoutuber = iYoutuber;
+    }
+
+    @Override
+    public void UltimosVideos() {
+
+        Authentication auth = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+
+        Vector<Video> videos = new Vector<>();
+
+        for (Object obj : usuario.getSeguidor_de()) {
+            com.example.demo.domain.Youtuber seguido = (com.example.demo.domain.Youtuber) obj;
+
+            videos.addAll(seguido.getHa_publicado());
+        }
+
+        videos.addAll(usuario.getHa_publicado());
+
+        _ultimosVideos = new UltimosVideosdeYoutuber(videos);
+
+        body.add(_ultimosVideos);
+    }
+
+    public void PerfilPropio() {
+
+        Authentication auth = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        com.example.demo.domain.Youtuber usuario = (com.example.demo.domain.Youtuber) auth.getPrincipal();
+
+        UI.getCurrent().navigate(
+                PerfilPropio.class,
+                usuario.getLogin());
     }
 
     @Override
@@ -61,55 +98,7 @@ public class Youtuber extends Registrado {
         super.bindEvents();
 
         perfilBtn.addClickListener(
-                e -> mostrarPerfilPropio());
+                e -> PerfilPropio());
     }
-
-    public void mostrarPerfilPropio() {
-
-        Authentication auth =
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication();
-
-        com.example.demo.domain.Youtuber usuario =
-                (com.example.demo.domain.Youtuber)
-                        auth.getPrincipal();
-
-        UI.getCurrent().navigate(
-                PerfilPropio.class,
-                usuario.getLogin());
-    }
-
-    @Override
-    public void UltimosVideos() {
-
-        Authentication auth =
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication();
-
-        com.example.demo.domain.Youtuber usuario =
-                (com.example.demo.domain.Youtuber)
-                        auth.getPrincipal();
-
-        Vector<Video> videos =
-                new Vector<>();
-
-        for (Object obj : usuario.getSeguidor_de()) {
-            com.example.demo.domain.Youtuber seguido =
-                    (com.example.demo.domain.Youtuber) obj;
-
-            videos.addAll(seguido.getHa_publicado());
-        }
-
-        videos.addAll(usuario.getHa_publicado());
-
-        ultimosVideos =
-                new UltimosVideosdeYoutuber(videos);
-
-        body.add(ultimosVideos);
-    }
-
-    
 
 }

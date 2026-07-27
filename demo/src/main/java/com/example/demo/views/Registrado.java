@@ -24,6 +24,21 @@ public abstract class Registrado extends Inicio {
         this.iRegistrado = iRegistrado;
     }
 
+    protected void Logout() {
+        new SecurityContextLogoutHandler().logout(
+                VaadinServletRequest.getCurrent()
+                        .getHttpServletRequest(),
+                null,
+                null);
+
+        VaadinSession.getCurrent().close();
+        VaadinSession.getCurrent()
+                .setAttribute("Registrado", null);
+
+        getUI().ifPresent(
+                ui -> ui.navigate("NoLogueado"));
+    }
+
     @Override
     protected void build() {
         super.build();
@@ -46,22 +61,9 @@ public abstract class Registrado extends Inicio {
     protected void bindEvents() {
         super.bindEvents();
 
-        logoutButton.addClickListener(e -> logout());
+        logoutButton.addClickListener(e -> Logout());
     }
 
-    protected void logout() {
-        new SecurityContextLogoutHandler().logout(
-                VaadinServletRequest.getCurrent()
-                        .getHttpServletRequest(),
-                null,
-                null);
-
-        VaadinSession.getCurrent().close();
-        VaadinSession.getCurrent()
-                .setAttribute("Registrado", null);
-
-        getUI().ifPresent(
-                ui -> ui.navigate("NoLogueado"));
-    }
+    
 
 }

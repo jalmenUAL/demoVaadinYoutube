@@ -15,7 +15,7 @@ public abstract class Inicio extends BaseView {
 
     protected final iInicio iInicio;
 
-    protected Buscar buscar;
+    protected Buscar _buscar;
     protected UltimosVideos _ultimosVideos;
 
     protected HorizontalLayout header;
@@ -26,6 +26,9 @@ public abstract class Inicio extends BaseView {
         this.iInicio = iInicio;
        
     }
+
+    protected abstract void UltimosVideos();
+
 
     @Override
     protected void configure() {
@@ -57,16 +60,16 @@ public abstract class Inicio extends BaseView {
 
         add(header, body);
 
-         buscar = new Buscar(iInicio);
-        header.add(buscar);
+        _buscar = new Buscar(iInicio);
+        header.add(_buscar);
     }
  
 
     @Override
     protected void bindEvents() {
-        buscar.botonbuscar.addClickListener(e -> {
+        _buscar.botonbuscar.addClickListener(e -> {
             body.removeAll();
-            body.add(buscar._resultadodeBusqueda);
+            body.add(_buscar._resultadodeBusqueda);
         });
     }
 
@@ -81,6 +84,5 @@ public abstract class Inicio extends BaseView {
         UltimosVideos();
     }
 
-    protected abstract void UltimosVideos();
 
 }

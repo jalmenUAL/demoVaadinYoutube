@@ -89,7 +89,8 @@ public class Registrar extends VerticalLayout {
         Button registrar = new Button("Registrar", new Icon(VaadinIcon.USER_CHECK));
         registrar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         registrar.addClickListener(event -> {
-            registrar();
+             _iNoLogueado.registrar(login.getValue(), password.getValue(), avatar.getSrc(), imagenDeFondo.getSrc());
+        UI.getCurrent().navigate(NoLogueado.class);
         });
 
         VerticalLayout contenido = new VerticalLayout(datosLayout, imagenesLayout, registrar);
@@ -100,10 +101,6 @@ public class Registrar extends VerticalLayout {
         add(contenido);
     }
 
-    private void registrar() {
-        _iNoLogueado.registrar(login.getValue(), password.getValue(), avatar.getSrc(), imagenDeFondo.getSrc());
-        UI.getCurrent().navigate(NoLogueado.class);
-    }
 
     public void EnviarCorreo() {
         Notification.show("El envío de correo está deshabilitado");

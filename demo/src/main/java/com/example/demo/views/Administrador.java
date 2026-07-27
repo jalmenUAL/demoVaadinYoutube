@@ -14,31 +14,15 @@ import jakarta.annotation.security.RolesAllowed;
 
 public class Administrador extends Registrado {
 
-    private final iAdministrador iAdministrador;
+    protected final iAdministrador iAdministrador;
 
-    private Usuariosdenunciados usuariosDenunciados;
+    protected Usuariosdenunciados _usuariosdenunciados;
 
     public Administrador(iAdministrador iAdministrador) {
         super(iAdministrador);
         this.iAdministrador = iAdministrador;
     }
 
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
-        UsuariosDenunciados();
-    }
-
-    private void UsuariosDenunciados() {
-       List<com.example.demo.domain.Youtuber> denunciados =
-                iAdministrador.buscarDenunciados();
-
-        usuariosDenunciados =
-                new Usuariosdenunciados(denunciados);
-
-        body.add(usuariosDenunciados);
-    }
- 
 
 	@Override
 	protected void UltimosVideos() {
@@ -50,5 +34,23 @@ public class Administrador extends Registrado {
 
         body.add(this._ultimosVideos);
 	}
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        Usuariosdenunciados();
+    }
+
+    private void Usuariosdenunciados() {
+       List<com.example.demo.domain.Youtuber> denunciados =
+                iAdministrador.buscarDenunciados();
+
+        _usuariosdenunciados =
+                new Usuariosdenunciados(denunciados);
+
+        body.add(_usuariosdenunciados);
+    }
+ 
+
 
 }

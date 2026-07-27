@@ -10,8 +10,7 @@ public abstract class BaseView extends VerticalLayout {
 
      protected final void initView() {
         configure();
-        build();
-         
+        build();  
         bindEvents();
         configureNavigation();
     }
@@ -19,8 +18,6 @@ public abstract class BaseView extends VerticalLayout {
     protected abstract void configure();
 
     protected abstract void build();
-
-    
 
     protected abstract void bindEvents();
 

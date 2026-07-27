@@ -32,7 +32,9 @@ public class Buscar extends VerticalLayout {
 		botonbuscar = new Button("Buscar");
 		botonbuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		botonbuscar.addClickListener(e -> {
-			buscar();
+			String texto = textobuscar.getValue();
+		resultados = iInicio.buscar(texto);
+		ResultadodeBusqueda();
 		});
 
 		HorizontalLayout buscarLayout = new HorizontalLayout(textobuscar, botonbuscar);
@@ -43,12 +45,6 @@ public class Buscar extends VerticalLayout {
 
 	}
 
-	private void buscar() {
-		String texto = textobuscar.getValue();
-		resultados = iInicio.buscar(texto);
-		ResultadodeBusqueda();
-
-	}
 
 	public void ResultadodeBusqueda() {
 		_resultadodeBusqueda = new ResultadodeBusqueda(resultados);

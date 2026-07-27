@@ -20,7 +20,7 @@ public class VerComentariosdeYoutuber extends VerComentarios {
 
         removeAll();
 
-        Button comentarButton = new Button("Comentar", event -> comentar());
+        Button comentarButton = new Button("Comentar", event -> Comentar());
 
         comentarButton.getStyle()
                 .set("background-color", "#28a745") // verde
@@ -48,7 +48,7 @@ public class VerComentariosdeYoutuber extends VerComentarios {
         }
     }
 
-    public void comentar() {
+    public void Comentar() {
         UI.getCurrent().navigate(Comentar.class, id);
 
     }
