@@ -16,41 +16,114 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route("NoLogueado")
 @AnonymousAllowed
 public class NoLogueado extends Inicio {
+
     public iNoLogueado _iNoLogueado;
+
     public Login _login;
     public Registrar _registrar;
 
+    private Button loginButton;
+    private Button registrarButton;
+
+
     public NoLogueado(iNoLogueado iNoLogueado) {
+
         super(iNoLogueado);
+
         this._iNoLogueado = iNoLogueado;
 
-        Button loginButton = new Button("Login", new Icon(VaadinIcon.SIGN_IN));
-        loginButton.addClickListener(e -> Login());
-        loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY); // Botón azul
+    }
 
-        Button registrarButton = new Button("Registrar", new Icon(VaadinIcon.USER_CARD));
-        registrarButton.addClickListener(e -> Registrar());
-        registrarButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS); // Botón verde
-        HorizontalLayout botones = new HorizontalLayout(loginButton, registrarButton);
+ 
+
+    @Override
+    protected void build() {
+
+        super.build();
+
+    }
+
+
+    @Override
+    protected void bindEvents() {
+
+        super.bindEvents();
+
+
+        loginButton = new Button(
+                "Login",
+                new Icon(VaadinIcon.SIGN_IN)
+        );
+
+        loginButton.addThemeVariants(
+                ButtonVariant.LUMO_PRIMARY
+        );
+
+
+        registrarButton = new Button(
+                "Registrar",
+                new Icon(VaadinIcon.USER_CARD)
+        );
+
+        registrarButton.addThemeVariants(
+                ButtonVariant.LUMO_SUCCESS
+        );
+
+
+        HorizontalLayout botones =
+                new HorizontalLayout(
+                        loginButton,
+                        registrarButton
+                );
+
 
         header.add(botones);
 
+
+        loginButton.addClickListener(e -> Login());
+
+        registrarButton.addClickListener(e -> Registrar());
+
     }
+
+
+    @Override
+    protected void configureNavigation() {
+
+        // Navegación definida en Login() y Registrar()
+
+    }
+
 
     @Override
     public void UltimosVideos() {
-        List<Video> videos = _iNoLogueado.getUltimosVideos();
-        _ultimosVideos = new UltimosVideos(videos);
-        body.add(_ultimosVideos);
+
+        List<Video> videos =
+                _iNoLogueado.getUltimosVideos();
+
+
+        _ultimosVideos =
+                new UltimosVideos(videos);
+
+
         body.add(_ultimosVideos);
 
     }
+
 
     public void Login() {
-        UI.getCurrent().navigate(Login.class);
+
+        UI.getCurrent()
+                .navigate(Login.class);
+
     }
 
+
     public void Registrar() {
-        UI.getCurrent().navigate(Registrar.class);
+
+        UI.getCurrent()
+                .navigate(Registrar.class);
+
     }
+
 }

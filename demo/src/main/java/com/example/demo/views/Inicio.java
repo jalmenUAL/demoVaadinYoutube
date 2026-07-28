@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.H1;
@@ -29,20 +30,14 @@ public abstract class Inicio extends BaseView {
 
     protected abstract void UltimosVideos();
 
+ 
 
     @Override
-    protected void configure() {
+    protected void build() {
         setWidthFull();
         setPadding(true);
         setSpacing(true);
         setAlignItems(Alignment.CENTER);
-    }
-
-    @Override
-    protected void build() {
-        header = new HorizontalLayout();
-        body = new VerticalLayout();
-
         H1 heading = new H1("YouTube");
         heading.getStyle()
                 .set("background-color", "#FF0000")
@@ -67,7 +62,7 @@ public abstract class Inicio extends BaseView {
 
     @Override
     protected void bindEvents() {
-        _buscar.botonbuscar.addClickListener(e -> {
+        _buscar.botonBuscar.addClickListener(e -> {
             body.removeAll();
             body.add(_buscar._resultadodeBusqueda);
         });

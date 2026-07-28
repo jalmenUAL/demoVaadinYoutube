@@ -1,56 +1,68 @@
 package com.example.demo.views;
 
+import java.util.List;
+
+import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import java.util.List;
 
 @Route("Buscar")
-public class Buscar extends VerticalLayout {
-	public Inicio _inicio;
-	public ResultadodeBusqueda _resultadodeBusqueda;
-	private TextField textobuscar;
+public class Buscar extends BaseView {
 
-	public Button botonbuscar;
+    public ResultadodeBusqueda _resultadodeBusqueda;
 
-	iInicio iInicio;
+    private final iInicio _iInicio;
 
-	List<Video> resultados;
+    private TextField textoBuscar;
+    public Button botonBuscar;
 
-	Buscar(iInicio iInicio) {
-		this.iInicio = iInicio;
+    private List<Video> resultados;
 
-		textobuscar = new TextField();
-		textobuscar.setPlaceholder("Introduzca el nombre del video que quiere buscar");
-		textobuscar.setWidthFull();
+    public Buscar(iInicio iInicio) {
+        this._iInicio = iInicio;
+    }
+ 
 
-		botonbuscar = new Button("Buscar");
-		botonbuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-		botonbuscar.addClickListener(e -> {
-			String texto = textobuscar.getValue();
-		resultados = iInicio.buscar(texto);
-		ResultadodeBusqueda();
-		});
+    @Override
+    protected void build() {
+		 setWidthFull();
+        textoBuscar = new TextField();
+        textoBuscar.setPlaceholder(
+                "Introduzca el nombre del vídeo que quiere buscar");
+        textoBuscar.setWidthFull();
 
-		HorizontalLayout buscarLayout = new HorizontalLayout(textobuscar, botonbuscar);
-		buscarLayout.setWidthFull();
-		buscarLayout.setFlexGrow(1, textobuscar);
+        botonBuscar = new Button("Buscar");
+        botonBuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-		add(buscarLayout);
+        HorizontalLayout buscarLayout =
+                new HorizontalLayout(textoBuscar, botonBuscar);
+        buscarLayout.setWidthFull();
+        buscarLayout.setFlexGrow(1, textoBuscar);
 
-	}
+        add(buscarLayout);
+    }
 
+    @Override
+    protected void bindEvents() {
 
-	public void ResultadodeBusqueda() {
-		_resultadodeBusqueda = new ResultadodeBusqueda(resultados);
+        botonBuscar.addClickListener(e -> {
+            resultados = _iInicio.buscar(textoBuscar.getValue());
+            ResultadodeBusqueda();
+        });
 
-	}
+    }
 
+    @Override
+    protected void configureNavigation() {
+        // No hay navegación en esta vista.
+    }
 
-	
-};
+    public void ResultadodeBusqueda() {
+        _resultadodeBusqueda = new ResultadodeBusqueda(resultados);
+    }
+}
