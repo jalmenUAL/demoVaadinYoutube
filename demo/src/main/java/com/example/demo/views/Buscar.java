@@ -24,6 +24,7 @@ public class Buscar extends BaseView {
     private List<Video> resultados;
 
     public Buscar(iInicio iInicio) {
+		super();
         this._iInicio = iInicio;
     }
  
@@ -57,10 +58,7 @@ public class Buscar extends BaseView {
 
     }
 
-    @Override
-    protected void configureNavigation() {
-        // No hay navegación en esta vista.
-    }
+ 
 
     public void ResultadodeBusqueda() {
         _resultadodeBusqueda = new ResultadodeBusqueda(resultados);

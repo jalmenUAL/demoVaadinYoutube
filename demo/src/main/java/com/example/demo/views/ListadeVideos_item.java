@@ -24,7 +24,10 @@ public class ListadeVideos_item extends BaseView {
 
 
     public ListadeVideos_item(Video video) {
+        super();
         this.video = video;
+        		 
+
     }
 
 
@@ -148,12 +151,7 @@ public class ListadeVideos_item extends BaseView {
     }
 
 
-    @Override
-    protected void configureNavigation() {
-
-        // La navegación está definida en VerVideo()
-
-    }
+  
 
 
     public void VerVideo() {

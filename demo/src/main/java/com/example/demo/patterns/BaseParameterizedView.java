@@ -9,10 +9,7 @@ public abstract class BaseParameterizedView<T>
         implements HasUrlParameter<T> {
 
 
-    public BaseParameterizedView() {
-       
-    }
-
+   
 
     @Override
     public void setParameter(
@@ -22,12 +19,12 @@ public abstract class BaseParameterizedView<T>
 
         build(parameter);
         bindEvents();
-        configureNavigation();
+         
 
     }
 
 
-    protected abstract void configureNavigation();
+   
 
     protected abstract void build(T parameter);
 

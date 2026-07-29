@@ -8,22 +8,35 @@ import com.vaadin.flow.router.Route;
 @Route("ResultadodeBusqueda")
 
 public class ResultadodeBusqueda extends GaleradeVideos {
-	public Buscar _buscar;
 
-	public ResultadodeBusqueda(List<Video> resultados) {
-		super(resultados);
+    public Buscar _buscar;
 
-		tituloGaleria.setText("Resultados de la búsqueda");
+    public ResultadodeBusqueda(List<Video> resultados) {
+        super(resultados);
+    }
 
-		carrusel.removeAll();
-		if (resultados == null || resultados.isEmpty()) {
+    @Override
+    protected void build() {
 
-			carrusel.add(new com.vaadin.flow.component.html.Span("No se han encontrado resultados."));
-			return;
-		}
-		for (Video video : resultados) {
-			ResultadodeBusqueda_item gvi = new ResultadodeBusqueda_item(video);
-			carrusel.add(gvi);
-		}
-	}
+        super.build();
+
+        tituloGaleria.setText("Resultados de la búsqueda");
+
+        carrusel.removeAll();
+
+        if (videos == null || videos.isEmpty()) {
+
+             
+
+            return;
+        }
+
+        for (Video video : videos) {
+
+            carrusel.add(
+                    new ResultadodeBusqueda_item(video)
+            );
+
+        }
+    }
 }

@@ -42,7 +42,7 @@ public class Registrar extends BaseView {
 
 
     public Registrar(iNoLogueado iNoLogueado) {
-
+        super();
         this._iNoLogueado = iNoLogueado;
 
     }
@@ -281,12 +281,7 @@ public class Registrar extends BaseView {
 
 
 
-    @Override
-    protected void configureNavigation() {
-
-        // No necesita navegación inicial
-
-    }
+    
 
 
 

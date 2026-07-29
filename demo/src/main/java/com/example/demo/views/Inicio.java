@@ -25,7 +25,8 @@ public abstract class Inicio extends BaseView {
     public Inicio(iInicio iInicio) {
         super();
         this.iInicio = iInicio;
-       
+       		 
+
     }
 
     protected abstract void UltimosVideos();
@@ -68,10 +69,7 @@ public abstract class Inicio extends BaseView {
         });
     }
 
-    @Override
-    protected void configureNavigation() {
-        // No es necesario en esta vista.
-    }
+   
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {

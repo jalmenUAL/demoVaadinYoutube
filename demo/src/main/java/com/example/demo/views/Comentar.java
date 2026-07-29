@@ -87,11 +87,7 @@ public class Comentar extends BaseParameterizedView<String>  {
         UI.getCurrent().getPage().getHistory().back();
     }
 
-
-    @Override
-    protected void configureNavigation() {
-        
-    }
+ 
  
 
      

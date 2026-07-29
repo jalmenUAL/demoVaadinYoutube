@@ -30,8 +30,10 @@ public class PublicarVideo extends BaseView {
 
 
     public PublicarVideo(iYoutuber iYoutuber) {
-
+        super();
         this._iYoutuber = iYoutuber;
+        	 
+
 
     }
 
@@ -108,12 +110,7 @@ public class PublicarVideo extends BaseView {
     }
 
 
-    @Override
-    protected void configureNavigation() {
-
-        // No necesita navegación inicial
-
-    }
+ 
 
 
     public void PublicarVideo() {

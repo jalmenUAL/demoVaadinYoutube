@@ -19,10 +19,13 @@ public class GaleradeVideos extends BaseView {
     protected HorizontalLayout carrusel;
     public H2 tituloGaleria;
 
-    private final List<Video> videos;
+    protected final List<Video> videos;
 
     public GaleradeVideos(List<Video> videos) {
+        super();
         this.videos = videos;
+        	 
+
     }
 
      
@@ -59,9 +62,6 @@ public class GaleradeVideos extends BaseView {
         // Esta vista no tiene eventos propios.
     }
 
-    @Override
-    protected void configureNavigation() {
-        // Esta vista no navega.
-    }
+  
 
 }

@@ -21,7 +21,6 @@ public class Administrador extends Registrado {
     public Administrador(iAdministrador iAdministrador) {
         super(iAdministrador);
         this.iAdministrador = iAdministrador;
-		 
     }
 
 

@@ -288,10 +288,6 @@ public class Perfil extends BaseParameterizedView<String> {
 
 
 
-
-    @Override
-    protected void configureNavigation() {
-        
-    }
+ 
 
 }

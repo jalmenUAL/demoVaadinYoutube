@@ -10,43 +10,70 @@ import com.vaadin.flow.router.Route;
 
 @Route("UltimosVideos")
 public class UltimosVideos extends GaleradeVideos {
-	public Inicio _inicio;
 
-	 
+    public Inicio _inicio;
 
-	public UltimosVideos(List<Video> videos) {
-		super(videos);
+    public UltimosVideos(List<Video> videos) {
+        super(videos);
+    }
 
-		tituloGaleria.setText("Últimos Videos");
+    @Override
+    protected void build() {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        super.build();
 
-		if (auth != null && auth.isAuthenticated()) {
+        tituloGaleria.setText("Últimos Videos");
 
-			boolean esAdmin = auth.getAuthorities().stream()
-					.anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
-			boolean esYoutuber = auth.getAuthorities().stream()
-					.anyMatch(a -> a.getAuthority().equals("ROLE_YOUTUBER"));
+        Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
 
-		 
-			if (esAdmin) {
-				for (Video video : videos) {
-					UltimosVideos_item item = new UltimosVideosdeAdministrador_item(video);
-					carrusel.add(item);
-				}
-			} else if (esYoutuber) {
-				for (Video video : videos) {
-					UltimosVideos_item item = new UltimosVideosdeYoutuber_item(video);
-					carrusel.add(item);
-				}
-			}
-		} else {
-			for (Video video : videos) {
-				UltimosVideos_item item = new UltimosVideos_item(video);
-				carrusel.add(item);
-			}
+        if (auth != null && auth.isAuthenticated()) {
 
-		}
+            boolean esAdmin = auth.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority()
+                            .equals("ROLE_ADMINISTRADOR"));
 
-	}
+            boolean esYoutuber = auth.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority()
+                            .equals("ROLE_YOUTUBER"));
+
+            if (esAdmin) {
+
+                for (Video video : videos) {
+
+                    UltimosVideos_item item =
+                            new UltimosVideosdeAdministrador_item(video);
+
+                    carrusel.add(item);
+
+                }
+
+            } else if (esYoutuber) {
+
+                for (Video video : videos) {
+
+                    UltimosVideos_item item =
+                            new UltimosVideosdeYoutuber_item(video);
+
+                    carrusel.add(item);
+
+                }
+
+            }
+
+        } else {
+
+            for (Video video : videos) {
+
+                UltimosVideos_item item =
+                        new UltimosVideos_item(video);
+
+                carrusel.add(item);
+
+            }
+
+        }
+
+    }
+
 }

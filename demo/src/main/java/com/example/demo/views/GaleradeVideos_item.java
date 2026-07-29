@@ -23,7 +23,10 @@ public class GaleradeVideos_item extends BaseView {
     private Image thumbnail;
 
     public GaleradeVideos_item(Video video) {
+        super();
         this.video = video;
+        	 
+
     }
  
 
@@ -129,10 +132,7 @@ public class GaleradeVideos_item extends BaseView {
     }
 
 
-    @Override
-    protected void configureNavigation() {
-        // La navegación está encapsulada en VerVideo()
-    }
+ 
 
 
     public void VerVideo() {

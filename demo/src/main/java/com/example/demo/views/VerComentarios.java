@@ -4,21 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.example.demo.patterns.BaseView;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("VerComentarios")
 
-public class VerComentarios extends VerticalLayout {
+public class VerComentarios extends BaseView {
     public VerVideo _verVideo;
     public List<VerComentarios_item> _item = new ArrayList<>();
+    protected Set<Comentario> comentarios;
  
 
     public VerComentarios(Set<Comentario> comentarios) {
+        super();
+        this.comentarios = comentarios;
+       
+    }
 
-        setWidthFull();
+    private void addSeparator() {
+       
+    }
+
+    @Override
+    protected void build() {
+       setWidthFull();
         setPadding(true);
         setSpacing(false);  
         setAlignItems(Alignment.STRETCH);
@@ -43,16 +54,18 @@ public class VerComentarios extends VerticalLayout {
                 }
             }
         }
-    }
-
-    private void addSeparator() {
-        Div separator = new Div();
+         Div separator = new Div();
         separator.getStyle()
                 .set("height", "1px")
                 .set("background-color", "#ddd")
                 .set("width", "100%")
                 .set("margin", "8px 0");
         add(separator);
+    }
+
+    @Override
+    protected void bindEvents() {
+        
     }
 
 }

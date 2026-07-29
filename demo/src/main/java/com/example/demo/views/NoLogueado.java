@@ -31,6 +31,8 @@ public class NoLogueado extends Inicio {
         super(iNoLogueado);
 
         this._iNoLogueado = iNoLogueado;
+        	 
+
 
     }
 
@@ -87,12 +89,7 @@ public class NoLogueado extends Inicio {
     }
 
 
-    @Override
-    protected void configureNavigation() {
-
-        // Navegación definida en Login() y Registrar()
-
-    }
+    
 
 
     @Override

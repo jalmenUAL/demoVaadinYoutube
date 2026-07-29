@@ -42,7 +42,10 @@ public class Configuracion extends BaseView {
     private MemoryBuffer fondoBuffer;
 
     public Configuracion(iYoutuber iYoutuber) {
+        super();
         this._iYoutuber = iYoutuber;
+        		 
+
     }
 
      
@@ -176,10 +179,7 @@ public class Configuracion extends BaseView {
         actualizar.addClickListener(event -> actualizar());
     }
 
-    @Override
-    protected void configureNavigation() {
-        // Esta vista no navega directamente a otras vistas.
-    }
+ 
 
     public void actualizar() {
 

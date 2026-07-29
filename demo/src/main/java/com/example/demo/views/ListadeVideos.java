@@ -19,7 +19,10 @@ public class ListadeVideos extends BaseView {
 
 
     public ListadeVideos(Set<Video> videos) {
+        super();
         this.videos = videos;
+        		 
+
     }
 
 
@@ -90,9 +93,6 @@ public class ListadeVideos extends BaseView {
     }
 
 
-    @Override
-    protected void configureNavigation() {
-        // No navega.
-    }
+  
 
 }
