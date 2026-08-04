@@ -3,7 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -13,40 +13,31 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("ListadeVideos_item")
-public class ListadeVideos_item extends BaseView {
+public class ListadeVideos_item extends BaseItemView<Video> {
 
     public ListadeVideos _listadeVideos;
     public VerVideo _verVideo;
-
-    private final Video video;
 
     private Image thumbnail;
 
 
     public ListadeVideos_item(Video video) {
-        super();
-        this.video = video;
-        		 
-
+        super(video);
     }
-
-
-    
-
 
     @Override
     protected void build() {
           setWidthFull();
         setSpacing(true);
-        String tituloVideo = video.getTitulo();
-        String propietarioNombre = video.getEs_de().getLogin();
-        String propietarioFotoUrl = video.getEs_de().getFotoPerfil();
+        String tituloVideo = model.getTitulo();
+        String propietarioNombre = model.getEs_de().getLogin();
+        String propietarioFotoUrl = model.getEs_de().getFotoPerfil();
 
         int numMeGustas =
-                video.getLe_gusta_a().size();
+                model.getLe_gusta_a().size();
 
         int numComentarios =
-                video.getTiene_comentarios().size();
+                model.getTiene_comentarios().size();
 
 
         Span tituloSpan =
@@ -91,9 +82,9 @@ public class ListadeVideos_item extends BaseView {
 
 
         String videoId =
-                video.getUrl()
+                model.getUrl()
                         .substring(
-                                video.getUrl().lastIndexOf("/") + 1
+                                model.getUrl().lastIndexOf("/") + 1
                         );
 
 
@@ -186,7 +177,7 @@ public class ListadeVideos_item extends BaseView {
                 UI.getCurrent()
                         .navigate(
                                 VerVideodeAdministrador.class,
-                                video.getId()
+                                model.getId()
                         );
 
 
@@ -195,7 +186,7 @@ public class ListadeVideos_item extends BaseView {
                 UI.getCurrent()
                         .navigate(
                                 VerVideodeYoutuber.class,
-                                video.getId()
+                                model.getId()
                         );
 
             }
@@ -206,7 +197,7 @@ public class ListadeVideos_item extends BaseView {
             UI.getCurrent()
                     .navigate(
                             VerVideo.class,
-                            video.getId()
+                            model.getId()
                     );
 
         }

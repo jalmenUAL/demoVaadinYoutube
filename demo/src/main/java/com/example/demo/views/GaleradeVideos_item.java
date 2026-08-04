@@ -3,7 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -13,19 +13,14 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("GaleriadeVideos_item")
-public class GaleradeVideos_item extends BaseView {
+public class GaleradeVideos_item extends BaseItemView<Video> {
 
     public GaleradeVideos _galeradeVideos;
     public VerVideo _verVideo;
-
-    private final Video video;
-
     private Image thumbnail;
 
     public GaleradeVideos_item(Video video) {
-        super();
-        this.video = video;
-        	 
+       super(video);      	 
 
     }
  
@@ -34,21 +29,21 @@ public class GaleradeVideos_item extends BaseView {
     protected void build() {
          setWidthFull();
         setSpacing(true);
-        Span tituloSpan = new Span(video.getTitulo());
+        Span tituloSpan = new Span(model.getTitulo());
 
         tituloSpan.getStyle()
                 .set("font-weight", "bold")
                 .set("font-size", "1.2em");
 
 
-        int numMeGustas = video.getLe_gusta_a().size();
-        int numComentarios = video.getTiene_comentarios().size();
+        int numMeGustas = model.getLe_gusta_a().size();
+        int numComentarios = model.getTiene_comentarios().size();
 
 
         Avatar propietarioAvatar =
                 new Avatar(
-                        video.getEs_de().getLogin(),
-                        video.getEs_de().getFotoPerfil()
+                        model.getEs_de().getLogin(),
+                        model.getEs_de().getFotoPerfil()
                 );
 
 
@@ -79,9 +74,9 @@ public class GaleradeVideos_item extends BaseView {
 
 
         String videoId =
-                video.getUrl()
+                model.getUrl()
                         .substring(
-                                video.getUrl().lastIndexOf("/") + 1
+                                model.getUrl().lastIndexOf("/") + 1
                         );
 
 
@@ -166,7 +161,7 @@ public class GaleradeVideos_item extends BaseView {
                 UI.getCurrent()
                         .navigate(
                                 VerVideodeAdministrador.class,
-                                video.getId()
+                                model.getId()
                         );
 
             } else if (esYoutuber) {
@@ -174,7 +169,7 @@ public class GaleradeVideos_item extends BaseView {
                 UI.getCurrent()
                         .navigate(
                                 VerVideodeYoutuber.class,
-                                video.getId()
+                                model.getId()
                         );
 
             }
@@ -184,7 +179,7 @@ public class GaleradeVideos_item extends BaseView {
             UI.getCurrent()
                     .navigate(
                             VerVideo.class,
-                            video.getId()
+                            model.getId()
                     );
         }
     }

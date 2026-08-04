@@ -39,7 +39,7 @@ public class UltimosVideos extends GaleradeVideos {
 
             if (esAdmin) {
 
-                for (Video video : videos) {
+                for (Video video : (List<Video>) elements) {
 
                     UltimosVideos_item item =
                             new UltimosVideosdeAdministrador_item(video);
@@ -50,7 +50,7 @@ public class UltimosVideos extends GaleradeVideos {
 
             } else if (esYoutuber) {
 
-                for (Video video : videos) {
+                for (Video video : (List<Video>) elements) {
 
                     UltimosVideos_item item =
                             new UltimosVideosdeYoutuber_item(video);
@@ -63,7 +63,7 @@ public class UltimosVideos extends GaleradeVideos {
 
         } else {
 
-            for (Video video : videos) {
+            for (Video video : (List<Video>) elements) {
 
                 UltimosVideos_item item =
                         new UltimosVideos_item(video);

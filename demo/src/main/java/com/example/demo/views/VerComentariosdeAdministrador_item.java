@@ -39,6 +39,6 @@ public class VerComentariosdeAdministrador_item extends VerComentarios_item {
     }
 
     public void eliminar() {
-        iAdministrador.eliminarComentario(comentario.getId());
+        iAdministrador.eliminarComentario(model.getId());
     }
 }

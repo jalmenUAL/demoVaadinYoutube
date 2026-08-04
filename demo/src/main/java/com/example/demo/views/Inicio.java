@@ -25,13 +25,10 @@ public abstract class Inicio extends BaseView {
     public Inicio(iInicio iInicio) {
         super();
         this.iInicio = iInicio;
-       		 
-
+       		
     }
 
     protected abstract void UltimosVideos();
-
- 
 
     @Override
     protected void build() {

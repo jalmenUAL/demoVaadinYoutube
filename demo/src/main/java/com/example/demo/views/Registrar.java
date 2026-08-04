@@ -280,11 +280,6 @@ public class Registrar extends BaseView {
     }
 
 
-
-    
-
-
-
     public void Registrar() {
 
         _iNoLogueado.registrar(

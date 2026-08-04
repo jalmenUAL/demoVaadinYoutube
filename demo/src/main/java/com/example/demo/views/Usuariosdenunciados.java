@@ -3,38 +3,46 @@ package com.example.demo.views;
 import java.util.List;
 import java.util.Vector;
 
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
-import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.BaseListView;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.Route;
 
 @Route("Usuariosdenunciados")
-public class Usuariosdenunciados extends BaseView {
+public class Usuariosdenunciados extends BaseListView<com.example.demo.tables.Youtuber> {
 
     public Administrador _administrador;
 
     public Vector<Usuariosdenunciados_item> _item =
             new Vector<>();
 
-    private final List<com.example.demo.tables.Youtuber> youtubers;
+   
 
     private HorizontalLayout cardsLayout;
 
 
     public Usuariosdenunciados(
             List<com.example.demo.tables.Youtuber> youtubers) {
-        super();
-        this.youtubers = youtubers;
+        super(youtubers);
+         
 
        
     }
 
+ 
+
 
     @Override
-    protected void build() {
+    protected void bindEvents() {
 
+        // No tiene eventos propios
+
+    }
+
+
+    @Override
+    protected void buildContainer() {
         Span titulo =
                 new Span("Usuarios denunciados");
 
@@ -53,7 +61,7 @@ public class Usuariosdenunciados extends BaseView {
 
 
 
-        if (youtubers == null || youtubers.isEmpty()) {
+        if (elements == null || elements.isEmpty()) {
 
             Span noUsers =
                     new Span(
@@ -70,10 +78,12 @@ public class Usuariosdenunciados extends BaseView {
 
             return;
         }
+    }
 
 
-
-        for (com.example.demo.tables.Youtuber youtuber : youtubers) {
+    @Override
+    protected void buildItems() {
+        for (com.example.demo.tables.Youtuber youtuber : elements) {
 
             Usuariosdenunciados_item item =
                     new Usuariosdenunciados_item(youtuber);
@@ -119,15 +129,6 @@ public class Usuariosdenunciados extends BaseView {
 
 
         add(cardsLayout);
-
-    }
-
-
-    @Override
-    protected void bindEvents() {
-
-        // No tiene eventos propios
-
     }
 
 }

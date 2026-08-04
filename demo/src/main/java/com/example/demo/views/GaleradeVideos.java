@@ -3,36 +3,35 @@ package com.example.demo.views;
 import java.util.List;
 import java.util.Vector;
 
-import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("GaleriadeVideos")
-public class GaleradeVideos extends BaseView {
+public class GaleradeVideos extends BaseListView<Video> {
 
     public Vector<GaleradeVideos_item> _item = new Vector<>();
 
     protected HorizontalLayout carrusel;
     public H2 tituloGaleria;
 
-    protected final List<Video> videos;
-
     public GaleradeVideos(List<Video> videos) {
-        super();
-        this.videos = videos;
-        	 
-
+        super(videos);
     }
 
-     
+    @Override
+    protected void bindEvents() {
+        // Esta vista no tiene eventos propios.
+    }
+
+
 
     @Override
-    protected void build() {
-        setSizeFull();
+    protected void buildContainer() {
+         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.START);
         tituloGaleria = new H2("Galería de Videos");
@@ -54,12 +53,11 @@ public class GaleradeVideos extends BaseView {
 
 
         add(tituloGaleria, carrusel);
-
     }
 
     @Override
-    protected void bindEvents() {
-        // Esta vista no tiene eventos propios.
+    protected void buildItems() {
+        //Está vacía porque cada subclase de GaleriadeVideos se encargará de construir sus propios items.
     }
 
   

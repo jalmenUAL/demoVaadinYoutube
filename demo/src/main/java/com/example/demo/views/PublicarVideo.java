@@ -109,10 +109,6 @@ public class PublicarVideo extends BaseView {
 
     }
 
-
- 
-
-
     public void PublicarVideo() {
 
         Authentication auth =

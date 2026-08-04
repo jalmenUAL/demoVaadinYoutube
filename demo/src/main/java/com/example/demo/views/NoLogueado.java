@@ -36,13 +36,10 @@ public class NoLogueado extends Inicio {
 
     }
 
- 
 
     @Override
     protected void build() {
-
         super.build();
-
     }
 
 
@@ -50,8 +47,6 @@ public class NoLogueado extends Inicio {
     protected void bindEvents() {
 
         super.bindEvents();
-
-
         loginButton = new Button(
                 "Login",
                 new Icon(VaadinIcon.SIGN_IN)
@@ -60,8 +55,6 @@ public class NoLogueado extends Inicio {
         loginButton.addThemeVariants(
                 ButtonVariant.LUMO_PRIMARY
         );
-
-
         registrarButton = new Button(
                 "Registrar",
                 new Icon(VaadinIcon.USER_CARD)

@@ -4,37 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
 
 @Route("VerComentarios")
 
-public class VerComentarios extends BaseView {
+public class VerComentarios extends BaseListView<Comentario> {
     public VerVideo _verVideo;
     public List<VerComentarios_item> _item = new ArrayList<>();
-    protected Set<Comentario> comentarios;
+    
  
 
     public VerComentarios(Set<Comentario> comentarios) {
-        super();
-        this.comentarios = comentarios;
+        super(comentarios);
+        
        
     }
+ 
+    
 
-    private void addSeparator() {
-       
+    @Override
+    protected void bindEvents() {
+        
     }
 
     @Override
-    protected void build() {
-       setWidthFull();
+    protected void buildContainer() {
+        setWidthFull();
         setPadding(true);
         setSpacing(false);  
         setAlignItems(Alignment.STRETCH);
+    }
 
-        List<Comentario> comentarios2 = new ArrayList<>(comentarios);
+    @Override
+    protected void buildItems() {
+         List<Comentario> comentarios2 = new ArrayList<>(elements);
 
         if (comentarios2.isEmpty()) {
           
@@ -49,8 +55,8 @@ public class VerComentarios extends BaseView {
                 add(comentario);
 
              
-                if (i < comentarios.size() - 1) {
-                    addSeparator();
+                if (i < elements.size() - 1) {
+                     
                 }
             }
         }
@@ -61,11 +67,6 @@ public class VerComentarios extends BaseView {
                 .set("width", "100%")
                 .set("margin", "8px 0");
         add(separator);
-    }
-
-    @Override
-    protected void bindEvents() {
-        
     }
 
 }

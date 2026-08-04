@@ -1,18 +1,17 @@
 package com.example.demo.views;
 
-import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.BaseItemView;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("Usuariosdenunciados_item")
-public class Usuariosdenunciados_item extends BaseView {
+public class Usuariosdenunciados_item extends BaseItemView<com.example.demo.tables.Youtuber> {
 
     public Usuariosdenunciados _usuariosdenunciados;
 
-    private final com.example.demo.tables.Youtuber youtuber;
+    
 
     private Image avatar;
     private Span nombreSpan;
@@ -20,7 +19,7 @@ public class Usuariosdenunciados_item extends BaseView {
     public Usuariosdenunciados_item(
             com.example.demo.tables.Youtuber youtuber) {
 
-        this.youtuber = youtuber;
+        super(youtuber);
 
         
     }
@@ -31,8 +30,8 @@ public class Usuariosdenunciados_item extends BaseView {
     protected void build() {
 
         avatar = new Image(
-                youtuber.getFotoPerfil(),
-                youtuber.getLogin()
+                model.getFotoPerfil(),
+                model.getLogin()
         );
 
         avatar.setWidth("50px");
@@ -43,7 +42,7 @@ public class Usuariosdenunciados_item extends BaseView {
 
 
         nombreSpan = new Span(
-                youtuber.getLogin()
+                model.getLogin()
         );
 
         nombreSpan.getStyle()
@@ -83,7 +82,7 @@ public class Usuariosdenunciados_item extends BaseView {
         getUI().ifPresent(
                 ui -> ui.navigate(
                         "PerfilAjenodeAdministrador/"
-                                + youtuber.getLogin()
+                                + model.getLogin()
                 )
         );
 

@@ -24,14 +24,14 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
         carrusel.removeAll();
 
-        if (videos == null || videos.isEmpty()) {
+        if (elements == null || elements.isEmpty()) {
 
              
 
             return;
         }
 
-        for (Video video : videos) {
+        for (Video video : (List<Video>) elements) {
 
             carrusel.add(
                     new ResultadodeBusqueda_item(video)

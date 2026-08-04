@@ -8,26 +8,20 @@ public abstract class BaseParameterizedView<T>
         extends VerticalLayout
         implements HasUrlParameter<T> {
 
-
-   
-
     @Override
-    public void setParameter(
-            BeforeEvent event,
-            T parameter
-    ) {
+    public void setParameter(BeforeEvent event, T parameter) {
+
+      
 
         build(parameter);
-        bindEvents();
-         
 
+        bindEvents();
     }
 
-
-   
+    
 
     protected abstract void build(T parameter);
 
-    protected abstract void bindEvents();
-
+    protected void bindEvents() {
+    }
 }
