@@ -36,7 +36,7 @@ public class NoLogueadoViewFactory implements ViewFactory {
     }
 
     @Override
-    public Class<? extends Perfil> createPerfilView() {
+    public Class<? extends Perfil> createPerfilView(String idYoutuber) {
         return com.example.demo.views.PerfilAjeno.class;
     }
     

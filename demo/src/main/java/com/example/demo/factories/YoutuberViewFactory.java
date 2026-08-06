@@ -34,7 +34,7 @@ public class YoutuberViewFactory implements ViewFactory {
     }
 
     @Override
-    public Class<? extends Perfil> createPerfilView() {
+    public Class<? extends Perfil> createPerfilView(String idYoutuber) {
         return com.example.demo.views.PerfilAjenodeYoutuber.class;
     }
 }

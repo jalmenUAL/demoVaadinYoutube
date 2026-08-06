@@ -44,7 +44,7 @@ public class AdministradorViewFactory implements ViewFactory {
     }
 
     @Override
-    public Class<? extends Perfil> createPerfilView() {
+    public Class<? extends Perfil> createPerfilView(String idYoutuber) {
         return PerfilAjenodeAdministrador.class;        
     }      
 

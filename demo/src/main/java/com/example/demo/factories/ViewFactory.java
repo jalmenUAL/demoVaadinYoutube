@@ -48,5 +48,5 @@ public interface ViewFactory {
 
     VerComentarios_item createComentarioItem(Comentario comentario);
 
-    Class<? extends Perfil> createPerfilView(String string);
+    Class<? extends Perfil> createPerfilView(String idYoutuber);
 }
