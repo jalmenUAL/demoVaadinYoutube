@@ -31,12 +31,11 @@ public class ResultadodeBusqueda extends GaleradeVideos {
             return;
         }
 
-        for (Video video : (List<Video>) elements) {
-
-            carrusel.add(
-                    new ResultadodeBusqueda_item(video)
-            );
-
-        }
+        
     }
+
+    @Override
+    protected void buildItems() {   
+         super.buildItems();
+}
 }

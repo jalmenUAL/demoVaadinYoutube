@@ -8,24 +8,41 @@ import com.vaadin.flow.router.Route;
 
 @Route("PerfilAjenodeAdministrador")
 public class PerfilAjenodeAdministrador extends PerfilAjeno {
-    private Button btnBloquear;
 
-    iAdministrador iAdministrador;
+    private final iAdministrador iAdministrador;
+
+    private Button btnBloquear;
 
     public PerfilAjenodeAdministrador(iAdministrador iAdministrador) {
         super(iAdministrador);
         this.iAdministrador = iAdministrador;
+    }
 
-        btnBloquear = new Button("", e -> Bloquear());
+    @Override
+    
+    protected void build(String parameter) {
+
+        super.build(parameter);
+
+        btnBloquear = new Button();
         btnBloquear.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        topLayout.add(btnBloquear);
 
+        topLayout.add(btnBloquear);
+    }
+
+    @Override
+    protected void bindEvents() {
+
+        super.bindEvents();
+
+        btnBloquear.addClickListener(e -> Bloquear());
     }
 
     @Override
     public void setParameter(BeforeEvent event, String parameter) {
-        // 👇 ejecuta la lógica de la clase padre
+
         super.setParameter(event, parameter);
+
         if (_usuario.getBloqueado()) {
             btnBloquear.setText("Quitar bloqueo");
         } else {
@@ -34,13 +51,19 @@ public class PerfilAjenodeAdministrador extends PerfilAjeno {
     }
 
     public void Bloquear() {
-        if (btnBloquear.getText().equals("Bloquear")) {
-            btnBloquear.setText("Quitar Bloqueo");
-            iAdministrador.bloquearUsuario(_usuario.getLogin());
-        } else {
-            btnBloquear.setText("Bloquear");
-            iAdministrador.desbloquearUsuario(_usuario.getLogin());
-        }
 
+        if (btnBloquear.getText().equals("Bloquear")) {
+
+            btnBloquear.setText("Quitar bloqueo");
+
+            iAdministrador.bloquearUsuario(_usuario.getLogin());
+
+        } else {
+
+            btnBloquear.setText("Bloquear");
+
+            iAdministrador.desbloquearUsuario(_usuario.getLogin());
+
+        }
     }
 }

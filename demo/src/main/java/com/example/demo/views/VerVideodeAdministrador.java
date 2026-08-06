@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.services.iAdministrador;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -10,11 +11,12 @@ import com.vaadin.flow.router.Route;
 
 public class VerVideodeAdministrador extends VerVideo {
 
+     
     iAdministrador iAdministrador;
 
-    public VerVideodeAdministrador(iAdministrador iAdministrador) {
+    public VerVideodeAdministrador(iAdministrador iAdministrador,ViewFactory viewFactory) {
 
-        super(iAdministrador);
+        super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;
 
     }
@@ -45,7 +47,7 @@ public class VerVideodeAdministrador extends VerVideo {
     @Override
     public void VerComentarios() {
 
-        _verComentarios = new VerComentariosdeAdministrador(iAdministrador, video.getTiene_comentarios());
+        _verComentarios = new VerComentariosdeAdministrador(viewFactory, iAdministrador, video.getTiene_comentarios());
         comentarios.add(_verComentarios);
 
     }

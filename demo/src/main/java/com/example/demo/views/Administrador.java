@@ -23,34 +23,27 @@ public class Administrador extends Registrado {
         this.iAdministrador = iAdministrador;
     }
 
-
-	@Override
-	protected void UltimosVideos() {
-		 List<Video> ultimosVideos =
-                iAdministrador.getAllVideos();
-
-        this._ultimosVideos =
-                new UltimosVideos(ultimosVideos);
-
-        body.add(this._ultimosVideos);
-	}
-
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
         Usuariosdenunciados();
     }
 
-    private void Usuariosdenunciados() {
-       List<com.example.demo.tables.Youtuber> denunciados =
-                iAdministrador.buscarDenunciados();
+    @Override
+    protected void UltimosVideos() {
+        List<Video> ultimosVideos = iAdministrador.getAllVideos();
 
-        _usuariosdenunciados =
-                new Usuariosdenunciados(denunciados);
+        this._ultimosVideos = new UltimosVideos(ultimosVideos);
+
+        body.add(this._ultimosVideos);
+    }
+
+    private void Usuariosdenunciados() {
+        List<com.example.demo.tables.Youtuber> denunciados = iAdministrador.buscarDenunciados();
+
+        _usuariosdenunciados = new Usuariosdenunciados(denunciados);
 
         body.add(_usuariosdenunciados);
     }
- 
-
 
 }

@@ -13,17 +13,37 @@ import com.vaadin.flow.router.Route;
 @Route("PerfilAjenodeYoutuber")
 public class PerfilAjenodeYoutuber extends PerfilAjeno {
 
-    private Button btnDenunciar;
+    private final iYoutuber iYoutuber;
+
     private Button btnSeguir;
-    iYoutuber _iYoutuber;
+    private Button btnDenunciar;
 
     public PerfilAjenodeYoutuber(iYoutuber iYoutuber) {
         super(iYoutuber);
-        this._iYoutuber = iYoutuber;
+        this.iYoutuber = iYoutuber;
+    }
 
-        btnDenunciar = new Button("Denunciar", e -> Denunciar());
-        btnSeguir = new Button("Seguir", e -> Seguir());
+    @Override
+    protected void build(String parameter) {
+
+        super.build(parameter);
+
+        btnSeguir = new Button();
+        btnDenunciar = new Button();
+
+        btnSeguir.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnDenunciar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
         topLayout.add(btnSeguir, btnDenunciar);
+    }
+
+    @Override
+    protected void bindEvents() {
+
+        super.bindEvents();
+
+        btnSeguir.addClickListener(e -> Seguir());
+        btnDenunciar.addClickListener(e -> Denunciar());
     }
 
     @Override
@@ -31,67 +51,96 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
 
         super.setParameter(event, parameter);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated()) {
-            Youtuber youtuber = (Youtuber) auth.getPrincipal();
 
-            btnSeguir.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-            btnDenunciar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+            Youtuber youtuber =
+                    (Youtuber) auth.getPrincipal();
 
             if (_usuario.getSeguido_por().contains(youtuber)) {
                 btnSeguir.setText("Dejar de seguir");
             } else {
                 btnSeguir.setText("Seguir");
             }
+
             if (_usuario.getDenunciado_por().contains(youtuber)) {
                 btnDenunciar.setText("Quitar denuncia");
             } else {
                 btnDenunciar.setText("Denunciar");
             }
+
             if (_usuario.getLogin().equals(youtuber.getLogin())) {
                 btnSeguir.setVisible(false);
                 btnDenunciar.setVisible(false);
             }
         }
-
     }
 
     public void Seguir() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
+
+        Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null
+                || !auth.isAuthenticated()
+                || auth.getPrincipal().equals("anonymousUser")) {
+
             throw new RuntimeException("Usuario no autenticado");
         }
 
-        com.example.demo.tables.Youtuber seguidor = (com.example.demo.tables.Youtuber) auth.getPrincipal();
+        Youtuber seguidor =
+                (Youtuber) auth.getPrincipal();
+
         if (btnSeguir.getText().equals("Seguir")) {
-            _iYoutuber.seguirUsuario(_usuario.getLogin(), seguidor.getLogin());
-            btnSeguir.setText("Dejar de seguir"); // Cambiar el texto del botón
+
+            iYoutuber.seguirUsuario(
+                    _usuario.getLogin(),
+                    seguidor.getLogin());
+
+            btnSeguir.setText("Dejar de seguir");
 
         } else {
-            _iYoutuber.dejardeseguirUsuario(_usuario.getLogin(), seguidor.getLogin());
-            btnSeguir.setText("Seguir"); // Cambiar el texto del botón
 
+            iYoutuber.dejardeseguirUsuario(
+                    _usuario.getLogin(),
+                    seguidor.getLogin());
+
+            btnSeguir.setText("Seguir");
         }
-
     }
 
     public void Denunciar() {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
+        Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null
+                || !auth.isAuthenticated()
+                || auth.getPrincipal().equals("anonymousUser")) {
+
             throw new RuntimeException("Usuario no autenticado");
         }
 
-        com.example.demo.tables.Youtuber seguidor = (com.example.demo.tables.Youtuber) auth.getPrincipal();
+        Youtuber seguidor =
+                (Youtuber) auth.getPrincipal();
+
         if (btnDenunciar.getText().equals("Denunciar")) {
-            _iYoutuber.denunciarUsuario(_usuario.getLogin(), seguidor.getLogin());
-            btnDenunciar.setText("Quitar denuncia"); // Cambiar el texto del botón
+
+            iYoutuber.denunciarUsuario(
+                    _usuario.getLogin(),
+                    seguidor.getLogin());
+
+            btnDenunciar.setText("Quitar denuncia");
+
         } else {
-            _iYoutuber.quitardenunciaUsuario(_usuario.getLogin(), seguidor.getLogin());
-            btnDenunciar.setText("Denunciar"); // Cambiar el texto del botón
+
+            iYoutuber.quitardenunciaUsuario(
+                    _usuario.getLogin(),
+                    seguidor.getLogin());
+
+            btnDenunciar.setText("Denunciar");
         }
-
     }
-
 }

@@ -3,6 +3,7 @@ package com.example.demo.views;
 import java.util.List;
 import java.util.Vector;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H2;
@@ -57,7 +58,10 @@ public class GaleradeVideos extends BaseListView<Video> {
 
     @Override
     protected void buildItems() {
-        //Está vacía porque cada subclase de GaleriadeVideos se encargará de construir sus propios items.
+          ViewFactory factory = ViewFactory.getFactory();
+        for (Video video : (List<Video>) elements) {
+         carrusel.add(factory.createGaleriaItem(video));
+}
     }
 
   

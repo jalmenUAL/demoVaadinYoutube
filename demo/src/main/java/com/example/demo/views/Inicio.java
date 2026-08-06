@@ -28,7 +28,7 @@ public abstract class Inicio extends BaseView {
        		
     }
 
-    protected abstract void UltimosVideos();
+   
 
     @Override
     protected void build() {
@@ -74,5 +74,5 @@ public abstract class Inicio extends BaseView {
         UltimosVideos();
     }
 
-
+     protected abstract void UltimosVideos();
 }

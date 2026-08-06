@@ -16,14 +16,22 @@ public class PerfilPropio extends Perfil {
     public PublicarVideo _publicarVideo;
     public Configuracion _configuracion;
 
-    iYoutuber _iYoutuber;
+    private final iYoutuber iYoutuber;
+
+    private Button publicarButton;
+    private Button configButton;
 
     public PerfilPropio(iYoutuber iYoutuber) {
         super(iYoutuber);
-        this._iYoutuber = iYoutuber;
+        this.iYoutuber = iYoutuber;
+    }
 
-        Button publicarButton = new Button("📤 Publicar video", event -> PublicarVideo());
-        Button configButton = new Button("⚙️ Configuración", event -> Configuracion());
+    @Override
+    protected void build(String parameter) {
+
+        super.build(parameter);
+
+        publicarButton = new Button("📤 Publicar video");
 
         publicarButton.getStyle()
                 .set("background-color", "#0d6efd")
@@ -31,26 +39,55 @@ public class PerfilPropio extends Perfil {
                 .set("border-radius", "8px")
                 .set("font-weight", "bold");
 
+        configButton = new Button("⚙️ Configuración");
+
         configButton.getStyle()
                 .set("background-color", "#6c757d")
                 .set("color", "white")
                 .set("border-radius", "8px")
                 .set("font-weight", "bold");
 
-        HorizontalLayout botonesHeader = new HorizontalLayout(publicarButton, configButton);
+        HorizontalLayout botonesHeader =
+                new HorizontalLayout(
+                        publicarButton,
+                        configButton
+                );
+
         botonesHeader.setWidthFull();
-        botonesHeader.setJustifyContentMode(JustifyContentMode.END);
+        botonesHeader.setJustifyContentMode(
+                JustifyContentMode.END
+        );
         botonesHeader.setPadding(true);
 
         topLayout.add(botonesHeader);
     }
 
+    @Override
+    protected void bindEvents() {
+
+        super.bindEvents();
+
+        publicarButton.addClickListener(
+                e -> PublicarVideo()
+        );
+
+        configButton.addClickListener(
+                e -> Configuracion()
+        );
+    }
+
     public void PublicarVideo() {
-        UI.getCurrent().navigate(PublicarVideo.class);
+
+        UI.getCurrent().navigate(
+                PublicarVideo.class
+        );
     }
 
     public void Configuracion() {
-        UI.getCurrent().navigate(Configuracion.class);
+
+        UI.getCurrent().navigate(
+                Configuracion.class
+        );
     }
 
 }

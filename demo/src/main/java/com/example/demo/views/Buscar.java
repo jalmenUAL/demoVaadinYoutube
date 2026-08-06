@@ -24,7 +24,7 @@ public class Buscar extends BaseView {
     private List<Video> resultados;
 
     public Buscar(iInicio iInicio) {
-		super();
+		 
         this._iInicio = iInicio;
     }
  
