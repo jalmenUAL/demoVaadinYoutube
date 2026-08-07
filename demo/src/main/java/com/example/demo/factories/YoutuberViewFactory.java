@@ -29,12 +29,9 @@ public class YoutuberViewFactory implements ViewFactory {
         return com.example.demo.views.UltimosVideos_item.class;
     }
     @Override
-    public VerComentarios_item createComentarioItem(Comentario comentario, ViewFactory factory) {
-        return new com.example.demo.views.VerComentariosdeYoutuber_item(comentario, factory);
+    public VerComentarios_item createComentarioItem(Comentario comentario) {
+        return new com.example.demo.views.VerComentariosdeYoutuber_item(comentario, this);
     }
 
-    @Override
-    public Class<? extends Perfil> createPerfilView() {
-        return com.example.demo.views.PerfilAjenodeYoutuber.class;
-    }
+   
 }

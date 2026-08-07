@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.services.iYoutuber;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -21,8 +22,8 @@ public class PerfilPropio extends Perfil {
         private Button publicarButton;
         private Button configButton;
 
-        public PerfilPropio(iYoutuber iYoutuber) {
-                super(iYoutuber);
+        public PerfilPropio(iYoutuber iYoutuber, ViewFactory viewFactory) {
+                super(iYoutuber, viewFactory);
                 this.iYoutuber = iYoutuber;
         }
 
@@ -31,6 +32,10 @@ public class PerfilPropio extends Perfil {
 
                 super.build(parameter);
 
+        }
+
+        @Override
+        protected void build() {
                 publicarButton = new Button("📤 Publicar video");
 
                 publicarButton.getStyle()

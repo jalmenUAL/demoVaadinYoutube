@@ -16,9 +16,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @Route("Comentar")
 @RolesAllowed("ROLE_YOUTUBER")
-public class Comentar extends BaseParameterizedView<String>  {
-
-    public VerComentariosdeYoutuber _verComentariosdeYoutuber;
+public class Comentar extends BaseParameterizedView<String> {
 
     private final iYoutuber _iYoutuber;
 
@@ -30,11 +28,41 @@ public class Comentar extends BaseParameterizedView<String>  {
     public Comentar(iYoutuber iYoutuber) {
         this._iYoutuber = iYoutuber;
     }
- 
 
     @Override
     protected void build(String parameter) {
         id = Integer.parseInt(parameter);
+
+    }
+
+    @Override
+    protected void bindEvents() {
+
+        btnPublicar.addClickListener(e -> {
+            publicarComentario();
+            campoComentario.clear();
+        });
+
+    }
+
+    public void publicarComentario() {
+
+        Video video = _iYoutuber.findVideoById(id);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
+
+        _iYoutuber.publicarComentario(
+                usuario.getLogin(),
+                String.valueOf(video.getId()),
+                campoComentario.getValue());
+
+        UI.getCurrent().getPage().getHistory().back();
+    }
+
+    @Override
+    protected void build() {
         setWidthFull();
         setPadding(true);
         setSpacing(true);
@@ -49,46 +77,4 @@ public class Comentar extends BaseParameterizedView<String>  {
         add(campoComentario, btnPublicar);
     }
 
-    @Override
-    protected void bindEvents() {
-
-        btnPublicar.addClickListener(e -> {
-            publicarComentario();
-            campoComentario.clear();
-        });
-
-    }
-
- 
- 
-
-    public void publicarComentario() {
-
-        Video video = _iYoutuber.findVideoById(id);
-
-        Authentication auth =
-                SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth == null
-                || !auth.isAuthenticated()
-                || auth.getPrincipal().equals("anonymousUser")) {
-            throw new RuntimeException("Usuario no autenticado");
-        }
-
-        com.example.demo.tables.Youtuber usuario =
-                (com.example.demo.tables.Youtuber) auth.getPrincipal();
-
-        _iYoutuber.publicarComentario(
-                usuario.getLogin(),
-                String.valueOf(video.getId()),
-                campoComentario.getValue()
-        );
-
-        UI.getCurrent().getPage().getHistory().back();
-    }
-
- 
- 
-
-     
 }

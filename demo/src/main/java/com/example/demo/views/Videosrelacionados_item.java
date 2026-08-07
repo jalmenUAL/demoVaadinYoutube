@@ -1,8 +1,5 @@
 package com.example.demo.views;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
@@ -11,34 +8,30 @@ import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("Videosrelacionados_item")
 
 public class Videosrelacionados_item extends BaseItemView<Video> {
-    public Videosrelacionados _videosrelacionados;
+    
     public VerVideo _verVideo;
-    ViewFactory viewFactory;
+    protected ViewFactory viewFactory;
+    protected Image thumbnail;
 
     public Videosrelacionados_item(Video video, ViewFactory viewFactory) {
         super(video);
-       
+
     }
 
-       
-
-    
-
     public void VerVideo() {
-        
+
         UI.getCurrent().navigate(viewFactory.createVideo(), model.getId());
 
     }
 
     @Override
     protected void build() {
-       String tituloVideo = model.getTitulo();
+        String tituloVideo = model.getTitulo();
         String propietarioNombre = model.getEs_de().getLogin();
         String propietarioFotoUrl = model.getEs_de().getFotoPerfil();
         int numMeGustas = model.getLe_gusta_a().size();
@@ -69,11 +62,15 @@ public class Videosrelacionados_item extends BaseItemView<Video> {
         }
         String thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
 
-        Image thumbnail = new Image(thumbnailUrl, "Miniatura del video");
+        thumbnail = new Image(thumbnailUrl, "Miniatura del video");
         thumbnail.setWidth("100%");
         thumbnail.getStyle().set("border-radius", "8px").set("cursor", "pointer");
-        thumbnail.addClickListener(e -> VerVideo());
 
         add(thumbnail);
+    }
+
+    @Override
+    protected void bindEvents() {
+        thumbnail.addClickListener(e -> VerVideo());
     }
 }

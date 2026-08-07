@@ -46,7 +46,38 @@ public class VerVideo extends BaseParameterizedView<Integer> {
 
         video = iInicio.findVideoById(parameter);
 
-        video_y_relacionados = new HorizontalLayout();
+        
+    }
+
+    @Override
+    protected void bindEvents() {
+
+        avatar.addClickListener(e -> PerfilAjeno());
+
+    }
+
+    public void Videosrelacionados() {
+        relacionados.removeAll();
+        List<Video> videosrelacionados = iInicio.getVideosRelacionados(video.getId());
+        _videosrelacionados = new Videosrelacionados(videosrelacionados, viewFactory);
+        relacionados.add(_videosrelacionados);
+    }
+
+    public void VerComentarios() {
+        comentarios.removeAll();
+        _verComentarios = new VerComentarios(viewFactory, video.getTiene_comentarios());
+        comentarios.add(_verComentarios);
+    }
+
+    public void PerfilAjeno() {
+
+        UI.getCurrent().navigate(
+                viewFactory.createPerfilAjeno(),video.getEs_de().getLogin());
+    }
+
+    @Override
+    protected void build() {
+      video_y_relacionados = new HorizontalLayout();
         frame_y_comentarios = new VerticalLayout();
         comentarios = new VerticalLayout();
         relacionados = new VerticalLayout();
@@ -131,31 +162,5 @@ public class VerVideo extends BaseParameterizedView<Integer> {
         video_y_relacionados.add(relacionados);
 
         getStyle().set("width", "100%");
-    }
-
-    @Override
-    protected void bindEvents() {
-
-        avatar.addClickListener(e -> PerfilAjeno());
-
-    }
-
-    public void Videosrelacionados() {
-        relacionados.removeAll();
-        List<Video> videosrelacionados = iInicio.getVideosRelacionados(video.getId());
-        _videosrelacionados = new Videosrelacionados(videosrelacionados, viewFactory);
-        relacionados.add(_videosrelacionados);
-    }
-
-    public void VerComentarios() {
-        comentarios.removeAll();
-        _verComentarios = new VerComentarios(viewFactory, video.getTiene_comentarios());
-        comentarios.add(_verComentarios);
-    }
-
-    public void PerfilAjeno() {
-
-        UI.getCurrent().navigate(
-                viewFactory.createPerfilView(),video.getEs_de().getLogin());
     }
 }

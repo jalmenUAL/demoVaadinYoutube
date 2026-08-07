@@ -7,7 +7,6 @@ import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("Videosrelacionados")
@@ -46,6 +45,11 @@ public class Videosrelacionados extends BaseListView<Video> {
             add(item);
 
         }
+    }
+
+    @Override
+    protected void bindEvents() {
+        
     }
 
 }

@@ -18,10 +18,9 @@ public class UltimosVideos extends GaleradeVideos {
     @Override
     protected void build() {
 
-         tituloGaleria.setText("Últimos Videos");
+        tituloGaleria.setText("Últimos Videos");
 
         super.build();
 
-       
     }
 }

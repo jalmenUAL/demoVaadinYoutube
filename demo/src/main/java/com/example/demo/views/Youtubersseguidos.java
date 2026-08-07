@@ -3,6 +3,7 @@ package com.example.demo.views;
 import java.util.Set;
 import java.util.Vector;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.html.H1;
@@ -26,10 +27,12 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
      FlexLayout gridContainer = new FlexLayout();
 
     iInicio _iInicio;
+    protected ViewFactory viewFactory;
 
-    public Youtubersseguidos(iInicio iInicio,Set<com.example.demo.tables.Youtuber> youtubers) {
+    public Youtubersseguidos(iInicio iInicio,Set<com.example.demo.tables.Youtuber> youtubers, ViewFactory viewFactory) {
         super(youtubers);
         this._iInicio = iInicio;
+        this.viewFactory = viewFactory;
     }
 
 
@@ -40,7 +43,7 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
     @Override
     public void setParameter(BeforeEvent event, String parameter) {
 
-        com.example.demo.tables.Youtuber usuario = _iInicio.findYoutuberById(parameter);
+        
         
 
         
@@ -57,7 +60,7 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
 
             for (com.example.demo.tables.Youtuber youtuber : youtubers) {
 
-                Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber);
+                Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber, viewFactory);
 
                 this._item.add(youtuberItem);
 
@@ -102,11 +105,21 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
     protected void buildItems() {
        for (com.example.demo.tables.Youtuber youtuber : youtubers) {
 
-                Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber);
+                Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber, viewFactory);
 
                 this._item.add(youtuberItem);
 
                 gridContainer.add(youtuberItem);
             }
+    }
+
+
+
+
+
+
+    @Override
+    protected void bindEvents() {
+         
     }
 }

@@ -13,12 +13,16 @@ public class VerComentariosdeAdministrador_item extends VerComentarios_item {
     public iAdministrador iAdministrador;
     public Button eliminarButton;
 
-    public VerComentariosdeAdministrador_item(iAdministrador iAdministrador, Comentario comentario, ViewFactory viewFactory) {
+    public VerComentariosdeAdministrador_item(iAdministrador iAdministrador, Comentario comentario,
+            ViewFactory viewFactory) {
         super(viewFactory, comentario);
         this.iAdministrador = iAdministrador;
 
-        eliminarButton = new Button("Eliminar", event -> eliminar());
+    }
 
+    @Override
+    protected void build() {
+        super.build();
         eliminarButton.getStyle()
                 .set("background-color", "#007BFF") // azul
                 .set("color", "white") // texto blanco
@@ -31,6 +35,11 @@ public class VerComentariosdeAdministrador_item extends VerComentarios_item {
         centrarLayout.setWidthFull();
 
         add(centrarLayout);
+    }
+
+    @Override
+    protected void bindEvents() {
+        eliminarButton = new Button("Eliminar", event -> eliminar());
     }
 
     public void eliminar() {

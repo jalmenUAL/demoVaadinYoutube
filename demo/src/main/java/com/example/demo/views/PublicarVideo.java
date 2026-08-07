@@ -90,16 +90,7 @@ public class PublicarVideo extends BaseView {
 
                 Authentication auth = SecurityContextHolder.getContext()
                                 .getAuthentication();
-
-                if (auth == null
-                                || !auth.isAuthenticated()
-                                || auth.getPrincipal().equals("anonymousUser")) {
-
-                        throw new RuntimeException(
-                                        "Usuario no autenticado");
-
-                }
-
+ 
                 com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
                 _iYoutuber.publicarVideo(

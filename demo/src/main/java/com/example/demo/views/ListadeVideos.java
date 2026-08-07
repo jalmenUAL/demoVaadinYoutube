@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -14,10 +15,11 @@ import com.vaadin.flow.router.Route;
 public class ListadeVideos extends BaseListView<Video> {
 
     public Vector<ListadeVideos_item> _item = new Vector<>();
+    protected ViewFactory viewFactory;
 
-    public ListadeVideos(Set<Video> videos) {
+    public ListadeVideos(Set<Video> videos, ViewFactory factory) {
         super(videos);
-
+        this.viewFactory = factory;
     }
 
     @Override
@@ -27,6 +29,8 @@ public class ListadeVideos extends BaseListView<Video> {
         setSpacing(true);
 
     }
+
+    
 
     @Override
     protected void bindEvents() {
@@ -55,7 +59,7 @@ public class ListadeVideos extends BaseListView<Video> {
 
                 Video video = listaVideos.get(index);
 
-                ListadeVideos_item item = new ListadeVideos_item(video);
+                ListadeVideos_item item = new ListadeVideos_item(video, viewFactory);
 
                 item.setWidth("48%");
 

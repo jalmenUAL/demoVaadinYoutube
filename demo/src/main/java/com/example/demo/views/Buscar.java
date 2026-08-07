@@ -21,21 +21,21 @@ public class Buscar extends BaseView {
 
     private TextField textoBuscar;
     public Button botonBuscar;
+    HorizontalLayout buscarLayout;
 
     private List<Video> resultados;
 
     protected ViewFactory viewFactory;
 
-    public Buscar(iInicio iInicio,ViewFactory viewFactory) {
-		 
+    public Buscar(iInicio iInicio, ViewFactory viewFactory) {
+
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;
     }
- 
 
     @Override
     protected void build() {
-		 setWidthFull();
+        setWidthFull();
         textoBuscar = new TextField();
         textoBuscar.setPlaceholder(
                 "Introduzca el nombre del vídeo que quiere buscar");
@@ -44,8 +44,7 @@ public class Buscar extends BaseView {
         botonBuscar = new Button("Buscar");
         botonBuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        HorizontalLayout buscarLayout =
-                new HorizontalLayout(textoBuscar, botonBuscar);
+        buscarLayout = new HorizontalLayout(textoBuscar, botonBuscar);
         buscarLayout.setWidthFull();
         buscarLayout.setFlexGrow(1, textoBuscar);
 
@@ -62,6 +61,7 @@ public class Buscar extends BaseView {
     }
 
     public void ResultadodeBusqueda() {
-        _resultadodeBusqueda = new ResultadodeBusqueda(resultados,viewFactory);
+        _resultadodeBusqueda = new ResultadodeBusqueda(resultados, viewFactory);
+        buscarLayout.add(_resultadodeBusqueda);
     }
 }

@@ -18,103 +18,77 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class NoLogueado extends Inicio {
 
-    public iNoLogueado _iNoLogueado;
+        public iNoLogueado _iNoLogueado;
 
-    public Login _login;
-    public Registrar _registrar;
+        public Login _login;
+        public Registrar _registrar;
 
-    private Button loginButton;
-    private Button registrarButton;
+        private Button loginButton;
+        private Button registrarButton;
 
-    
+        public NoLogueado(iNoLogueado iNoLogueado, ViewFactory viewFactory) {
 
+                super(iNoLogueado, viewFactory);
+                this._iNoLogueado = iNoLogueado;
 
-    public NoLogueado(iNoLogueado iNoLogueado,ViewFactory viewFactory) {
+        }
 
-        super(iNoLogueado, viewFactory);
-        this._iNoLogueado = iNoLogueado;
-        
+        @Override
+        protected void build() {
+                super.build();
+                loginButton = new Button(
+                                "Login",
+                                new Icon(VaadinIcon.SIGN_IN));
 
-    }
+                loginButton.addThemeVariants(
+                                ButtonVariant.LUMO_PRIMARY);
+                registrarButton = new Button(
+                                "Registrar",
+                                new Icon(VaadinIcon.USER_CARD));
 
+                registrarButton.addThemeVariants(
+                                ButtonVariant.LUMO_SUCCESS);
 
-    @Override
-    protected void build() {
-        super.build();
-    }
+                HorizontalLayout botones = new HorizontalLayout(
+                                loginButton,
+                                registrarButton);
 
+                header.add(botones);
+        }
 
-    @Override
-    protected void bindEvents() {
+        @Override
+        protected void bindEvents() {
 
-        super.bindEvents();
-        loginButton = new Button(
-                "Login",
-                new Icon(VaadinIcon.SIGN_IN)
-        );
+                super.bindEvents();
+                
 
-        loginButton.addThemeVariants(
-                ButtonVariant.LUMO_PRIMARY
-        );
-        registrarButton = new Button(
-                "Registrar",
-                new Icon(VaadinIcon.USER_CARD)
-        );
+                loginButton.addClickListener(e -> Login());
 
-        registrarButton.addThemeVariants(
-                ButtonVariant.LUMO_SUCCESS
-        );
+                registrarButton.addClickListener(e -> Registrar());
 
+        }
 
-        HorizontalLayout botones =
-                new HorizontalLayout(
-                        loginButton,
-                        registrarButton
-                );
+        @Override
+        public void UltimosVideos() {
 
+                List<Video> videos = _iNoLogueado.getUltimosVideos();
 
-        header.add(botones);
+                _ultimosVideos = new UltimosVideos(videos, viewFactory);
 
+                body.add(_ultimosVideos);
 
-        loginButton.addClickListener(e -> Login());
+        }
 
-        registrarButton.addClickListener(e -> Registrar());
+        public void Login() {
 
-    }
+                UI.getCurrent().navigate(Login.class);
 
+        }
 
-    
+        public void Registrar() {
 
+                UI.getCurrent().navigate(Registrar.class);
 
-    @Override
-    public void UltimosVideos() {
-
-        List<Video> videos =
-                _iNoLogueado.getUltimosVideos();
-
-
-        _ultimosVideos =
-                new UltimosVideos(videos, viewFactory);
-
-
-        body.add(_ultimosVideos);
-
-    }
-
-
-    public void Login() {
-
-        UI.getCurrent()
-                .navigate(Login.class);
-
-    }
-
-
-    public void Registrar() {
-
-        UI.getCurrent()
-                .navigate(Registrar.class);
-
-    }
+        }
 
 }

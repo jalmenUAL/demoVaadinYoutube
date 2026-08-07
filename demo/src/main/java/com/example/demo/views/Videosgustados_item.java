@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
@@ -7,8 +8,8 @@ import com.vaadin.flow.router.Route;
 
 public class Videosgustados_item extends ListadeVideos_item {
 
-    public Videosgustados_item(Video video) {
-        super(video);
+    public Videosgustados_item(Video video, ViewFactory viewFactory) {
+        super(video, viewFactory);
          
     }
 }

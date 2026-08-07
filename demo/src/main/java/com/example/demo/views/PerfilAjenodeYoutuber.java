@@ -3,6 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Youtuber;
 import com.vaadin.flow.component.button.Button;
@@ -18,8 +19,8 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
     private Button btnSeguir;
     private Button btnDenunciar;
 
-    public PerfilAjenodeYoutuber(iYoutuber iYoutuber) {
-        super(iYoutuber);
+    public PerfilAjenodeYoutuber(iYoutuber iYoutuber, ViewFactory viewFactory) {
+        super(iYoutuber, viewFactory);
         this.iYoutuber = iYoutuber;
     }
 
@@ -28,6 +29,10 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
 
         super.build(parameter);
 
+    }
+
+    @Override
+    protected void build() {
         btnSeguir = new Button();
         btnDenunciar = new Button();
 
@@ -51,47 +56,34 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
 
         super.setParameter(event, parameter);
 
-        Authentication auth =
-                SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth != null && auth.isAuthenticated()) {
+        Youtuber youtuber = (Youtuber) auth.getPrincipal();
 
-            Youtuber youtuber =
-                    (Youtuber) auth.getPrincipal();
-
-            if (_usuario.getSeguido_por().contains(youtuber)) {
-                btnSeguir.setText("Dejar de seguir");
-            } else {
-                btnSeguir.setText("Seguir");
-            }
-
-            if (_usuario.getDenunciado_por().contains(youtuber)) {
-                btnDenunciar.setText("Quitar denuncia");
-            } else {
-                btnDenunciar.setText("Denunciar");
-            }
-
-            if (_usuario.getLogin().equals(youtuber.getLogin())) {
-                btnSeguir.setVisible(false);
-                btnDenunciar.setVisible(false);
-            }
+        if (_usuario.getSeguido_por().contains(youtuber)) {
+            btnSeguir.setText("Dejar de seguir");
+        } else {
+            btnSeguir.setText("Seguir");
         }
+
+        if (_usuario.getDenunciado_por().contains(youtuber)) {
+            btnDenunciar.setText("Quitar denuncia");
+        } else {
+            btnDenunciar.setText("Denunciar");
+        }
+
+        if (_usuario.getLogin().equals(youtuber.getLogin())) {
+            btnSeguir.setVisible(false);
+            btnDenunciar.setVisible(false);
+        }
+
     }
 
     public void Seguir() {
 
-        Authentication auth =
-                SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth == null
-                || !auth.isAuthenticated()
-                || auth.getPrincipal().equals("anonymousUser")) {
-
-            throw new RuntimeException("Usuario no autenticado");
-        }
-
-        Youtuber seguidor =
-                (Youtuber) auth.getPrincipal();
+        Youtuber seguidor = (Youtuber) auth.getPrincipal();
 
         if (btnSeguir.getText().equals("Seguir")) {
 
@@ -113,18 +105,9 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
 
     public void Denunciar() {
 
-        Authentication auth =
-                SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth == null
-                || !auth.isAuthenticated()
-                || auth.getPrincipal().equals("anonymousUser")) {
-
-            throw new RuntimeException("Usuario no autenticado");
-        }
-
-        Youtuber seguidor =
-                (Youtuber) auth.getPrincipal();
+        Youtuber seguidor = (Youtuber) auth.getPrincipal();
 
         if (btnDenunciar.getText().equals("Denunciar")) {
 

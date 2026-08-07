@@ -29,9 +29,6 @@ public class VerVideodeYoutuber extends VerVideo {
 
     public void like() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
-            throw new RuntimeException("Usuario no autenticado");
-        }
 
         com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
         if (likeButton.getText().equals("Me Gusta")) {
@@ -74,8 +71,6 @@ public class VerVideodeYoutuber extends VerVideo {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
-
-        
 
         legusta = usuario.getLe_gusta().stream().anyMatch(v -> ((Video) v).getId() == video.getId());
 

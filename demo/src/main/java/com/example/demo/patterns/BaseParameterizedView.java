@@ -18,10 +18,13 @@ public abstract class BaseParameterizedView<T>
         bindEvents();
     }
 
-    
-
-    protected abstract void build(T parameter);
-
-    protected void bindEvents() {
+    protected void build(T parameter) {
+        build();
     }
+
+    protected abstract void build();
+
+    protected abstract void bindEvents();
+
+     
 }

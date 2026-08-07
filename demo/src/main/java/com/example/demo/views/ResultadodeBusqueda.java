@@ -18,23 +18,16 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
     @Override
     protected void build() {
-
+        tituloGaleria.setText("Resultados de la búsqueda");
         super.build();
 
-        tituloGaleria.setText("Resultados de la búsqueda");
-
-        for (Video video : elements) {
-            ResultadodeBusqueda_item item = new ResultadodeBusqueda_item(video, viewFactory);
-            
-            carrusel.add(item);
-        }
- 
-
-        
     }
 
     @Override
-    protected void buildItems() {   
-         super.buildItems();
-}
+    protected void buildItems() {
+        for (Video video : elements) {
+            ResultadodeBusqueda_item item = new ResultadodeBusqueda_item(video, viewFactory);
+            carrusel.add(item);
+        }
+    }
 }

@@ -49,7 +49,7 @@ public class VerComentarios extends BaseListView<Comentario> {
 
             for (Comentario e : elements) {
 
-                VerComentarios_item comentario = factory.createComentarioItem(e,factory);
+                VerComentarios_item comentario = factory.createComentarioItem(e);
                 add(comentario);
             }
 

@@ -11,6 +11,5 @@ public abstract class BaseView extends VerticalLayout {
 
     protected abstract void build();
 
-    protected void bindEvents() {
-    }
+    protected abstract void bindEvents();
 }

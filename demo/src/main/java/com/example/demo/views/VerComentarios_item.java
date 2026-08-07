@@ -60,7 +60,7 @@ public class VerComentarios_item extends BaseItemView<Comentario> {
 
         comentarioLayout.add(comentario_texto);
 
-        // Añadir avatar y comentario al layout horizontal
+       
         add(avatar, nombreUsuario, comentarioLayout);
     }
 

@@ -24,29 +24,9 @@ public interface ViewFactory {
 
     Class<? extends GaleradeVideos_item> createGaleriaItem();
 
+    VerComentarios_item createComentarioItem(Comentario comentario);
 
-    static ViewFactory getFactory() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+ 
 
-        if (auth != null && auth.isAuthenticated()) {
-
-            boolean esAdmin = auth.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
-            boolean esYoutuber = auth.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_YOUTUBER"));
-
-            if (esAdmin) {
-                return new AdministradorViewFactory();
-            } else if (esYoutuber) {
-                return new YoutuberViewFactory();
-            } else {
-                return new NoLogueadoViewFactory();
-            }
-        }
-        return null;
-    }
-
-    VerComentarios_item createComentarioItem(Comentario comentario, ViewFactory factory);
-
-    Class<? extends Perfil> createPerfilView();
+    
 }

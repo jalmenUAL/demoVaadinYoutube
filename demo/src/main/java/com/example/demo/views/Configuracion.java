@@ -29,179 +29,152 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_YOUTUBER")
 public class Configuracion extends BaseView {
 
-    public PerfilPropio _perfilPropio;
+        private final iYoutuber _iYoutuber;
 
-    private final iYoutuber _iYoutuber;
+        private Image imagenDeFondo;
+        private Image avatar;
+        private TextField password;
+        private Button actualizar;
 
-    private Image imagenDeFondo;
-    private Image avatar;
-    private TextField password;
-    private Button actualizar;
+        private MemoryBuffer avatarBuffer;
+        private MemoryBuffer fondoBuffer;
 
-    private MemoryBuffer avatarBuffer;
-    private MemoryBuffer fondoBuffer;
-
-    public Configuracion(iYoutuber iYoutuber) {
-        super();
-        this._iYoutuber = iYoutuber;
-        		 
-
-    }
-
-     
-
-    @Override
-    protected void build() {
-        setSizeFull();
-        setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setSpacing(true);
-        H1 heading = new H1("Configuración");
-        heading.getStyle().set("color", "#2c3e50");
-
-        // Datos del usuario
-        VerticalLayout datosLayout = new VerticalLayout();
-        datosLayout.setAlignItems(Alignment.CENTER);
-
-        password = new TextField("New Password");
-        datosLayout.add(password);
-
-        // Avatar
-        VerticalLayout avatarLayout = new VerticalLayout();
-        avatarLayout.setAlignItems(Alignment.CENTER);
-
-        Span avatarLabel = new Span("Avatar");
-        avatar = new Image();
-        avatar.setMaxWidth("300px");
-
-        avatarBuffer = new MemoryBuffer();
-        Upload uploadAvatar = new Upload(avatarBuffer);
-        uploadAvatar.setAcceptedFileTypes(
-                "image/jpeg",
-                "image/png",
-                "image/gif");
-
-        avatarLayout.add(avatarLabel, uploadAvatar, avatar);
-
-        // Imagen de fondo
-        VerticalLayout fondoLayout = new VerticalLayout();
-        fondoLayout.setAlignItems(Alignment.CENTER);
-
-        Span fondoLabel = new Span("Imagen de fondo");
-        imagenDeFondo = new Image();
-        imagenDeFondo.setMaxWidth("300px");
-
-        fondoBuffer = new MemoryBuffer();
-        Upload uploadFondo = new Upload(fondoBuffer);
-        uploadFondo.setAcceptedFileTypes(
-                "image/jpeg",
-                "image/png",
-                "image/gif");
-
-        fondoLayout.add(fondoLabel, uploadFondo, imagenDeFondo);
-
-        // Imágenes
-        HorizontalLayout imagenesLayout =
-                new HorizontalLayout(avatarLayout, fondoLayout);
-        imagenesLayout.setAlignItems(Alignment.START);
-        imagenesLayout.setSpacing(true);
-
-        // Botón actualizar
-        actualizar = new Button(
-                "Actualizar",
-                new Icon(VaadinIcon.REFRESH));
-
-        actualizar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        VerticalLayout contenido = new VerticalLayout(
-                datosLayout,
-                imagenesLayout,
-                actualizar);
-
-        contenido.setAlignItems(Alignment.CENTER);
-        contenido.setSpacing(true);
-        contenido.setPadding(true);
-
-        add(heading, contenido);
-
-        // Necesitamos los uploads para registrar sus eventos
-        uploadAvatar.setId("uploadAvatar");
-        uploadFondo.setId("uploadFondo");
-    }
-
-    @Override
-    protected void bindEvents() {
-
-        Upload uploadAvatar = (Upload) getChildren()
-                .flatMap(component -> component.getChildren())
-                .filter(component -> component instanceof Upload
-                        && "uploadAvatar".equals(component.getId().orElse("")))
-                .findFirst()
-                .orElse(null);
-
-        Upload uploadFondo = (Upload) getChildren()
-                .flatMap(component -> component.getChildren())
-                .filter(component -> component instanceof Upload
-                        && "uploadFondo".equals(component.getId().orElse("")))
-                .findFirst()
-                .orElse(null);
-
-        if (uploadAvatar != null) {
-            uploadAvatar.addSucceededListener(event -> {
-
-                InputStream inputStream = avatarBuffer.getInputStream();
-
-                StreamResource resource =
-                        new StreamResource(
-                                event.getFileName(),
-                                () -> inputStream);
-
-                avatar.setSrc(resource);
-
-            });
+        public Configuracion(iYoutuber iYoutuber) {
+                super();
+                this._iYoutuber = iYoutuber;
         }
 
-        if (uploadFondo != null) {
-            uploadFondo.addSucceededListener(event -> {
+        @Override
+        protected void build() {
+                setSizeFull();
+                setAlignItems(Alignment.CENTER);
+                setJustifyContentMode(JustifyContentMode.CENTER);
+                setSpacing(true);
+                H1 heading = new H1("Configuración");
+                heading.getStyle().set("color", "#2c3e50");
 
-                InputStream inputStream = fondoBuffer.getInputStream();
+                VerticalLayout datosLayout = new VerticalLayout();
+                datosLayout.setAlignItems(Alignment.CENTER);
 
-                StreamResource resource =
-                        new StreamResource(
-                                event.getFileName(),
-                                () -> inputStream);
+                password = new TextField("New Password");
+                datosLayout.add(password);
 
-                imagenDeFondo.setSrc(resource);
+                VerticalLayout avatarLayout = new VerticalLayout();
+                avatarLayout.setAlignItems(Alignment.CENTER);
 
-            });
+                Span avatarLabel = new Span("Avatar");
+                avatar = new Image();
+                avatar.setMaxWidth("300px");
+
+                avatarBuffer = new MemoryBuffer();
+                Upload uploadAvatar = new Upload(avatarBuffer);
+                uploadAvatar.setAcceptedFileTypes(
+                                "image/jpeg",
+                                "image/png",
+                                "image/gif");
+
+                avatarLayout.add(avatarLabel, uploadAvatar, avatar);
+
+                VerticalLayout fondoLayout = new VerticalLayout();
+                fondoLayout.setAlignItems(Alignment.CENTER);
+
+                Span fondoLabel = new Span("Imagen de fondo");
+                imagenDeFondo = new Image();
+                imagenDeFondo.setMaxWidth("300px");
+
+                fondoBuffer = new MemoryBuffer();
+                Upload uploadFondo = new Upload(fondoBuffer);
+                uploadFondo.setAcceptedFileTypes(
+                                "image/jpeg",
+                                "image/png",
+                                "image/gif");
+
+                fondoLayout.add(fondoLabel, uploadFondo, imagenDeFondo);
+
+                HorizontalLayout imagenesLayout = new HorizontalLayout(avatarLayout, fondoLayout);
+                imagenesLayout.setAlignItems(Alignment.START);
+                imagenesLayout.setSpacing(true);
+
+                actualizar = new Button(
+                                "Actualizar",
+                                new Icon(VaadinIcon.REFRESH));
+
+                actualizar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+                VerticalLayout contenido = new VerticalLayout(
+                                datosLayout,
+                                imagenesLayout,
+                                actualizar);
+
+                contenido.setAlignItems(Alignment.CENTER);
+                contenido.setSpacing(true);
+                contenido.setPadding(true);
+
+                add(heading, contenido);
+
+                uploadAvatar.setId("uploadAvatar");
+                uploadFondo.setId("uploadFondo");
         }
 
-        actualizar.addClickListener(event -> actualizar());
-    }
+        @Override
+        protected void bindEvents() {
 
- 
+                Upload uploadAvatar = (Upload) getChildren()
+                                .flatMap(component -> component.getChildren())
+                                .filter(component -> component instanceof Upload
+                                                && "uploadAvatar".equals(component.getId().orElse("")))
+                                .findFirst()
+                                .orElse(null);
 
-    public void actualizar() {
+                Upload uploadFondo = (Upload) getChildren()
+                                .flatMap(component -> component.getChildren())
+                                .filter(component -> component instanceof Upload
+                                                && "uploadFondo".equals(component.getId().orElse("")))
+                                .findFirst()
+                                .orElse(null);
 
-        Authentication auth =
-                SecurityContextHolder.getContext().getAuthentication();
+                if (uploadAvatar != null) {
+                        uploadAvatar.addSucceededListener(event -> {
 
-        if (auth == null
-                || !auth.isAuthenticated()
-                || auth.getPrincipal().equals("anonymousUser")) {
+                                InputStream inputStream = avatarBuffer.getInputStream();
 
-            throw new RuntimeException("Usuario no autenticado");
+                                StreamResource resource = new StreamResource(
+                                                event.getFileName(),
+                                                () -> inputStream);
+
+                                avatar.setSrc(resource);
+
+                        });
+                }
+
+                if (uploadFondo != null) {
+                        uploadFondo.addSucceededListener(event -> {
+
+                                InputStream inputStream = fondoBuffer.getInputStream();
+
+                                StreamResource resource = new StreamResource(
+                                                event.getFileName(),
+                                                () -> inputStream);
+
+                                imagenDeFondo.setSrc(resource);
+
+                        });
+                }
+
+                actualizar.addClickListener(event -> {
+                        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+                        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth
+                                        .getPrincipal();
+
+                        _iYoutuber.actualizarConfiguracion(
+                                        usuario.getLogin(),
+                                        password.getValue(),
+                                        avatar.getSrc(),
+                                        imagenDeFondo.getSrc());
+
+                        UI.getCurrent().getPage().getHistory().back();
+                });
         }
 
-        com.example.demo.tables.Youtuber usuario =
-                (com.example.demo.tables.Youtuber) auth.getPrincipal();
-
-        _iYoutuber.actualizarConfiguracion(
-                usuario.getLogin(),
-                password.getValue(),
-                avatar.getSrc(),
-                imagenDeFondo.getSrc());
-
-        UI.getCurrent().getPage().getHistory().back();
-    }
 }

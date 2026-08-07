@@ -28,13 +28,9 @@ public class NoLogueadoViewFactory implements ViewFactory {
     public Class<? extends UltimosVideos_item> createGaleriaItem() {
         return  com.example.demo.views.UltimosVideos_item.class;
     }
-    public VerComentarios_item createComentarioItem(Comentario comentario, ViewFactory factory) {
-        return new com.example.demo.views.VerComentarios_item(factory, comentario);
+    public VerComentarios_item createComentarioItem(Comentario comentario) {
+        return new com.example.demo.views.VerComentarios_item(this,comentario);
     }
 
-    @Override
-    public Class<? extends Perfil> createPerfilView() {
-        return com.example.demo.views.PerfilAjeno.class;
-    }
     
 }

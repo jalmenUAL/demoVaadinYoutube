@@ -26,6 +26,13 @@ public class GaleradeVideos extends BaseListView<Video> {
         this.viewFactory = factory;
     }
 
+     @Override
+    protected void build() {
+        tituloGaleria.setText("Galería de Videos");
+        super.build();
+
+    }
+
     @Override
     protected void bindEvents() {
         // Esta vista no tiene eventos propios.
@@ -64,7 +71,7 @@ public class GaleradeVideos extends BaseListView<Video> {
          
            
         for (Video video :  elements) {
-
+        _item.add(new GaleradeVideos_item(video, viewFactory));
          carrusel.add(new GaleradeVideos_item(video, viewFactory));
 }
     }
