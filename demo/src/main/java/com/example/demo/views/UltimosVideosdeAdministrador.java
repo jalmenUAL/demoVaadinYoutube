@@ -2,15 +2,23 @@ package com.example.demo.views;
 
 import java.util.List;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
 @Route("UltimosVideosdeAdministrador")
 public class UltimosVideosdeAdministrador extends UltimosVideos {
 
-public UltimosVideosdeAdministrador(List<Video> videos) {
-
-		super(videos);	
-		tituloGaleria.setText("Todos los videos");		
+public UltimosVideosdeAdministrador(List<Video> videos, ViewFactory viewFactory) {
+		
+		super(videos, viewFactory);
+			
+			
 	}
+public void build() {
+		tituloGaleria.setText("Todos los videos");
+		super.build();
+		
+	}
+	
 }

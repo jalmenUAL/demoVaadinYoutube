@@ -2,6 +2,7 @@ package com.example.demo.views;
 
 import java.util.List;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.services.iAdministrador;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.AttachEvent;
@@ -18,8 +19,8 @@ public class Administrador extends Registrado {
 
     protected Usuariosdenunciados _usuariosdenunciados;
 
-    public Administrador(iAdministrador iAdministrador) {
-        super(iAdministrador);
+    public Administrador(iAdministrador iAdministrador, ViewFactory viewFactory) {
+        super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;
     }
 
@@ -32,17 +33,13 @@ public class Administrador extends Registrado {
     @Override
     protected void UltimosVideos() {
         List<Video> ultimosVideos = iAdministrador.getAllVideos();
-
-        this._ultimosVideos = new UltimosVideos(ultimosVideos);
-
-        body.add(this._ultimosVideos);
+        _ultimosVideos = new UltimosVideos(ultimosVideos, viewFactory);
+        body.add(_ultimosVideos);
     }
 
     private void Usuariosdenunciados() {
         List<com.example.demo.tables.Youtuber> denunciados = iAdministrador.buscarDenunciados();
-
         _usuariosdenunciados = new Usuariosdenunciados(denunciados);
-
         body.add(_usuariosdenunciados);
     }
 

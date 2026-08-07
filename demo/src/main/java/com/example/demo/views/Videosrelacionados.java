@@ -3,6 +3,8 @@ package com.example.demo.views;
 import java.util.List;
 import java.util.Vector;
 
+import com.example.demo.factories.ViewFactory;
+import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -10,20 +12,31 @@ import com.vaadin.flow.router.Route;
 
 @Route("Videosrelacionados")
 
-public class Videosrelacionados extends VerticalLayout {
+public class Videosrelacionados extends BaseListView<Video> {
     public VerVideo _verVideo;
     public Vector<Videosrelacionados_item> _item = new Vector<Videosrelacionados_item>();
+    protected ViewFactory viewFactory;
 
-    public Videosrelacionados(List<Video> videosrelacionados) {
-        setWidthFull();
+    public Videosrelacionados(List<Video> videosrelacionados,ViewFactory viewFactory) {
+        super(videosrelacionados);
+        this.viewFactory = viewFactory;
+    }
+
+    @Override
+    protected void buildContainer() {
+       setWidthFull();
         setPadding(true);
         setSpacing(false);  
         H2 titulo = new H2("Videos Relacionados");
         add(titulo);
+    }
 
-        for (int i = 0; i < videosrelacionados.size(); i++) {
+    @Override
+    protected void buildItems() {
+       
+       for (Video v: elements) {
 
-            Videosrelacionados_item item = new Videosrelacionados_item(videosrelacionados.get(i));
+            Videosrelacionados_item item = new Videosrelacionados_item(v, viewFactory);
             item.getStyle()
                     .set("padding", "10px")
                     .set("background-color", "#f9f9f9")
@@ -33,7 +46,6 @@ public class Videosrelacionados extends VerticalLayout {
             add(item);
 
         }
-
     }
 
 }

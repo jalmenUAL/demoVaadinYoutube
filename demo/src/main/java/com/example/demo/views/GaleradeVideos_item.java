@@ -3,6 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
@@ -18,10 +19,11 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
     public GaleradeVideos _galeradeVideos;
     public VerVideo _verVideo;
     private Image thumbnail;
+    protected ViewFactory viewFactory;
 
-    public GaleradeVideos_item(Video video) {
+    public GaleradeVideos_item(Video video, ViewFactory viewFactory) {
        super(video);      	 
-
+        this.viewFactory = viewFactory;
     }
  
 
@@ -132,55 +134,9 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
 
     public void VerVideo() {
 
-        Authentication auth =
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication();
-
-
-        if (auth != null && auth.isAuthenticated()) {
-
-            boolean esAdmin =
-                    auth.getAuthorities()
-                            .stream()
-                            .anyMatch(a ->
-                                    a.getAuthority()
-                                            .equals("ROLE_ADMINISTRADOR"));
-
-
-            boolean esYoutuber =
-                    auth.getAuthorities()
-                            .stream()
-                            .anyMatch(a ->
-                                    a.getAuthority()
-                                            .equals("ROLE_YOUTUBER"));
-
-
-            if (esAdmin) {
-
-                UI.getCurrent()
-                        .navigate(
-                                VerVideodeAdministrador.class,
-                                model.getId()
-                        );
-
-            } else if (esYoutuber) {
-
-                UI.getCurrent()
-                        .navigate(
-                                VerVideodeYoutuber.class,
-                                model.getId()
-                        );
-
-            }
-
-        } else {
-
-            UI.getCurrent()
-                    .navigate(
-                            VerVideo.class,
-                            model.getId()
-                    );
-        }
+        UI.getCurrent().navigate(
+                viewFactory.createVideo(),
+                model.getId()
+        );
     }
 }

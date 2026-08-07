@@ -12,11 +12,10 @@ import com.vaadin.flow.router.Route;
 public class VerComentariosdeAdministrador extends VerComentarios {
 
     public VerComentariosdeAdministrador(ViewFactory viewFactory, iAdministrador iAdministrador,
-           
             Set<Comentario> comentarios) {
 
-        super(viewFactory, comentarios);               
-        
+        super(viewFactory, comentarios);
+
     }
 
 }

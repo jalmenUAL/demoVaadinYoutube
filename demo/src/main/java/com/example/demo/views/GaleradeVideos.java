@@ -19,8 +19,11 @@ public class GaleradeVideos extends BaseListView<Video> {
     protected HorizontalLayout carrusel;
     public H2 tituloGaleria;
 
-    public GaleradeVideos(List<Video> videos) {
+    protected ViewFactory viewFactory;
+
+    public GaleradeVideos(List<Video> videos, ViewFactory factory) {
         super(videos);
+        this.viewFactory = factory;
     }
 
     @Override
@@ -58,9 +61,11 @@ public class GaleradeVideos extends BaseListView<Video> {
 
     @Override
     protected void buildItems() {
-          ViewFactory factory = ViewFactory.getFactory();
-        for (Video video : (List<Video>) elements) {
-         carrusel.add(factory.createGaleriaItem(video));
+         
+           
+        for (Video video :  elements) {
+
+         carrusel.add(new GaleradeVideos_item(video, viewFactory));
 }
     }
 

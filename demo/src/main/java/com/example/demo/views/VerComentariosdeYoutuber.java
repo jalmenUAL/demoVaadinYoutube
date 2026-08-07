@@ -15,11 +15,10 @@ public class VerComentariosdeYoutuber extends VerComentarios {
 
     private String id;
 
-    public VerComentariosdeYoutuber(ViewFactory factory,Set<Comentario> comentarios, int idvideo) {
+    public VerComentariosdeYoutuber(ViewFactory factory, Set<Comentario> comentarios, int idvideo) {
         super(factory, comentarios);
         this.id = Integer.toString(idvideo);
 
-         
     }
 
     public void Comentar() {

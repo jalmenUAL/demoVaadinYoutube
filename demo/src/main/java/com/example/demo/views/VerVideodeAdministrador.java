@@ -11,10 +11,9 @@ import com.vaadin.flow.router.Route;
 
 public class VerVideodeAdministrador extends VerVideo {
 
-     
     iAdministrador iAdministrador;
 
-    public VerVideodeAdministrador(iAdministrador iAdministrador,ViewFactory viewFactory) {
+    public VerVideodeAdministrador(iAdministrador iAdministrador, ViewFactory viewFactory) {
 
         super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;

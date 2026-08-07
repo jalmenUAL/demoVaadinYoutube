@@ -2,6 +2,7 @@ package com.example.demo.views;
 
 import java.util.List;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
@@ -10,15 +11,17 @@ public class UltimosVideos extends GaleradeVideos {
 
     public Inicio _inicio;
 
-    public UltimosVideos(List<Video> videos) {
-        super(videos);
+    public UltimosVideos(List<Video> videos, ViewFactory viewFactory) {
+        super(videos, viewFactory);
     }
 
     @Override
     protected void build() {
 
+         tituloGaleria.setText("Últimos Videos");
+
         super.build();
 
-        tituloGaleria.setText("Últimos Videos");
+       
     }
 }

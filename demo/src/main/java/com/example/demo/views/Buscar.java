@@ -2,6 +2,7 @@ package com.example.demo.views;
 
 import java.util.List;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
 import com.example.demo.tables.Video;
@@ -23,9 +24,12 @@ public class Buscar extends BaseView {
 
     private List<Video> resultados;
 
-    public Buscar(iInicio iInicio) {
+    protected ViewFactory viewFactory;
+
+    public Buscar(iInicio iInicio,ViewFactory viewFactory) {
 		 
         this._iInicio = iInicio;
+        this.viewFactory = viewFactory;
     }
  
 
@@ -50,7 +54,6 @@ public class Buscar extends BaseView {
 
     @Override
     protected void bindEvents() {
-
         botonBuscar.addClickListener(e -> {
             resultados = _iInicio.buscar(textoBuscar.getValue());
             ResultadodeBusqueda();
@@ -58,9 +61,7 @@ public class Buscar extends BaseView {
 
     }
 
- 
-
     public void ResultadodeBusqueda() {
-        _resultadodeBusqueda = new ResultadodeBusqueda(resultados);
+        _resultadodeBusqueda = new ResultadodeBusqueda(resultados,viewFactory);
     }
 }

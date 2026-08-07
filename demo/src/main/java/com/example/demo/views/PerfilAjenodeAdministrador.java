@@ -19,7 +19,7 @@ public class PerfilAjenodeAdministrador extends PerfilAjeno {
     }
 
     @Override
-    
+
     protected void build(String parameter) {
 
         super.build(parameter);

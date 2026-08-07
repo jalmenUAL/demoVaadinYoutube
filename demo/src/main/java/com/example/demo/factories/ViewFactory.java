@@ -18,11 +18,11 @@ public interface ViewFactory {
 
     Class<? extends VerVideo> createVideo();
 
-    Class<? extends PerfilAjeno> createPerfilAjeno(String login);
+    Class<? extends PerfilAjeno> createPerfilAjeno();
 
     Class<? extends VerComentarios> createVerComentarios();
 
-    GaleradeVideos_item createGaleriaItem(Video video);
+    Class<? extends GaleradeVideos_item> createGaleriaItem();
 
 
     static ViewFactory getFactory() {
@@ -46,7 +46,7 @@ public interface ViewFactory {
         return null;
     }
 
-    VerComentarios_item createComentarioItem(Comentario comentario);
+    VerComentarios_item createComentarioItem(Comentario comentario, ViewFactory factory);
 
-    Class<? extends Perfil> createPerfilView(String idYoutuber);
+    Class<? extends Perfil> createPerfilView();
 }

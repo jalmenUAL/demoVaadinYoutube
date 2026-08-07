@@ -1,9 +1,9 @@
 package com.example.demo.factories;
 
 import com.example.demo.tables.Comentario;
-import com.example.demo.tables.Video;
 import com.example.demo.views.Perfil;
 import com.example.demo.views.UltimosVideos_item;
+import com.example.demo.views.VerComentarios_item;
 
 public class YoutuberViewFactory implements ViewFactory {
 
@@ -15,7 +15,7 @@ public class YoutuberViewFactory implements ViewFactory {
     }
 
     @Override
-    public Class<? extends com.example.demo.views.PerfilAjeno> createPerfilAjeno(String login) {
+    public Class<? extends com.example.demo.views.PerfilAjeno> createPerfilAjeno() {
         return com.example.demo.views.PerfilAjeno.class;
     }
 
@@ -25,16 +25,16 @@ public class YoutuberViewFactory implements ViewFactory {
     }
 
     @Override
-    public UltimosVideos_item createGaleriaItem(Video video) {
-        return new UltimosVideos_item(video);
+    public Class<? extends UltimosVideos_item> createGaleriaItem() {
+        return com.example.demo.views.UltimosVideos_item.class;
     }
     @Override
-    public com.example.demo.views.VerComentarios_item createComentarioItem(Comentario comentario) {
-        return new com.example.demo.views.VerComentariosdeYoutuber_item(comentario);
+    public VerComentarios_item createComentarioItem(Comentario comentario, ViewFactory factory) {
+        return new com.example.demo.views.VerComentariosdeYoutuber_item(comentario, factory);
     }
 
     @Override
-    public Class<? extends Perfil> createPerfilView(String idYoutuber) {
+    public Class<? extends Perfil> createPerfilView() {
         return com.example.demo.views.PerfilAjenodeYoutuber.class;
     }
 }

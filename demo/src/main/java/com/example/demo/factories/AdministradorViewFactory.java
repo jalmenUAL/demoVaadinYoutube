@@ -26,7 +26,7 @@ public class AdministradorViewFactory implements ViewFactory {
     }
 
     @Override
-    public Class<? extends PerfilAjeno> createPerfilAjeno(String login) {
+    public Class<? extends PerfilAjeno> createPerfilAjeno() {
         return PerfilAjenodeAdministrador.class;
     }
 
@@ -35,16 +35,16 @@ public class AdministradorViewFactory implements ViewFactory {
         return VerComentariosdeAdministrador.class;
     }
     @Override
-    public UltimosVideos_item createGaleriaItem(Video video) {
-        return new UltimosVideosdeAdministrador_item(video);
+    public Class<? extends UltimosVideos_item> createGaleriaItem() {
+        return UltimosVideosdeAdministrador_item.class;
     }
     @Override
-    public VerComentarios_item createComentarioItem(Comentario comentario) {
-        return new VerComentariosdeAdministrador_item(_iAdministrador, comentario);
+    public VerComentarios_item createComentarioItem(Comentario comentario, ViewFactory factory) {
+        return new VerComentariosdeAdministrador_item(_iAdministrador, comentario, factory);
     }
 
     @Override
-    public Class<? extends Perfil> createPerfilView(String idYoutuber) {
+    public Class<? extends Perfil> createPerfilView() {
         return PerfilAjenodeAdministrador.class;        
     }      
 

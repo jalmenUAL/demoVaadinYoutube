@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
@@ -28,8 +29,8 @@ public class Youtuber extends Registrado {
 
     private Button perfilBtn;
 
-    public Youtuber(iYoutuber iYoutuber) {
-        super(iYoutuber);
+    public Youtuber(iYoutuber iYoutuber, ViewFactory viewFactory) {
+        super(iYoutuber, viewFactory);
         this.iYoutuber = iYoutuber;
     }
 
@@ -52,7 +53,7 @@ public class Youtuber extends Registrado {
 
         videos.addAll(usuario.getHa_publicado());
 
-        _ultimosVideos = new UltimosVideosdeYoutuber(videos);
+        _ultimosVideos = new UltimosVideosdeYoutuber(videos, viewFactory);
 
         body.add(_ultimosVideos);
     }

@@ -3,6 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.UI;
@@ -17,41 +18,20 @@ import com.vaadin.flow.router.Route;
 public class VerComentarios_item extends BaseItemView<Comentario> {
     public VerComentarios _verComentarios;
     public PerfilAjeno _perfilAjeno;
-     
+    ViewFactory viewFactory;
+
     Image avatar;
-   
 
-    public VerComentarios_item(Comentario comentario) {
+    public VerComentarios_item(ViewFactory viewFactory, Comentario comentario) {
         super(comentario);
-
-       
+        this.viewFactory = viewFactory;
     }
 
-    
     public void PerfilAjeno() {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
-        if (auth != null && auth.isAuthenticated()) {
-            boolean esAdmin = auth.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
-            boolean esYoutuber = auth.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_YOUTUBER"));
-
-            if (esAdmin) {
-                UI.getCurrent().navigate(PerfilAjenodeAdministrador.class, model.getEscrito_por().getLogin());
-            } else if (esYoutuber) {
-
-                if (model.getEscrito_por().getLogin().equals(usuario.getLogin())) {
-                UI.getCurrent().navigate(PerfilPropio.class, model.getEscrito_por().getLogin());}
-                else { UI.getCurrent().navigate(PerfilAjenodeYoutuber.class, model.getEscrito_por().getLogin());  }
-            }
-        } else {
-            UI.getCurrent().navigate(PerfilAjeno.class, model.getEscrito_por().getLogin());
-        }
-
+        UI.getCurrent().navigate(
+            viewFactory.createPerfilAjeno(),model.getEscrito_por().getLogin());
+        
     }
-
 
     @Override
     protected void build() {
@@ -60,13 +40,10 @@ public class VerComentarios_item extends BaseItemView<Comentario> {
         setWidthFull();
         setAlignItems(Alignment.START);
 
-
         avatar = new Image(model.getEscrito_por().getFotoPerfil(), "Avatar");
         avatar.setWidth("50px");
         avatar.setHeight("50px");
         avatar.getStyle().set("border-radius", "50%");
-
-      
 
         Span nombreUsuario = new Span(model.getEscrito_por().getLogin());
 
@@ -87,9 +64,8 @@ public class VerComentarios_item extends BaseItemView<Comentario> {
         add(avatar, nombreUsuario, comentarioLayout);
     }
 
-
     @Override
     protected void bindEvents() {
-          avatar.addClickListener(e -> PerfilAjeno());
+        avatar.addClickListener(e -> PerfilAjeno());
     }
 }

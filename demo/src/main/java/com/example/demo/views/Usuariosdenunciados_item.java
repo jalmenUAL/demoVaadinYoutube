@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.patterns.BaseItemView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -9,85 +10,64 @@ import com.vaadin.flow.router.Route;
 @Route("Usuariosdenunciados_item")
 public class Usuariosdenunciados_item extends BaseItemView<com.example.demo.tables.Youtuber> {
 
-    public Usuariosdenunciados _usuariosdenunciados;
+        public Usuariosdenunciados _usuariosdenunciados;
 
-    
+        private Image avatar;
+        private Span nombreSpan;
 
-    private Image avatar;
-    private Span nombreSpan;
+        public Usuariosdenunciados_item(
+                        com.example.demo.tables.Youtuber youtuber) {
 
-    public Usuariosdenunciados_item(
-            com.example.demo.tables.Youtuber youtuber) {
+                super(youtuber);
 
-        super(youtuber);
+        }
 
-        
-    }
+        @Override
+        protected void build() {
 
-     
+                avatar = new Image(
+                                model.getFotoPerfil(),
+                                model.getLogin());
 
-    @Override
-    protected void build() {
+                avatar.setWidth("50px");
+                avatar.setHeight("50px");
 
-        avatar = new Image(
-                model.getFotoPerfil(),
-                model.getLogin()
-        );
+                avatar.getStyle()
+                                .set("border-radius", "50%");
 
-        avatar.setWidth("50px");
-        avatar.setHeight("50px");
+                nombreSpan = new Span(
+                                model.getLogin());
 
-        avatar.getStyle()
-                .set("border-radius", "50%");
+                nombreSpan.getStyle()
+                                .set("font-weight", "bold")
+                                .set("font-size", "1.1em");
 
+                HorizontalLayout infoLayout = new HorizontalLayout(
+                                avatar,
+                                nombreSpan);
 
-        nombreSpan = new Span(
-                model.getLogin()
-        );
+                infoLayout.setAlignItems(
+                                Alignment.CENTER);
 
-        nombreSpan.getStyle()
-                .set("font-weight", "bold")
-                .set("font-size", "1.1em");
+                add(infoLayout);
 
+        }
 
-        HorizontalLayout infoLayout =
-                new HorizontalLayout(
-                        avatar,
-                        nombreSpan
-                );
+        // CAMBIOS PARA NAVEGAR AL PERFIL DEL YOUTUBER DENUNCIADO DESDE EL ADMINISTRADOR
 
-        infoLayout.setAlignItems(
-                Alignment.CENTER
-        );
+        @Override
+        protected void bindEvents() {
 
+                avatar.addClickListener(
+                                event -> navegarAlPerfil());
 
-        add(infoLayout);
+        }
 
-    }
+        private void navegarAlPerfil() {
 
+                  UI.getCurrent().navigate(PerfilAjenodeAdministrador.class, model.getLogin());
+               
 
-    //CAMBIOS PARA NAVEGAR AL PERFIL DEL YOUTUBER DENUNCIADO DESDE EL ADMINISTRADOR
-
-    @Override
-    protected void bindEvents() {
-
-        avatar.addClickListener(
-                event -> navegarAlPerfil()
-        );
-
-    }
-
-    private void navegarAlPerfil() {
-
-        getUI().ifPresent(
-                ui -> ui.navigate(
-                        "PerfilAjenodeAdministrador/"
-                                + model.getLogin()
-                )
-        );
-
-    }
-
-
+        }
 
 }

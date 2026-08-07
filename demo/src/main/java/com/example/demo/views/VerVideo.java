@@ -2,9 +2,6 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.iInicio;
@@ -16,8 +13,6 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
@@ -148,7 +143,7 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     public void Videosrelacionados() {
         relacionados.removeAll();
         List<Video> videosrelacionados = iInicio.getVideosRelacionados(video.getId());
-        _videosrelacionados = new Videosrelacionados(videosrelacionados);
+        _videosrelacionados = new Videosrelacionados(videosrelacionados, viewFactory);
         relacionados.add(_videosrelacionados);
     }
 
@@ -161,7 +156,6 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     public void PerfilAjeno() {
 
         UI.getCurrent().navigate(
-                viewFactory.createPerfilView(video.getEs_de().getLogin())
-        );
+                viewFactory.createPerfilView(),video.getEs_de().getLogin());
     }
 }

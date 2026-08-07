@@ -12,82 +12,75 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_YOUTUBER")
 public class PerfilPropio extends Perfil {
 
-    public com.example.demo.tables.Youtuber _youtuber;
-    public PublicarVideo _publicarVideo;
-    public Configuracion _configuracion;
+        public com.example.demo.tables.Youtuber _youtuber;
+        public PublicarVideo _publicarVideo;
+        public Configuracion _configuracion;
 
-    private final iYoutuber iYoutuber;
+        private final iYoutuber iYoutuber;
 
-    private Button publicarButton;
-    private Button configButton;
+        private Button publicarButton;
+        private Button configButton;
 
-    public PerfilPropio(iYoutuber iYoutuber) {
-        super(iYoutuber);
-        this.iYoutuber = iYoutuber;
-    }
+        public PerfilPropio(iYoutuber iYoutuber) {
+                super(iYoutuber);
+                this.iYoutuber = iYoutuber;
+        }
 
-    @Override
-    protected void build(String parameter) {
+        @Override
+        protected void build(String parameter) {
 
-        super.build(parameter);
+                super.build(parameter);
 
-        publicarButton = new Button("📤 Publicar video");
+                publicarButton = new Button("📤 Publicar video");
 
-        publicarButton.getStyle()
-                .set("background-color", "#0d6efd")
-                .set("color", "white")
-                .set("border-radius", "8px")
-                .set("font-weight", "bold");
+                publicarButton.getStyle()
+                                .set("background-color", "#0d6efd")
+                                .set("color", "white")
+                                .set("border-radius", "8px")
+                                .set("font-weight", "bold");
 
-        configButton = new Button("⚙️ Configuración");
+                configButton = new Button("⚙️ Configuración");
 
-        configButton.getStyle()
-                .set("background-color", "#6c757d")
-                .set("color", "white")
-                .set("border-radius", "8px")
-                .set("font-weight", "bold");
+                configButton.getStyle()
+                                .set("background-color", "#6c757d")
+                                .set("color", "white")
+                                .set("border-radius", "8px")
+                                .set("font-weight", "bold");
 
-        HorizontalLayout botonesHeader =
-                new HorizontalLayout(
-                        publicarButton,
-                        configButton
-                );
+                HorizontalLayout botonesHeader = new HorizontalLayout(
+                                publicarButton,
+                                configButton);
 
-        botonesHeader.setWidthFull();
-        botonesHeader.setJustifyContentMode(
-                JustifyContentMode.END
-        );
-        botonesHeader.setPadding(true);
+                botonesHeader.setWidthFull();
+                botonesHeader.setJustifyContentMode(
+                                JustifyContentMode.END);
+                botonesHeader.setPadding(true);
 
-        topLayout.add(botonesHeader);
-    }
+                topLayout.add(botonesHeader);
+        }
 
-    @Override
-    protected void bindEvents() {
+        @Override
+        protected void bindEvents() {
 
-        super.bindEvents();
+                super.bindEvents();
 
-        publicarButton.addClickListener(
-                e -> PublicarVideo()
-        );
+                publicarButton.addClickListener(
+                                e -> PublicarVideo());
 
-        configButton.addClickListener(
-                e -> Configuracion()
-        );
-    }
+                configButton.addClickListener(
+                                e -> Configuracion());
+        }
 
-    public void PublicarVideo() {
+        public void PublicarVideo() {
 
-        UI.getCurrent().navigate(
-                PublicarVideo.class
-        );
-    }
+                UI.getCurrent().navigate(
+                                PublicarVideo.class);
+        }
 
-    public void Configuracion() {
+        public void Configuracion() {
 
-        UI.getCurrent().navigate(
-                Configuracion.class
-        );
-    }
+                UI.getCurrent().navigate(
+                                Configuracion.class);
+        }
 
 }

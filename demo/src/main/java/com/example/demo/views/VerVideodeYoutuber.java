@@ -61,7 +61,7 @@ public class VerVideodeYoutuber extends VerVideo {
 
     @Override
     public void VerComentarios() {
-        _verComentarios = new VerComentariosdeYoutuber(viewFactory,video.getTiene_comentarios(), video.getId());
+        _verComentarios = new VerComentariosdeYoutuber(viewFactory, video.getTiene_comentarios(), video.getId());
         comentarios.add(_verComentarios);
     }
 
@@ -75,7 +75,7 @@ public class VerVideodeYoutuber extends VerVideo {
 
         com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
-        usuario = iYoutuber.findYoutuberById(usuario.getLogin());
+        
 
         legusta = usuario.getLe_gusta().stream().anyMatch(v -> ((Video) v).getId() == video.getId());
 

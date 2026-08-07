@@ -17,51 +17,45 @@ public class VerComentarios extends BaseListView<Comentario> {
     public VerVideo _verVideo;
     public List<VerComentarios_item> _item = new ArrayList<>();
     protected ViewFactory factory;
-    
- 
 
     public VerComentarios(ViewFactory factory, Set<Comentario> comentarios) {
         super(comentarios);
         this.factory = factory;
-       
+
     }
- 
-    
 
     @Override
     protected void bindEvents() {
-        
+
     }
 
     @Override
     protected void buildContainer() {
         setWidthFull();
         setPadding(true);
-        setSpacing(false);  
+        setSpacing(false);
         setAlignItems(Alignment.STRETCH);
     }
 
     @Override
     protected void buildItems() {
-        
 
         if (elements.isEmpty()) {
-          
+
             Div noComments = new Div();
             noComments.setText("No hay comentarios disponibles.");
             add(noComments);
         } else {
 
-            for (Comentario e:elements) {
-                 
-                VerComentarios_item comentario = factory.createComentarioItem(e);
+            for (Comentario e : elements) {
+
+                VerComentarios_item comentario = factory.createComentarioItem(e,factory);
                 add(comentario);
             }
 
-                 
-            }
-        
-         Div separator = new Div();
+        }
+
+        Div separator = new Div();
         separator.getStyle()
                 .set("height", "1px")
                 .set("background-color", "#ddd")

@@ -2,6 +2,7 @@ package com.example.demo.views;
 
 import java.util.List;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.services.iNoLogueado;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
@@ -25,14 +26,14 @@ public class NoLogueado extends Inicio {
     private Button loginButton;
     private Button registrarButton;
 
+    
 
-    public NoLogueado(iNoLogueado iNoLogueado) {
 
-        super(iNoLogueado);
+    public NoLogueado(iNoLogueado iNoLogueado,ViewFactory viewFactory) {
 
+        super(iNoLogueado, viewFactory);
         this._iNoLogueado = iNoLogueado;
-        	 
-
+        
 
     }
 
@@ -93,7 +94,7 @@ public class NoLogueado extends Inicio {
 
 
         _ultimosVideos =
-                new UltimosVideos(videos);
+                new UltimosVideos(videos, viewFactory);
 
 
         body.add(_ultimosVideos);

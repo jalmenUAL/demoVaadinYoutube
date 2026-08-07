@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.AttachEvent;
@@ -22,10 +23,12 @@ public abstract class Inicio extends BaseView {
     protected HorizontalLayout header;
     protected VerticalLayout body;
 
-    public Inicio(iInicio iInicio) {
+    protected ViewFactory viewFactory;
+
+    public Inicio(iInicio iInicio,ViewFactory viewFactory) {
         super();
         this.iInicio = iInicio;
-       		
+        this.viewFactory = viewFactory;
     }
 
    
@@ -53,7 +56,7 @@ public abstract class Inicio extends BaseView {
 
         add(header, body);
 
-        _buscar = new Buscar(iInicio);
+        _buscar = new Buscar(iInicio, viewFactory);
         header.add(_buscar);
     }
  

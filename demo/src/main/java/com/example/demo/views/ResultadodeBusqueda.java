@@ -2,6 +2,7 @@ package com.example.demo.views;
 
 import java.util.List;
 
+import com.example.demo.factories.ViewFactory;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
@@ -11,8 +12,8 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
     public Buscar _buscar;
 
-    public ResultadodeBusqueda(List<Video> resultados) {
-        super(resultados);
+    public ResultadodeBusqueda(List<Video> resultados, ViewFactory viewFactory) {
+        super(resultados, viewFactory);
     }
 
     @Override
@@ -22,14 +23,12 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
         tituloGaleria.setText("Resultados de la búsqueda");
 
-        carrusel.removeAll();
-
-        if (elements == null || elements.isEmpty()) {
-
-             
-
-            return;
+        for (Video video : elements) {
+            ResultadodeBusqueda_item item = new ResultadodeBusqueda_item(video, viewFactory);
+            
+            carrusel.add(item);
         }
+ 
 
         
     }
