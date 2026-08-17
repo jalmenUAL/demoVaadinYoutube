@@ -17,7 +17,7 @@ public class GaleradeVideos extends BaseListView<Video> {
     public Vector<GaleradeVideos_item> _item = new Vector<>();
 
     protected HorizontalLayout carrusel;
-    public H2 tituloGaleria;
+    protected H2 tituloGaleria;
 
     protected ViewFactory viewFactory;
 
@@ -28,8 +28,8 @@ public class GaleradeVideos extends BaseListView<Video> {
 
      @Override
     protected void build() {
-        tituloGaleria.setText("Galería de Videos");
         super.build();
+        tituloGaleria.setText("Galería de Videos");
 
     }
 

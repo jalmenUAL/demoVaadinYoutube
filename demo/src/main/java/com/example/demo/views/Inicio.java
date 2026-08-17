@@ -3,7 +3,6 @@ package com.example.demo.views;
 import com.example.demo.factories.ViewFactory;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
-import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -40,6 +39,8 @@ public abstract class Inicio extends BaseView {
         setSpacing(true);
         setAlignItems(Alignment.CENTER);
         H1 heading = new H1("YouTube");
+        header = new HorizontalLayout();
+        body = new VerticalLayout();
         heading.getStyle()
                 .set("background-color", "#FF0000")
                 .set("color", "white")
@@ -58,6 +59,8 @@ public abstract class Inicio extends BaseView {
 
         _buscar = new Buscar(iInicio, viewFactory);
         header.add(_buscar);
+        UltimosVideos();
+       
     }
  
 
@@ -67,15 +70,11 @@ public abstract class Inicio extends BaseView {
             body.removeAll();
             body.add(_buscar._resultadodeBusqueda);
         });
+        
     }
 
    
-
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
-        UltimosVideos();
-    }
+ 
 
      protected abstract void UltimosVideos();
 }

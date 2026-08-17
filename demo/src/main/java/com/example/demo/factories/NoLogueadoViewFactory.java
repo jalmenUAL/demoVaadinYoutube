@@ -1,9 +1,12 @@
 package com.example.demo.factories;
 
+import org.springframework.stereotype.Component;
+
 import com.example.demo.tables.Comentario;
-import com.example.demo.views.Perfil;
 import com.example.demo.views.UltimosVideos_item;
 import com.example.demo.views.VerComentarios_item;
+
+@Component
 
 public class NoLogueadoViewFactory implements ViewFactory {
 

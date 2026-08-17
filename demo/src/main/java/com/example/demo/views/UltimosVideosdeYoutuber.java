@@ -15,8 +15,9 @@ public UltimosVideosdeYoutuber(List<Video> videos, ViewFactory viewFactory) {
 }
 
 public void build() {
-		tituloGaleria.setText("Videos Propios o de Youtubers que sigues");
+		
 		super.build();
+		tituloGaleria.setText("Videos Propios o de Youtubers que sigues");
 		
 	}
 	 

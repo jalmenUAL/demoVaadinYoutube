@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.services.iAdministrador;
 import com.example.demo.tables.Comentario;
-import com.example.demo.views.Perfil;
 import com.example.demo.views.PerfilAjeno;
 import com.example.demo.views.PerfilAjenodeAdministrador;
 import com.example.demo.views.UltimosVideos_item;

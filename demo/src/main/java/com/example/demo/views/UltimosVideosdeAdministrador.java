@@ -16,9 +16,9 @@ public UltimosVideosdeAdministrador(List<Video> videos, ViewFactory viewFactory)
 			
 	}
 public void build() {
-		tituloGaleria.setText("Todos los videos");
-		super.build();
 		
+		super.build();
+		tituloGaleria.setText("Todos los videos");
 	}
 	
 }

@@ -4,10 +4,12 @@ import java.util.Vector;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
-import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.YoutuberViewFactory;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Video;
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -19,87 +21,86 @@ import jakarta.annotation.security.RolesAllowed;
 
 @Route("Youtuber")
 @RolesAllowed("ROLE_YOUTUBER")
-
+@Component
 public class Youtuber extends Registrado {
 
-    protected final iYoutuber iYoutuber;
+        protected final iYoutuber iYoutuber;
 
-    protected PerfilPropio _PerfilPropio;
-     
+        protected PerfilPropio _PerfilPropio;
 
-    private Button perfilBtn;
+        private Button perfilBtn;
 
-    public Youtuber(iYoutuber iYoutuber, ViewFactory viewFactory) {
-        super(iYoutuber, viewFactory);
-        this.iYoutuber = iYoutuber;
-    }
-
-    @Override
-    public void UltimosVideos() {
-
-        Authentication auth = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
-
-        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
-
-        Vector<Video> videos = new Vector<>();
-
-        for (Object obj : usuario.getSeguidor_de()) {
-            com.example.demo.tables.Youtuber seguido = (com.example.demo.tables.Youtuber) obj;
-
-            videos.addAll(seguido.getHa_publicado());
+        public Youtuber(iYoutuber iYoutuber, YoutuberViewFactory viewFactory) {
+                super(iYoutuber, viewFactory);
+                this.iYoutuber = iYoutuber;
         }
 
-        videos.addAll(usuario.getHa_publicado());
+        @Override
+        public void UltimosVideos() {
 
-        _ultimosVideos = new UltimosVideosdeYoutuber(videos, viewFactory);
+                Authentication auth = SecurityContextHolder
+                                .getContext()
+                                .getAuthentication();
 
-        body.add(_ultimosVideos);
-    }
+                com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
-    public void PerfilPropio() {
+                Vector<Video> videos = new Vector<>();
 
-        Authentication auth = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
+                for (Object obj : usuario.getSeguidor_de()) {
+                        com.example.demo.tables.Youtuber seguido = (com.example.demo.tables.Youtuber) obj;
 
-        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
+                        videos.addAll(seguido.getHa_publicado());
+                }
 
-        UI.getCurrent().navigate(
-                PerfilPropio.class,
-                usuario.getLogin());
-    }
+                videos.addAll(usuario.getHa_publicado());
 
-    @Override
-    protected void build() {
-        super.build();
+                _ultimosVideos = new UltimosVideosdeYoutuber(videos, viewFactory);
 
-        perfilBtn = new Button(
-                "Mi Perfil",
-                new Icon(VaadinIcon.USER));
+                body.add(_ultimosVideos);
+        }
 
-        perfilBtn.addThemeVariants(
-                ButtonVariant.LUMO_PRIMARY);
+        public void PerfilPropio() {
 
-        perfilBtn.getStyle()
-                .set("margin", "10px")
-                .set("border-radius", "8px");
+                Authentication auth = SecurityContextHolder
+                                .getContext()
+                                .getAuthentication();
 
-        header.setWidthFull();
-        header.setJustifyContentMode(
-                JustifyContentMode.END);
+                com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
-        header.setPadding(true);
-        header.add(perfilBtn);
-    }
+                UI.getCurrent().navigate(
+                                PerfilPropio.class,
+                                usuario.getLogin());
+        }
 
-    @Override
-    protected void bindEvents() {
-        super.bindEvents();
+        @Override
+        protected void build() {
+                super.build();
 
-        perfilBtn.addClickListener(
-                e -> PerfilPropio());
-    }
+                perfilBtn = new Button(
+                                "Mi Perfil",
+                                new Icon(VaadinIcon.USER));
 
+                perfilBtn.addThemeVariants(
+                                ButtonVariant.LUMO_PRIMARY);
+
+                perfilBtn.getStyle()
+                                .set("margin", "10px")
+                                .set("border-radius", "8px");
+
+                header.setWidthFull();
+                header.setJustifyContentMode(
+                                JustifyContentMode.END);
+
+                header.setPadding(true);
+                header.add(perfilBtn);
+        }
+
+        @Override
+        protected void bindEvents() {
+                super.bindEvents();
+
+                perfilBtn.addClickListener(
+                                e -> PerfilPropio());
+        }
+ 
 }

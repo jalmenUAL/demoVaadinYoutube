@@ -66,7 +66,6 @@ public abstract class Registrado extends Inicio {
 
         logoutButton.addClickListener(e -> Logout());
     }
-
-    
+ 
 
 }

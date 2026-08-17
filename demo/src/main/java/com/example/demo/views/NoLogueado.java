@@ -2,7 +2,9 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import com.example.demo.factories.ViewFactory;
+import org.springframework.stereotype.Component;
+
+import com.example.demo.factories.NoLogueadoViewFactory;
 import com.example.demo.services.iNoLogueado;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
@@ -16,6 +18,8 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("NoLogueado")
 @AnonymousAllowed
+@Component
+
 public class NoLogueado extends Inicio {
 
         public iNoLogueado _iNoLogueado;
@@ -26,7 +30,7 @@ public class NoLogueado extends Inicio {
         private Button loginButton;
         private Button registrarButton;
 
-        public NoLogueado(iNoLogueado iNoLogueado, ViewFactory viewFactory) {
+        public NoLogueado(iNoLogueado iNoLogueado, NoLogueadoViewFactory viewFactory) {
 
                 super(iNoLogueado, viewFactory);
                 this._iNoLogueado = iNoLogueado;
@@ -54,13 +58,13 @@ public class NoLogueado extends Inicio {
                                 registrarButton);
 
                 header.add(botones);
+                 UltimosVideos();
         }
 
         @Override
         protected void bindEvents() {
 
                 super.bindEvents();
-                
 
                 loginButton.addClickListener(e -> Login());
 
@@ -90,5 +94,7 @@ public class NoLogueado extends Inicio {
                 UI.getCurrent().navigate(Registrar.class);
 
         }
+
+        
 
 }
