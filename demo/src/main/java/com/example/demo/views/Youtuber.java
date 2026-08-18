@@ -34,6 +34,7 @@ public class Youtuber extends Registrado {
         public Youtuber(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
                 super(iYoutuber, viewFactory);
                 this.iYoutuber = iYoutuber;
+                initView();
                  
         }
 

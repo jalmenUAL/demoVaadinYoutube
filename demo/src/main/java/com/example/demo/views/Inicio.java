@@ -62,7 +62,7 @@ public abstract class Inicio extends BaseView {
 
         _buscar = new Buscar(iInicio, viewFactory);
         header.add(_buscar);
-        UltimosVideos();
+        //UltimosVideos();
        
     }
  
