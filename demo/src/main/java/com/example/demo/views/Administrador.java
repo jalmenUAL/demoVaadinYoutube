@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.factories.AdministradorViewFactory;
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iAdministrador;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.AttachEvent;
@@ -15,16 +16,17 @@ import jakarta.annotation.security.RolesAllowed;
 
 @Route("Administrador")
 @RolesAllowed("ROLE_ADMINISTRADOR")
-@Component
+ 
 public class Administrador extends Registrado {
 
     protected final iAdministrador iAdministrador;
 
     protected Usuariosdenunciados _usuariosdenunciados;
 
-    public Administrador(iAdministrador iAdministrador, AdministradorViewFactory viewFactory) {
+    public Administrador(iAdministrador iAdministrador, ViewFactoryProvider viewFactory) {
         super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;
+        initView();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.html.H1;
@@ -22,12 +23,14 @@ public abstract class Inicio extends BaseView {
     protected HorizontalLayout header;
     protected VerticalLayout body;
 
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public Inicio(iInicio iInicio,ViewFactory viewFactory) {
+    public Inicio(iInicio iInicio,ViewFactoryProvider viewFactory) {
         super();
         this.iInicio = iInicio;
         this.viewFactory = viewFactory;
+        
+    
     }
 
    
@@ -64,14 +67,7 @@ public abstract class Inicio extends BaseView {
     }
  
 
-    @Override
-    protected void bindEvents() {
-        _buscar.botonBuscar.addClickListener(e -> {
-            body.removeAll();
-            body.add(_buscar._resultadodeBusqueda);
-        });
-        
-    }
+    
 
    
  

@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.button.Button;
@@ -21,7 +22,7 @@ public class VerVideodeYoutuber extends VerVideo {
 
     Boolean legusta;
 
-    public VerVideodeYoutuber(com.example.demo.services.iYoutuber iYoutuber, ViewFactory viewFactory) {
+    public VerVideodeYoutuber(com.example.demo.services.iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
         super(iYoutuber, viewFactory);
         this.iYoutuber = iYoutuber;
 
@@ -58,7 +59,7 @@ public class VerVideodeYoutuber extends VerVideo {
 
     @Override
     public void VerComentarios() {
-        _verComentarios = new VerComentariosdeYoutuber(viewFactory, video.getTiene_comentarios(), video.getId());
+        _verComentarios = new VerComentariosdeYoutuber(video.getTiene_comentarios(), video.getId(), viewFactory);
         comentarios.add(_verComentarios);
     }
 

@@ -3,6 +3,7 @@ package com.example.demo.views;
 import java.util.Set;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -15,8 +16,8 @@ public class VerComentariosdeYoutuber extends VerComentarios {
 
     private String id;
 
-    public VerComentariosdeYoutuber(ViewFactory factory, Set<Comentario> comentarios, int idvideo) {
-        super(factory, comentarios);
+    public VerComentariosdeYoutuber(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory) {
+        super(comentarios, viewFactory);
         this.id = Integer.toString(idvideo);
 
     }

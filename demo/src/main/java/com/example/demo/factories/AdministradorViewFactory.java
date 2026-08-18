@@ -15,7 +15,7 @@ import com.example.demo.views.VerComentariosdeAdministrador_item;
 import com.example.demo.views.VerVideo;
 import com.example.demo.views.VerVideodeAdministrador;
 
-@Component
+ @Component
 public class AdministradorViewFactory implements ViewFactory {
 
     private iAdministrador _iAdministrador;

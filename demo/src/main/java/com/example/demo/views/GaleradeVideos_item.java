@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
@@ -18,9 +19,9 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
 
         public VerVideo _verVideo;
         private Image thumbnail;
-        protected ViewFactory viewFactory;
+        protected ViewFactoryProvider viewFactory;
 
-        public GaleradeVideos_item(Video video, ViewFactory viewFactory) {
+        public GaleradeVideos_item(Video video, ViewFactoryProvider viewFactory) {
                 super(video);
                 this.viewFactory = viewFactory;
         }
@@ -102,7 +103,7 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
         public void VerVideo() {
 
                 UI.getCurrent().navigate(
-                                viewFactory.createVideo(),
+                                viewFactory.getFactory().createVideo(),
                                 model.getId());
         }
 }

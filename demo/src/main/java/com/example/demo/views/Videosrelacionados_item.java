@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.UI;
@@ -18,7 +19,7 @@ public class Videosrelacionados_item extends BaseItemView<Video> {
     protected ViewFactory viewFactory;
     protected Image thumbnail;
 
-    public Videosrelacionados_item(Video video, ViewFactory viewFactory) {
+    public Videosrelacionados_item(Video video, ViewFactoryProvider viewFactory) {
         super(video);
 
     }

@@ -3,6 +3,7 @@ package com.example.demo.views;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iRegistrado;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -20,7 +21,7 @@ public abstract class Registrado extends Inicio {
 
     protected Button logoutButton;
 
-    public Registrado(iRegistrado iRegistrado, ViewFactory viewFactory) {
+    public Registrado(iRegistrado iRegistrado, ViewFactoryProvider viewFactory) {
         super(iRegistrado, viewFactory);
         this.iRegistrado = iRegistrado;
     }
@@ -62,7 +63,7 @@ public abstract class Registrado extends Inicio {
 
     @Override
     protected void bindEvents() {
-        super.bindEvents();
+        
 
         logoutButton.addClickListener(e -> Logout());
     }

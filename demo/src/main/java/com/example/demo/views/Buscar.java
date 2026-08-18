@@ -3,6 +3,7 @@ package com.example.demo.views;
 import java.util.List;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
 import com.example.demo.tables.Video;
@@ -25,9 +26,9 @@ public class Buscar extends BaseView {
 
     private List<Video> resultados;
 
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public Buscar(iInicio iInicio, ViewFactory viewFactory) {
+    public Buscar(iInicio iInicio, ViewFactoryProvider viewFactory) {
 
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;

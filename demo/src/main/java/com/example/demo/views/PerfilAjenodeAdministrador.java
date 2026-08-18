@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iAdministrador;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -14,7 +15,7 @@ public class PerfilAjenodeAdministrador extends PerfilAjeno {
 
     private Button btnBloquear;
 
-    public PerfilAjenodeAdministrador(iAdministrador iAdministrador, ViewFactory viewFactory) {
+    public PerfilAjenodeAdministrador(iAdministrador iAdministrador, ViewFactoryProvider viewFactory) {
         super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;
     }

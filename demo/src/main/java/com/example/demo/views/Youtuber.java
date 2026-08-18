@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.factories.YoutuberViewFactory;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Video;
@@ -30,9 +31,10 @@ public class Youtuber extends Registrado {
 
         private Button perfilBtn;
 
-        public Youtuber(iYoutuber iYoutuber, YoutuberViewFactory viewFactory) {
+        public Youtuber(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
                 super(iYoutuber, viewFactory);
                 this.iYoutuber = iYoutuber;
+                 
         }
 
         @Override

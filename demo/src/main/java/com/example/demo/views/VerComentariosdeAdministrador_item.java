@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iAdministrador;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.button.Button;
@@ -15,7 +16,7 @@ public class VerComentariosdeAdministrador_item extends VerComentarios_item {
 
     public VerComentariosdeAdministrador_item(iAdministrador iAdministrador, Comentario comentario,
             ViewFactory viewFactory) {
-        super(viewFactory, comentario);
+        super(comentario, viewFactory);
         this.iAdministrador = iAdministrador;
 
     }

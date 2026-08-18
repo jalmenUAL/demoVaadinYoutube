@@ -3,6 +3,7 @@ package com.example.demo.views;
 import java.util.List;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.iInicio;
 import com.example.demo.tables.Video;
@@ -25,7 +26,7 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     public PerfilAjeno _perfilAjeno;
 
     protected final iInicio iInicio;
-    protected final ViewFactory viewFactory;
+    protected final ViewFactoryProvider viewFactory;
 
     protected Video video;
 
@@ -36,7 +37,7 @@ public class VerVideo extends BaseParameterizedView<Integer> {
 
     protected Image avatar;
 
-    public VerVideo(iInicio iInicio, ViewFactory viewFactory) {
+    public VerVideo(iInicio iInicio, ViewFactoryProvider viewFactory) {
         this.iInicio = iInicio;
         this.viewFactory = viewFactory;
     }
@@ -65,14 +66,14 @@ public class VerVideo extends BaseParameterizedView<Integer> {
 
     public void VerComentarios() {
         comentarios.removeAll();
-        _verComentarios = new VerComentarios(viewFactory, video.getTiene_comentarios());
+        _verComentarios = new VerComentarios(video.getTiene_comentarios(), viewFactory);
         comentarios.add(_verComentarios);
     }
 
     public void PerfilAjeno() {
 
         UI.getCurrent().navigate(
-                viewFactory.createPerfilAjeno(),video.getEs_de().getLogin());
+                viewFactory.getFactory().createPerfilAjeno(),video.getEs_de().getLogin());
     }
 
     @Override

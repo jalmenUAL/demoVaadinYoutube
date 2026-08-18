@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.UI;
@@ -32,9 +33,9 @@ public class Perfil extends BaseParameterizedView<String> {
     private final iInicio _iInicio;
 
     protected com.example.demo.tables.Youtuber _usuario;
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public Perfil(iInicio iInicio, ViewFactory viewFactory) {
+    public Perfil(iInicio iInicio, ViewFactoryProvider viewFactory) {
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;
     }

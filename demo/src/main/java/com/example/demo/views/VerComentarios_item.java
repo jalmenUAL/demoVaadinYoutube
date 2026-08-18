@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.UI;
@@ -22,7 +23,7 @@ public class VerComentarios_item extends BaseItemView<Comentario> {
 
     Image avatar;
 
-    public VerComentarios_item(ViewFactory viewFactory, Comentario comentario) {
+    public VerComentarios_item(Comentario comentario, ViewFactory viewFactory) {
         super(comentario);
         this.viewFactory = viewFactory;
     }

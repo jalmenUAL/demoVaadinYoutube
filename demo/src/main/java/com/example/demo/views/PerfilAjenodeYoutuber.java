@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Youtuber;
 import com.vaadin.flow.component.button.Button;
@@ -19,7 +20,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
     private Button btnSeguir;
     private Button btnDenunciar;
 
-    public PerfilAjenodeYoutuber(iYoutuber iYoutuber, ViewFactory viewFactory) {
+    public PerfilAjenodeYoutuber(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
         super(iYoutuber, viewFactory);
         this.iYoutuber = iYoutuber;
     }

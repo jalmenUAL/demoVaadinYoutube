@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -18,16 +19,16 @@ import com.vaadin.flow.router.Route;
 public class Youtubersseguidos_item extends BaseItemView<com.example.demo.tables.Youtuber> {
     public Youtubersseguidos _youtubersseguidos;
     public PerfilAjeno _perfilAjeno;
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public Youtubersseguidos_item(com.example.demo.tables.Youtuber youtuber,ViewFactory viewFactory) {
+    public Youtubersseguidos_item(com.example.demo.tables.Youtuber youtuber,ViewFactoryProvider viewFactory) {
         super(youtuber);
         this.viewFactory = viewFactory;
 
     }
 
     public void PerfilAjeno() {
-        UI.getCurrent().navigate(viewFactory.createPerfilAjeno(), model.getLogin());
+        UI.getCurrent().navigate(viewFactory.getFactory().createPerfilAjeno(), model.getLogin());
     }
 
     @Override

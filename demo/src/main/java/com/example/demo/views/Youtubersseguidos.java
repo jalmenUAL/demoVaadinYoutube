@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.html.H1;
@@ -27,9 +28,9 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
      FlexLayout gridContainer = new FlexLayout();
 
     iInicio _iInicio;
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public Youtubersseguidos(iInicio iInicio,Set<com.example.demo.tables.Youtuber> youtubers, ViewFactory viewFactory) {
+    public Youtubersseguidos(iInicio iInicio,Set<com.example.demo.tables.Youtuber> youtubers, ViewFactoryProvider viewFactory) {
         super(youtubers);
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;

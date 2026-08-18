@@ -6,8 +6,8 @@ import com.example.demo.tables.Comentario;
 import com.example.demo.views.UltimosVideos_item;
 import com.example.demo.views.VerComentarios_item;
 
+ 
 @Component
-
 public class YoutuberViewFactory implements ViewFactory {
 
      

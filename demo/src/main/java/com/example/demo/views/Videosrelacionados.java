@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H2;
@@ -14,9 +15,9 @@ import com.vaadin.flow.router.Route;
 public class Videosrelacionados extends BaseListView<Video> {
     public VerVideo _verVideo;
     public Vector<Videosrelacionados_item> _item = new Vector<Videosrelacionados_item>();
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public Videosrelacionados(List<Video> videosrelacionados,ViewFactory viewFactory) {
+    public Videosrelacionados(List<Video> videosrelacionados,ViewFactoryProvider viewFactory) {
         super(videosrelacionados);
         this.viewFactory = viewFactory;
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.services.iAdministrador;
 import com.example.demo.tables.Comentario;
@@ -16,9 +17,9 @@ import com.vaadin.flow.router.Route;
 public class VerComentarios extends BaseListView<Comentario> {
     public VerVideo _verVideo;
     public List<VerComentarios_item> _item = new ArrayList<>();
-    protected ViewFactory factory;
+    protected ViewFactoryProvider factory;
 
-    public VerComentarios(ViewFactory factory, Set<Comentario> comentarios) {
+    public VerComentarios(Set<Comentario> comentarios, ViewFactoryProvider factory) {
         super(comentarios);
         this.factory = factory;
 
@@ -49,7 +50,7 @@ public class VerComentarios extends BaseListView<Comentario> {
 
             for (Comentario e : elements) {
 
-                VerComentarios_item comentario = factory.createComentarioItem(e);
+                VerComentarios_item comentario = factory.getFactory().createComentarioItem(e);
                 add(comentario);
             }
 

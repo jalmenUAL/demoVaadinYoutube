@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H2;
@@ -19,9 +20,9 @@ public class GaleradeVideos extends BaseListView<Video> {
     protected HorizontalLayout carrusel;
     protected H2 tituloGaleria;
 
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public GaleradeVideos(List<Video> videos, ViewFactory factory) {
+    public GaleradeVideos(List<Video> videos, ViewFactoryProvider factory) {
         super(videos);
         this.viewFactory = factory;
     }

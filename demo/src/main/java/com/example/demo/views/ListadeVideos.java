@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -15,9 +16,9 @@ import com.vaadin.flow.router.Route;
 public class ListadeVideos extends BaseListView<Video> {
 
     public Vector<ListadeVideos_item> _item = new Vector<>();
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
 
-    public ListadeVideos(Set<Video> videos, ViewFactory factory) {
+    public ListadeVideos(Set<Video> videos, ViewFactoryProvider factory) {
         super(videos);
         this.viewFactory = factory;
     }

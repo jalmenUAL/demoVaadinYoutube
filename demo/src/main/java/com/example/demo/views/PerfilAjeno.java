@@ -1,6 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactory;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -9,7 +10,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class PerfilAjeno extends Perfil {
 
-	public PerfilAjeno(iInicio iInicio, ViewFactory viewFactory) {
+	public PerfilAjeno(iInicio iInicio, ViewFactoryProvider viewFactory) {
 		super(iInicio, viewFactory);
 	}
 	 
