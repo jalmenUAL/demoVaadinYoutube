@@ -26,6 +26,7 @@ public class PerfilPropio extends Perfil {
         public PerfilPropio(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
                 super(iYoutuber, viewFactory);
                 this.iYoutuber = iYoutuber;
+                
         }
 
         @Override
@@ -33,10 +34,7 @@ public class PerfilPropio extends Perfil {
 
                 super.build(parameter);
 
-        }
-
-        @Override
-        protected void build() {
+        
                 publicarButton = new Button("📤 Publicar video");
 
                 publicarButton.getStyle()

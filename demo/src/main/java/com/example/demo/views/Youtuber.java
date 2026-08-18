@@ -22,7 +22,6 @@ import jakarta.annotation.security.RolesAllowed;
 
 @Route("Youtuber")
 @RolesAllowed("ROLE_YOUTUBER")
-@Component
 public class Youtuber extends Registrado {
 
         protected final iYoutuber iYoutuber;

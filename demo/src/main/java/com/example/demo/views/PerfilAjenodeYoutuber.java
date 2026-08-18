@@ -29,11 +29,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
     protected void build(String parameter) {
 
         super.build(parameter);
-
-    }
-
-    @Override
-    protected void build() {
+ 
         btnSeguir = new Button();
         btnDenunciar = new Button();
 

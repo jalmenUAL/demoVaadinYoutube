@@ -4,6 +4,7 @@ import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -62,11 +63,16 @@ public abstract class Inicio extends BaseView {
 
         _buscar = new Buscar(iInicio, viewFactory);
         header.add(_buscar);
-        //UltimosVideos();
+        
        
     }
  
-
+    //Es necesario que se llame a este método en el onAttach de las clases que heredan de Inicio, para que se muestren los últimos videos al cargar la vista.
+ @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        UltimosVideos();
+    }
     
 
    

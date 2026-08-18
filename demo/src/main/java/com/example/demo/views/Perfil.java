@@ -38,14 +38,9 @@ public class Perfil extends BaseParameterizedView<String> {
     public Perfil(iInicio iInicio, ViewFactoryProvider viewFactory) {
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;
+        
     }
-
-    @Override
-    protected void build(String parameter) {
-        _usuario = _iInicio.findYoutuberById(parameter);
-
-    }
-
+ 
     @Override
     protected void bindEvents() {
 
@@ -66,7 +61,8 @@ public class Perfil extends BaseParameterizedView<String> {
     }
 
     @Override
-    protected void build() {
+    protected void build(String parameter) {
+         _usuario = _iInicio.findYoutuberById(parameter);
         setSizeFull();
         setSpacing(true);
         setPadding(false);

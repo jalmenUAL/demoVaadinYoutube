@@ -10,19 +10,15 @@ public abstract class BaseParameterizedView<T>
 
     @Override
     public void setParameter(BeforeEvent event, T parameter) {
+       initView(parameter);
+    }
 
-      
-
+    public void initView(T parameter) {
         build(parameter);
-
         bindEvents();
     }
 
-    protected void build(T parameter) {
-        build();
-    }
-
-    protected abstract void build();
+    protected abstract void build(T parameter);
 
     protected abstract void bindEvents();
 

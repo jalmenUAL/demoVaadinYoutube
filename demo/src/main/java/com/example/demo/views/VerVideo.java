@@ -42,13 +42,7 @@ public class VerVideo extends BaseParameterizedView<Integer> {
         this.viewFactory = viewFactory;
     }
 
-    @Override
-    protected void build(Integer parameter) {
-
-        video = iInicio.findVideoById(parameter);
-
-        
-    }
+   
 
     @Override
     protected void bindEvents() {
@@ -77,7 +71,9 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     }
 
     @Override
-    protected void build() {
+   protected void build(Integer parameter) {
+
+        video = iInicio.findVideoById(parameter);
       video_y_relacionados = new HorizontalLayout();
         frame_y_comentarios = new VerticalLayout();
         comentarios = new VerticalLayout();

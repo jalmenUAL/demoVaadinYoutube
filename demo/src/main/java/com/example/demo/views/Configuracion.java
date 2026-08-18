@@ -42,6 +42,7 @@ public class Configuracion extends BaseView {
         public Configuracion(iYoutuber iYoutuber) {
                 super();
                 this._iYoutuber = iYoutuber;
+                initView();
         }
 
         @Override

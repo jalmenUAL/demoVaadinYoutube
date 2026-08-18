@@ -33,6 +33,19 @@ public class Comentar extends BaseParameterizedView<String> {
     protected void build(String parameter) {
         id = Integer.parseInt(parameter);
 
+         setWidthFull();
+        setPadding(true);
+        setSpacing(true);
+        setAlignItems(Alignment.STRETCH);
+        campoComentario = new TextField("Escribe un comentario");
+        campoComentario.setWidthFull();
+
+        btnPublicar = new Button("Publicar comentario");
+        btnPublicar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnPublicar.setWidthFull();
+
+        add(campoComentario, btnPublicar);
+
     }
 
     @Override
@@ -60,21 +73,5 @@ public class Comentar extends BaseParameterizedView<String> {
 
         UI.getCurrent().getPage().getHistory().back();
     }
-
-    @Override
-    protected void build() {
-        setWidthFull();
-        setPadding(true);
-        setSpacing(true);
-        setAlignItems(Alignment.STRETCH);
-        campoComentario = new TextField("Escribe un comentario");
-        campoComentario.setWidthFull();
-
-        btnPublicar = new Button("Publicar comentario");
-        btnPublicar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        btnPublicar.setWidthFull();
-
-        add(campoComentario, btnPublicar);
-    }
-
+ 
 }

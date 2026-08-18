@@ -10,7 +10,7 @@ public abstract class BaseListView<T> extends BaseView {
 
         this.elements = elements;
 
-        initView();
+        
     }
 
     @Override

@@ -30,6 +30,7 @@ public class PublicarVideo extends BaseView {
         public PublicarVideo(iYoutuber iYoutuber) {
                 super();
                 this._iYoutuber = iYoutuber;
+                initView();
 
         }
 

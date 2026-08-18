@@ -34,6 +34,7 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
         super(youtubers);
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;
+        initView();
     }
 
 
@@ -43,11 +44,6 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
 
     @Override
     public void setParameter(BeforeEvent event, String parameter) {
-
-        
-        
-
-        
 
         if (youtubers == null) {
 
@@ -104,6 +100,10 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
 
     @Override
     protected void buildItems() {
+
+       if (youtubers == null) {
+
+        } else  
        for (com.example.demo.tables.Youtuber youtuber : youtubers) {
 
                 Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber, viewFactory);
@@ -112,6 +112,7 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
 
                 gridContainer.add(youtuberItem);
             }
+        
     }
 
 
