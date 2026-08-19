@@ -11,6 +11,7 @@ public class Videosgustados_item extends ListadeVideos_item {
 
     public Videosgustados_item(Video video, ViewFactoryProvider viewFactory) {
         super(video, viewFactory);
+        
          
     }
 }

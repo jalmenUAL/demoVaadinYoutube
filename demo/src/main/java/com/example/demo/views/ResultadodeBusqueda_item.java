@@ -10,6 +10,7 @@ public class ResultadodeBusqueda_item extends GaleradeVideos_item {
 
     public ResultadodeBusqueda_item(Video video, ViewFactoryProvider viewFactory) {
         super(video, viewFactory);
+        
 
     }
 }

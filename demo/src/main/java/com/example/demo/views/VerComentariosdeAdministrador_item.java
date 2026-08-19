@@ -18,6 +18,7 @@ public class VerComentariosdeAdministrador_item extends VerComentarios_item {
             ViewFactory viewFactory) {
         super(comentario, viewFactory);
         this.iAdministrador = iAdministrador;
+        
 
     }
 

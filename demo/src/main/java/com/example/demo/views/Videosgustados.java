@@ -12,6 +12,7 @@ import com.vaadin.flow.router.Route;
 public class Videosgustados extends ListadeVideos {
 	public Videosgustados(Set<Video> videos, ViewFactoryProvider viewFactory) {
 		super(videos, viewFactory);
+		 
  	}
 
 	 

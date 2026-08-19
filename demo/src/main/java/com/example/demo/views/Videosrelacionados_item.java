@@ -21,6 +21,7 @@ public class Videosrelacionados_item extends BaseItemView<Video> {
 
     public Videosrelacionados_item(Video video, ViewFactoryProvider viewFactory) {
         super(video);
+         initView();
 
     }
 

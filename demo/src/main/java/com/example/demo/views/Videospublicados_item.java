@@ -11,5 +11,6 @@ public class Videospublicados_item extends ListadeVideos_item {
 
     public Videospublicados_item(Video video, ViewFactoryProvider viewFactory) {
         super(video, viewFactory);
+         
      }
 }

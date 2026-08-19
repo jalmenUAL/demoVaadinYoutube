@@ -18,6 +18,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("Perfil")
+
 public class Perfil extends BaseParameterizedView<String> {
 
     public Videosgustados _videosgustados;
@@ -38,6 +39,7 @@ public class Perfil extends BaseParameterizedView<String> {
     public Perfil(iInicio iInicio, ViewFactoryProvider viewFactory) {
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;
+         
         
     }
  

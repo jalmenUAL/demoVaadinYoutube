@@ -16,6 +16,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -33,7 +34,7 @@ public class Youtuber extends Registrado {
         public Youtuber(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
                 super(iYoutuber, viewFactory);
                 this.iYoutuber = iYoutuber;
-                initView();
+                  
                  
         }
 
@@ -89,12 +90,7 @@ public class Youtuber extends Registrado {
                                 .set("margin", "10px")
                                 .set("border-radius", "8px");
 
-                header.setWidthFull();
-                header.setJustifyContentMode(
-                                JustifyContentMode.END);
-
-                header.setPadding(true);
-                header.add(perfilBtn);
+                
         }
 
         @Override

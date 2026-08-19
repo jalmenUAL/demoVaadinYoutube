@@ -40,6 +40,7 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     public VerVideo(iInicio iInicio, ViewFactoryProvider viewFactory) {
         this.iInicio = iInicio;
         this.viewFactory = viewFactory;
+        
     }
 
    

@@ -35,7 +35,7 @@ public class NoLogueado extends Inicio {
 
                 super(iNoLogueado, viewFactory);
                 this._iNoLogueado = iNoLogueado;
-                initView();
+                 
                 
 
         }

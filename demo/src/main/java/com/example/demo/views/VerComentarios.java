@@ -22,6 +22,7 @@ public class VerComentarios extends BaseListView<Comentario> {
     public VerComentarios(Set<Comentario> comentarios, ViewFactoryProvider factory) {
         super(comentarios);
         this.factory = factory;
+         initView();
 
     }
 

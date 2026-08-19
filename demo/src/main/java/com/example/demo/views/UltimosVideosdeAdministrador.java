@@ -13,6 +13,7 @@ public class UltimosVideosdeAdministrador extends UltimosVideos {
 public UltimosVideosdeAdministrador(List<Video> videos, ViewFactoryProvider viewFactory) {
 		
 		super(videos, viewFactory);
+		 
 			
 			
 	}
@@ -20,6 +21,7 @@ public void build() {
 		
 		super.build();
 		tituloGaleria.setText("Todos los videos");
+		
 	}
 	
 }

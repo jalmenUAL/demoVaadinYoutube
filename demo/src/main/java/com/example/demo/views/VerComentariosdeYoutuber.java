@@ -19,6 +19,7 @@ public class VerComentariosdeYoutuber extends VerComentarios {
     public VerComentariosdeYoutuber(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory) {
         super(comentarios, viewFactory);
         this.id = Integer.toString(idvideo);
+        
 
     }
 

@@ -26,7 +26,7 @@ public class Administrador extends Registrado {
     public Administrador(iAdministrador iAdministrador, ViewFactoryProvider viewFactory) {
         super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;
-        initView();
+        
     }
 
     @Override

@@ -14,6 +14,7 @@ public class UltimosVideos extends GaleradeVideos {
 
     public UltimosVideos(List<Video> videos, ViewFactoryProvider viewFactory) {
         super(videos, viewFactory);
+        
     }
 
     @Override

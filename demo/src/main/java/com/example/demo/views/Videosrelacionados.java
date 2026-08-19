@@ -20,6 +20,7 @@ public class Videosrelacionados extends BaseListView<Video> {
     public Videosrelacionados(List<Video> videosrelacionados,ViewFactoryProvider viewFactory) {
         super(videosrelacionados);
         this.viewFactory = viewFactory;
+         initView();
     }
 
     @Override

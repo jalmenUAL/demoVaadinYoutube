@@ -25,6 +25,7 @@ public class ListadeVideos_item extends BaseItemView<Video> {
         public ListadeVideos_item(Video video,ViewFactoryProvider viewFactory) {
                 super(video);
                 this.viewFactory = viewFactory;
+                 initView();
         }
 
         @Override

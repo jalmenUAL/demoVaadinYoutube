@@ -27,12 +27,13 @@ public class Comentar extends BaseParameterizedView<String> {
 
     public Comentar(iYoutuber iYoutuber) {
         this._iYoutuber = iYoutuber;
+       
     }
 
     @Override
     protected void build(String parameter) {
         id = Integer.parseInt(parameter);
-
+         
          setWidthFull();
         setPadding(true);
         setSpacing(true);

@@ -24,6 +24,7 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
         public GaleradeVideos_item(Video video, ViewFactoryProvider viewFactory) {
                 super(video);
                 this.viewFactory = viewFactory;
+                 initView();
         }
 
         @Override

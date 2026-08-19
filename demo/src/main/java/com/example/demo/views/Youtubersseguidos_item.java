@@ -24,7 +24,7 @@ public class Youtubersseguidos_item extends BaseItemView<com.example.demo.tables
     public Youtubersseguidos_item(com.example.demo.tables.Youtuber youtuber,ViewFactoryProvider viewFactory) {
         super(youtuber);
         this.viewFactory = viewFactory;
-
+         initView();
     }
 
     public void PerfilAjeno() {

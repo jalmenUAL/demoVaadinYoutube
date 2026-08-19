@@ -25,6 +25,7 @@ public class GaleradeVideos extends BaseListView<Video> {
     public GaleradeVideos(List<Video> videos, ViewFactoryProvider factory) {
         super(videos);
         this.viewFactory = factory;
+        initView();
     }
 
      @Override

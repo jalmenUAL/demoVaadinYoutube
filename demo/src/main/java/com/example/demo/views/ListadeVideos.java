@@ -21,6 +21,7 @@ public class ListadeVideos extends BaseListView<Video> {
     public ListadeVideos(Set<Video> videos, ViewFactoryProvider factory) {
         super(videos);
         this.viewFactory = factory;
+         initView();
     }
 
     @Override

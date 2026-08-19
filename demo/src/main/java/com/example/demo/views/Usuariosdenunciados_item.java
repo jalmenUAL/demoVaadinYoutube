@@ -19,6 +19,7 @@ public class Usuariosdenunciados_item extends BaseItemView<com.example.demo.tabl
                         com.example.demo.tables.Youtuber youtuber) {
 
                 super(youtuber);
+                 initView();
 
         }
 

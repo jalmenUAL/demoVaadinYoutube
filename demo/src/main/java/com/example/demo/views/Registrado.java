@@ -24,6 +24,7 @@ public abstract class Registrado extends Inicio {
     public Registrado(iRegistrado iRegistrado, ViewFactoryProvider viewFactory) {
         super(iRegistrado, viewFactory);
         this.iRegistrado = iRegistrado;
+         
     }
 
      

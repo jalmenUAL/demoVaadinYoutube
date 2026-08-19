@@ -21,6 +21,7 @@ public class Usuariosdenunciados extends BaseListView<com.example.demo.tables.Yo
         public Usuariosdenunciados(
                         List<com.example.demo.tables.Youtuber> youtubers) {
                 super(youtubers);
+                 initView();
 
         }
 

@@ -16,6 +16,7 @@ public class VerComentariosdeAdministrador extends VerComentarios {
             Set<Comentario> comentarios, ViewFactoryProvider viewFactory) {
 
         super(comentarios, viewFactory);
+         
 
     }
 

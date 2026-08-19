@@ -2,7 +2,6 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.iInicio;
@@ -10,10 +9,12 @@ import com.example.demo.tables.Video;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 @Route("Buscar")
+ 
 public class Buscar extends BaseView {
 
     public ResultadodeBusqueda _resultadodeBusqueda;
@@ -23,6 +24,7 @@ public class Buscar extends BaseView {
     private TextField textoBuscar;
     public Button botonBuscar;
     HorizontalLayout buscarLayout;
+    VerticalLayout resultadosBusquedaLayout;
 
     private List<Video> resultados;
 
@@ -31,7 +33,8 @@ public class Buscar extends BaseView {
     public Buscar(iInicio iInicio, ViewFactoryProvider viewFactory) {
 
         this._iInicio = iInicio;
-        this.viewFactory = viewFactory;
+        this.viewFactory = viewFactory;    
+        initView();
     }
 
     @Override
@@ -49,7 +52,10 @@ public class Buscar extends BaseView {
         buscarLayout.setWidthFull();
         buscarLayout.setFlexGrow(1, textoBuscar);
 
-        add(buscarLayout);
+        resultadosBusquedaLayout = new VerticalLayout();
+        resultadosBusquedaLayout.setWidthFull();
+
+        add(buscarLayout, resultadosBusquedaLayout);
     }
 
     @Override
@@ -60,9 +66,9 @@ public class Buscar extends BaseView {
         });
 
     }
-
+    
     public void ResultadodeBusqueda() {
         _resultadodeBusqueda = new ResultadodeBusqueda(resultados, viewFactory);
-        buscarLayout.add(_resultadodeBusqueda);
+        resultadosBusquedaLayout .add(_resultadodeBusqueda);
     }
 }

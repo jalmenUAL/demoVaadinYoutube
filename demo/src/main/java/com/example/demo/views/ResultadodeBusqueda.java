@@ -15,12 +15,14 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
     public ResultadodeBusqueda(List<Video> resultados, ViewFactoryProvider viewFactory) {
         super(resultados, viewFactory);
+      
     }
 
     @Override
     protected void build() {
-        tituloGaleria.setText("Resultados de la búsqueda");
+       
         super.build();
+         tituloGaleria.setText("Resultados de la búsqueda");
 
     }
 

@@ -4,6 +4,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public abstract class BaseView extends VerticalLayout {
 
+    
+
     protected final void initView() {
         build();
         bindEvents();
@@ -12,5 +14,4 @@ public abstract class BaseView extends VerticalLayout {
     protected abstract void build();
 
     protected abstract void bindEvents();
-    
 }

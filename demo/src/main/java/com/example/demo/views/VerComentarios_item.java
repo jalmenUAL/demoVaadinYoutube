@@ -26,6 +26,7 @@ public class VerComentarios_item extends BaseItemView<Comentario> {
     public VerComentarios_item(Comentario comentario, ViewFactory viewFactory) {
         super(comentario);
         this.viewFactory = viewFactory;
+         initView();
     }
 
     public void PerfilAjeno() {

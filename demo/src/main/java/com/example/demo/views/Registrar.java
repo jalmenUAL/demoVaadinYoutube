@@ -42,6 +42,7 @@ public class Registrar extends BaseView {
         public Registrar(iNoLogueado iNoLogueado) {
                 super();
                 this._iNoLogueado = iNoLogueado;
+                initView();
 
         }
 

@@ -12,6 +12,7 @@ public class UltimosVideosdeYoutuber extends UltimosVideos {
 
 public UltimosVideosdeYoutuber(List<Video> videos, ViewFactoryProvider viewFactory) {
 	super(videos, viewFactory);	 
+	  
 	
 }
 

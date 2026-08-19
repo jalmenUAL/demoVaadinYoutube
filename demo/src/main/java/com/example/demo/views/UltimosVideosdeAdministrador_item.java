@@ -10,6 +10,7 @@ public class UltimosVideosdeAdministrador_item extends UltimosVideos_item {
 
     public UltimosVideosdeAdministrador_item(Video video,ViewFactoryProvider viewFactory) {
         super(video, viewFactory);
+        
 
     }
 }
