@@ -14,6 +14,7 @@ import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
 
+//@Route("PublicarVideo")
 @Route("PublicarVideo")
 @RolesAllowed("ROLE_YOUTUBER")
 public class PublicarVideo extends BaseView {

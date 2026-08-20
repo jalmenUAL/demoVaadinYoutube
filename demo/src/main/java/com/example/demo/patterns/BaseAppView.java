@@ -11,6 +11,10 @@ public abstract class BaseAppView extends AppLayout {
     protected VerticalLayout body;
 
     public BaseAppView() {
+        
+    }
+
+    public void initView() {
         buildLayout();
         build();
         bindEvents();

@@ -8,6 +8,7 @@ import com.example.demo.factories.NoLogueadoViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iNoLogueado;
 import com.example.demo.tables.Video;
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -35,7 +36,7 @@ public class NoLogueado extends Inicio {
 
                 super(iNoLogueado, viewFactory);
                 this._iNoLogueado = iNoLogueado;
-                 
+                  initView();
                 
 
         }
@@ -64,10 +65,12 @@ public class NoLogueado extends Inicio {
                 
         }
 
+         
+
         @Override
         protected void bindEvents() {
 
-               
+               super.bindEvents();
 
                 loginButton.addClickListener(e -> Login());
 

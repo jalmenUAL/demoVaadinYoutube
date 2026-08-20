@@ -34,7 +34,7 @@ public class Youtuber extends Registrado {
         public Youtuber(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
                 super(iYoutuber, viewFactory);
                 this.iYoutuber = iYoutuber;
-                  
+                   initView();
                  
         }
 
@@ -89,7 +89,8 @@ public class Youtuber extends Registrado {
                 perfilBtn.getStyle()
                                 .set("margin", "10px")
                                 .set("border-radius", "8px");
-
+                header.add(perfilBtn);
+                header.setJustifyContentMode(JustifyContentMode.END);
                 
         }
 

@@ -26,7 +26,7 @@ public class Administrador extends Registrado {
     public Administrador(iAdministrador iAdministrador, ViewFactoryProvider viewFactory) {
         super(iAdministrador, viewFactory);
         this.iAdministrador = iAdministrador;
-        
+        initView();
     }
 
     @Override
@@ -48,6 +48,13 @@ public class Administrador extends Registrado {
         body.add(_usuariosdenunciados);
     }
 
-    
+     @Override
+        protected void bindEvents() {
+                super.bindEvents();
+
+                
+        
+ 
+}
 
 }
