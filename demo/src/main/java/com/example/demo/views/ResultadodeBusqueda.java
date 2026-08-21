@@ -15,6 +15,7 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
     public ResultadodeBusqueda(List<Video> resultados, ViewFactoryProvider viewFactory) {
         super(resultados, viewFactory);
+         
       
     }
 
@@ -28,6 +29,7 @@ public class ResultadodeBusqueda extends GaleradeVideos {
 
     @Override
     protected void buildItems() {
+        
         for (Video video : elements) {
             ResultadodeBusqueda_item item = new ResultadodeBusqueda_item(video, viewFactory);
             carrusel.add(item);

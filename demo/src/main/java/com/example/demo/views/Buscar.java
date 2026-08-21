@@ -72,16 +72,10 @@ public class Buscar extends BaseView {
         botonBuscar.addClickListener(e -> Buscar());
     }
 
-   public void Buscar() {
-
-   
+   public void Buscar() {   
     List<Video> resultados =
             _iInicio.buscar(textoBuscar.getValue());
-
-    
-
     if (onResultado != null) {
-         
         onResultado.accept(resultados);
     }  
 }

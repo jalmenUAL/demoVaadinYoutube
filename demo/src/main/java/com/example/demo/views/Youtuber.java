@@ -55,6 +55,8 @@ public class Youtuber extends Registrado {
                         videos.addAll(seguido.getHa_publicado());
                 }
 
+                
+
                 videos.addAll(usuario.getHa_publicado());
 
                 _ultimosVideos = new UltimosVideosdeYoutuber(videos, viewFactory);

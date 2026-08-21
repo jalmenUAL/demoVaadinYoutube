@@ -25,56 +25,52 @@ public abstract class Inicio extends BaseAppView {
         super();
         this.iInicio = iInicio;
         this.viewFactory = viewFactory;
-        
+
     }
 
     @Override
-protected void build() {
+    protected void build() {
 
-    Div youtubeLogo = new Div();
-    youtubeLogo.setText("YouTube");
+        Div youtubeLogo = new Div();
+        youtubeLogo.setText("YouTube");
 
-    youtubeLogo.getStyle()
-            .set("background-color", "#FF0000")
-            .set("color", "white")
-            .set("font-weight", "bold")
-            .set("font-size", "1.8em")
-            .set("padding", "10px 22px")
-            .set("border-radius", "8px");
+        youtubeLogo.getStyle()
+                .set("background-color", "#FF0000")
+                .set("color", "white")
+                .set("font-weight", "bold")
+                .set("font-size", "1.8em")
+                .set("padding", "10px 22px")
+                .set("border-radius", "8px");
 
-    header.setAlignItems(Alignment.CENTER);
-    header.setSpacing(true);
+        header.setAlignItems(Alignment.CENTER);
+        header.setSpacing(true);
 
-    header.add(youtubeLogo);
+        header.add(youtubeLogo);
 
-    _buscar = new Buscar(iInicio, viewFactory);
+        _buscar = new Buscar(iInicio, viewFactory);
 
-    header.add(_buscar);
-}
+        header.add(_buscar);
+    }
 
-   @Override
-protected void bindEvents() {
+    @Override
+    protected void bindEvents() {
 
-  
+        _buscar.setOnResultado(resultados -> {
 
-    _buscar.setOnResultado(resultados -> {
+            body.removeAll();
 
-       
+            ResultadodeBusqueda vista = new ResultadodeBusqueda(
+                    resultados,
+                    viewFactory);
 
-        body.removeAll();
+            body.add(vista);
+        });
+    }
 
-        ResultadodeBusqueda vista =
-                new ResultadodeBusqueda(
-                        resultados,
-                        viewFactory);
-
-        body.add(vista);
-    });
-}
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
-      
+
         UltimosVideos();
     }
 
