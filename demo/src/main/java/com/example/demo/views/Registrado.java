@@ -64,7 +64,7 @@ public abstract class Registrado extends Inicio {
 
     @Override
     protected void bindEvents() {
-        
+        super.bindEvents();
 
         logoutButton.addClickListener(e -> Logout());
     }

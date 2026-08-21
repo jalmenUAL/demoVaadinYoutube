@@ -1,5 +1,7 @@
 package com.example.demo.facade;
 
+import com.example.demo.repositories.RepositorioYoutuber;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -22,17 +24,19 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iRegistrado, iInicio {
+    private final RepositorioYoutuber repositorioYoutuber;
     public BD_Videos _videos;
     public BD_Comentarios _comentarios;
     public BD_Youtubers _youtubers;
     public BD_Administradores _administradores;
 
     public BDPrincipal(BD_Videos videos, BD_Comentarios comentarios, BD_Youtubers youtubers,
-            BD_Administradores administradores) {
+            BD_Administradores administradores, RepositorioYoutuber repositorioYoutuber) {
         this._youtubers = youtubers;
         this._administradores = administradores;
         this._videos = videos;
         this._comentarios = comentarios;
+        this.repositorioYoutuber = repositorioYoutuber;
     }
 
     @Override
@@ -69,8 +73,14 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
     }
 
     @Override
-    public void actualizarConfiguracion(String login, String password, String avatar, String imagenFondo) {
-        _youtubers.actualizarConfiguracion(login, password, avatar, imagenFondo);
+    public void actualizarConfiguracion(String login,
+        String password,
+        InputStream avatar,
+        String avatarNombre,
+        InputStream fondo,
+        String fondoNombre) {
+         
+        _youtubers.actualizarConfiguracion(login, password, avatar, avatarNombre, fondo, fondoNombre);
     }
 
     @Override
@@ -142,16 +152,33 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
 
     @Override
     public void likeVideo(String loginYoutuber, Integer idVideo) {
-        Youtuber usuario = _youtubers.findYoutuberById(loginYoutuber);
-        Video video = _videos.findVideoById(idVideo);
+
+    Youtuber usuario =
+            _youtubers.findYoutuberById(loginYoutuber);
+
+    Video video =
+            _videos.findVideoById(idVideo);
+
+    if (!usuario.getLe_gusta().contains(video)) {
+
         usuario.getLe_gusta().add(video);
+        
+        repositorioYoutuber.save(usuario);
+        
     }
+}
 
     @Override
     public void dislikeVideo(String loginYoutuber, Integer idVideo) {
         Youtuber usuario = _youtubers.findYoutuberById(loginYoutuber);
         Video video = _videos.findVideoById(idVideo);
+       if (!usuario.getLe_gusta().contains(video)) {
+
         usuario.getLe_gusta().remove(video);
+        
+        repositorioYoutuber.save(usuario);
+        
+    }
     }
 
     @Override

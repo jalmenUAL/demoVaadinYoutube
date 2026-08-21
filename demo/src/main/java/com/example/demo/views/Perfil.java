@@ -73,15 +73,18 @@ public class Perfil extends BaseParameterizedView<String> {
         // Banner
         // --------------------------------
 
-        String bannerUrl = _usuario.getBanner();
+         
 
-        if (bannerUrl == null || bannerUrl.isBlank()) {
+       String bannerUrl = _usuario.getBanner();
 
-            bannerUrl =
-                    "https://images.unsplash.com/photo-1485846234645-a62644f84728"
-                    + "?auto=format&fit=crop&w=1600&q=80";
-        }
+if (bannerUrl == null
+        || bannerUrl.isBlank()
+        || bannerUrl.startsWith("VAADIN/dynamic/resource")) {
 
+    bannerUrl =
+            "https://images.unsplash.com/photo-1485846234645-a62644f84728"
+            + "?auto=format&fit=crop&w=1600&q=80";
+}
         Image imagenDeFondo = new Image(
                 bannerUrl,
                 "Imagen de fondo");
@@ -135,9 +138,18 @@ public class Perfil extends BaseParameterizedView<String> {
         // Avatar
         // --------------------------------
 
-        Avatar avatar = new Avatar(
-                _usuario.getLogin(),
-                _usuario.getFotoPerfil());
+        String avatarUrl = _usuario.getFotoPerfil();
+
+if (avatarUrl == null
+        || avatarUrl.isBlank()
+        || avatarUrl.startsWith("VAADIN/dynamic/resource")) {
+
+    avatarUrl = "https://i.pravatar.cc/150";
+}
+
+Avatar avatar = new Avatar(
+        _usuario.getLogin(),
+        avatarUrl);
 
         avatar.setWidth("100px");
         avatar.setHeight("100px");

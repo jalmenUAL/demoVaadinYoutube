@@ -40,10 +40,8 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     public VerVideo(iInicio iInicio, ViewFactoryProvider viewFactory) {
         this.iInicio = iInicio;
         this.viewFactory = viewFactory;
-        
-    }
 
-   
+    }
 
     @Override
     protected void bindEvents() {
@@ -69,14 +67,14 @@ public class VerVideo extends BaseParameterizedView<Integer> {
     public void PerfilAjeno() {
 
         UI.getCurrent().navigate(
-                viewFactory.getFactory().createPerfilAjeno(),video.getEs_de().getLogin());
+                viewFactory.getFactory().createPerfilAjeno(), video.getEs_de().getLogin());
     }
 
     @Override
-   protected void build(Integer parameter) {
+    protected void build(Integer parameter) {
 
         video = iInicio.findVideoById(parameter);
-      video_y_relacionados = new HorizontalLayout();
+        video_y_relacionados = new HorizontalLayout();
         frame_y_comentarios = new VerticalLayout();
         comentarios = new VerticalLayout();
         relacionados = new VerticalLayout();

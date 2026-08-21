@@ -29,153 +29,275 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_YOUTUBER")
 public class Configuracion extends BaseView {
 
-        private final iYoutuber _iYoutuber;
+    private final iYoutuber _iYoutuber;
 
-        private Image imagenDeFondo;
-        private Image avatar;
-        private TextField password;
-        private Button actualizar;
+    private Image imagenDeFondo;
+    private Image avatar;
+    private TextField password;
+    private Button actualizar;
 
-        private MemoryBuffer avatarBuffer;
-        private MemoryBuffer fondoBuffer;
+    private MemoryBuffer avatarBuffer;
+    private MemoryBuffer fondoBuffer;
 
-        public Configuracion(iYoutuber iYoutuber) {
-                super();
-                this._iYoutuber = iYoutuber;
-                initView();
-        }
+    private Upload uploadAvatar;
+    private Upload uploadFondo;
 
-        @Override
-        protected void build() {
-                setSizeFull();
-                setAlignItems(Alignment.CENTER);
-                setJustifyContentMode(JustifyContentMode.CENTER);
-                setSpacing(true);
-                H1 heading = new H1("Configuración");
-                heading.getStyle().set("color", "#2c3e50");
+    public Configuracion(iYoutuber iYoutuber) {
+        super();
+        this._iYoutuber = iYoutuber;
+        initView();
+    }
 
-                VerticalLayout datosLayout = new VerticalLayout();
-                datosLayout.setAlignItems(Alignment.CENTER);
+    @Override
+    protected void build() {
 
-                password = new TextField("New Password");
-                datosLayout.add(password);
+        setSizeFull();
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(
+                JustifyContentMode.CENTER);
+        setSpacing(true);
 
-                VerticalLayout avatarLayout = new VerticalLayout();
-                avatarLayout.setAlignItems(Alignment.CENTER);
+        H1 heading =
+                new H1("Configuración");
 
-                Span avatarLabel = new Span("Avatar");
-                avatar = new Image();
-                avatar.setMaxWidth("300px");
+        heading.getStyle()
+                .set("color", "#2c3e50");
 
-                avatarBuffer = new MemoryBuffer();
-                Upload uploadAvatar = new Upload(avatarBuffer);
-                uploadAvatar.setAcceptedFileTypes(
-                                "image/jpeg",
-                                "image/png",
-                                "image/gif");
+        // -------------------------
+        // Contraseña
+        // -------------------------
 
-                avatarLayout.add(avatarLabel, uploadAvatar, avatar);
+        VerticalLayout datosLayout =
+                new VerticalLayout();
 
-                VerticalLayout fondoLayout = new VerticalLayout();
-                fondoLayout.setAlignItems(Alignment.CENTER);
+        datosLayout.setAlignItems(
+                Alignment.CENTER);
 
-                Span fondoLabel = new Span("Imagen de fondo");
-                imagenDeFondo = new Image();
-                imagenDeFondo.setMaxWidth("300px");
+        password =
+                new TextField("Nueva contraseña");
 
-                fondoBuffer = new MemoryBuffer();
-                Upload uploadFondo = new Upload(fondoBuffer);
-                uploadFondo.setAcceptedFileTypes(
-                                "image/jpeg",
-                                "image/png",
-                                "image/gif");
+        datosLayout.add(password);
 
-                fondoLayout.add(fondoLabel, uploadFondo, imagenDeFondo);
+        // -------------------------
+        // Avatar
+        // -------------------------
 
-                HorizontalLayout imagenesLayout = new HorizontalLayout(avatarLayout, fondoLayout);
-                imagenesLayout.setAlignItems(Alignment.START);
-                imagenesLayout.setSpacing(true);
+        VerticalLayout avatarLayout =
+                new VerticalLayout();
 
-                actualizar = new Button(
-                                "Actualizar",
-                                new Icon(VaadinIcon.REFRESH));
+        avatarLayout.setAlignItems(
+                Alignment.CENTER);
 
-                actualizar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Span avatarLabel =
+                new Span("Avatar");
 
-                VerticalLayout contenido = new VerticalLayout(
-                                datosLayout,
-                                imagenesLayout,
-                                actualizar);
+        avatar =
+                new Image();
 
-                contenido.setAlignItems(Alignment.CENTER);
-                contenido.setSpacing(true);
-                contenido.setPadding(true);
+        avatar.setMaxWidth("300px");
 
-                add(heading, contenido);
+        avatarBuffer =
+                new MemoryBuffer();
 
-                uploadAvatar.setId("uploadAvatar");
-                uploadFondo.setId("uploadFondo");
-        }
+        uploadAvatar =
+                new Upload(avatarBuffer);
 
-        @Override
-        protected void bindEvents() {
+        uploadAvatar.setAcceptedFileTypes(
+                "image/jpeg",
+                "image/png",
+                "image/gif");
 
-                Upload uploadAvatar = (Upload) getChildren()
-                                .flatMap(component -> component.getChildren())
-                                .filter(component -> component instanceof Upload
-                                                && "uploadAvatar".equals(component.getId().orElse("")))
-                                .findFirst()
-                                .orElse(null);
+        avatarLayout.add(
+                avatarLabel,
+                uploadAvatar,
+                avatar);
 
-                Upload uploadFondo = (Upload) getChildren()
-                                .flatMap(component -> component.getChildren())
-                                .filter(component -> component instanceof Upload
-                                                && "uploadFondo".equals(component.getId().orElse("")))
-                                .findFirst()
-                                .orElse(null);
+        // -------------------------
+        // Fondo
+        // -------------------------
 
-                if (uploadAvatar != null) {
-                        uploadAvatar.addSucceededListener(event -> {
+        VerticalLayout fondoLayout =
+                new VerticalLayout();
 
-                                InputStream inputStream = avatarBuffer.getInputStream();
+        fondoLayout.setAlignItems(
+                Alignment.CENTER);
 
-                                StreamResource resource = new StreamResource(
-                                                event.getFileName(),
-                                                () -> inputStream);
+        Span fondoLabel =
+                new Span("Imagen de fondo");
 
-                                avatar.setSrc(resource);
+        imagenDeFondo =
+                new Image();
 
-                        });
-                }
+        imagenDeFondo.setMaxWidth("300px");
 
-                if (uploadFondo != null) {
-                        uploadFondo.addSucceededListener(event -> {
+        fondoBuffer =
+                new MemoryBuffer();
 
-                                InputStream inputStream = fondoBuffer.getInputStream();
+        uploadFondo =
+                new Upload(fondoBuffer);
 
-                                StreamResource resource = new StreamResource(
-                                                event.getFileName(),
-                                                () -> inputStream);
+        uploadFondo.setAcceptedFileTypes(
+                "image/jpeg",
+                "image/png",
+                "image/gif");
 
-                                imagenDeFondo.setSrc(resource);
+        fondoLayout.add(
+                fondoLabel,
+                uploadFondo,
+                imagenDeFondo);
 
-                        });
-                }
+        // -------------------------
+        // Imágenes
+        // -------------------------
 
-                actualizar.addClickListener(event -> {
-                        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HorizontalLayout imagenesLayout =
+                new HorizontalLayout(
+                        avatarLayout,
+                        fondoLayout);
 
-                        com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth
-                                        .getPrincipal();
+        imagenesLayout.setAlignItems(
+                Alignment.START);
 
-                        _iYoutuber.actualizarConfiguracion(
-                                        usuario.getLogin(),
-                                        password.getValue(),
-                                        avatar.getSrc(),
-                                        imagenDeFondo.getSrc());
+        imagenesLayout.setSpacing(true);
 
-                        UI.getCurrent().getPage().getHistory().back();
-                });
-        }
+        // -------------------------
+        // Botón
+        // -------------------------
 
+        actualizar =
+                new Button(
+                        "Actualizar",
+                        new Icon(VaadinIcon.REFRESH));
+
+        actualizar.addThemeVariants(
+                ButtonVariant.LUMO_PRIMARY);
+
+        // -------------------------
+        // Contenido
+        // -------------------------
+
+        VerticalLayout contenido =
+                new VerticalLayout(
+                        datosLayout,
+                        imagenesLayout,
+                        actualizar);
+
+        contenido.setAlignItems(
+                Alignment.CENTER);
+
+        contenido.setSpacing(true);
+        contenido.setPadding(true);
+
+        add(
+                heading,
+                contenido);
+    }
+
+    @Override
+    protected void bindEvents() {
+
+        // =========================
+        // PREVISUALIZAR AVATAR
+        // =========================
+
+        uploadAvatar.addSucceededListener(event -> {
+
+            InputStream inputStream =
+                    avatarBuffer.getInputStream();
+
+            StreamResource resource =
+                    new StreamResource(
+                            event.getFileName(),
+                            () -> inputStream);
+
+            avatar.setSrc(resource);
+        });
+
+        // =========================
+        // PREVISUALIZAR FONDO
+        // =========================
+
+        uploadFondo.addSucceededListener(event -> {
+
+            InputStream inputStream =
+                    fondoBuffer.getInputStream();
+
+            StreamResource resource =
+                    new StreamResource(
+                            event.getFileName(),
+                            () -> inputStream);
+
+            imagenDeFondo.setSrc(resource);
+        });
+
+        // =========================
+        // ACTUALIZAR
+        // =========================
+
+        actualizar.addClickListener(event -> {
+
+            Authentication auth =
+                    SecurityContextHolder
+                            .getContext()
+                            .getAuthentication();
+
+            if (auth == null ||
+                    !auth.isAuthenticated()) {
+
+                return;
+            }
+
+            com.example.demo.tables.Youtuber usuario =
+                    (com.example.demo.tables.Youtuber)
+                            auth.getPrincipal();
+
+            String passwordValue =
+                    password.getValue();
+
+            InputStream avatarInput =
+                    null;
+
+            InputStream fondoInput =
+                    null;
+
+            String avatarNombre =
+                    null;
+
+            String fondoNombre =
+                    null;
+
+            if (avatarBuffer.getFileName() != null
+                    && !avatarBuffer.getFileName().isBlank()) {
+
+                avatarInput =
+                        avatarBuffer.getInputStream();
+
+                avatarNombre =
+                        avatarBuffer.getFileName();
+            }
+
+            if (fondoBuffer.getFileName() != null
+                    && !fondoBuffer.getFileName().isBlank()) {
+
+                fondoInput =
+                        fondoBuffer.getInputStream();
+
+                fondoNombre =
+                        fondoBuffer.getFileName();
+            }
+
+            _iYoutuber.actualizarConfiguracion(
+                    usuario.getLogin(),
+                    passwordValue,
+                    avatarInput,
+                    avatarNombre,
+                    fondoInput,
+                    fondoNombre);
+
+            UI.getCurrent()
+                    .getPage()
+                    .getHistory()
+                    .back();
+        });
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.io.InputStream;
+
 import com.example.demo.tables.Video;
 
 public interface iYoutuber extends iRegistrado {
@@ -10,7 +12,13 @@ public interface iYoutuber extends iRegistrado {
 
     void publicarComentario(String loginYoutuber, String idVideo, String contenido);
 
-    void actualizarConfiguracion(String loginYoutuber, String password, String avatar, String imagenFondo);
+    void actualizarConfiguracion(
+        String login,
+        String password,
+        InputStream avatar,
+        String avatarNombre,
+        InputStream fondo,
+        String fondoNombre);
 
     void seguirUsuario(String loginSeguidor, String loginSeguido);
 
