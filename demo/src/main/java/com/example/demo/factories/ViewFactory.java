@@ -15,13 +15,13 @@ public interface ViewFactory {
 
     Class<? extends PerfilAjeno> createPerfilAjeno();
 
-    VerComentarios createVerComentarios(Set<Comentario> comentarios);
+    VerComentarios createVerComentarios(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory);
 
     Class<? extends GaleradeVideos_item> createGaleriaItem();
 
-    VerComentarios_item createComentarioItem(Comentario comentario);
+    VerComentarios_item createVerComentariosItem(Comentario comentario, ViewFactoryProvider viewFactory);
 
-    VerComentarios createVerComentariosItem(Set<Comentario> comentarios);
+     
 
  
 

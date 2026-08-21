@@ -61,8 +61,8 @@ public class VerVideo extends BaseParameterizedView<Integer> {
 
     public void VerComentarios() {
         comentarios.removeAll();
-        _verComentarios = viewFactory.getFactory().createVerComentarios();
-        new VerComentarios(video.getTiene_comentarios(), viewFactory);
+        _verComentarios = viewFactory.getFactory().createVerComentarios(
+                video.getTiene_comentarios(), video.getId(), viewFactory);
         comentarios.add(_verComentarios);
     }
 

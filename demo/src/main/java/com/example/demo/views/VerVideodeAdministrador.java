@@ -47,7 +47,7 @@ public class VerVideodeAdministrador extends VerVideo {
     @Override
     public void VerComentarios() {
 
-        _verComentarios = new VerComentariosdeAdministrador( iAdministrador, video.getTiene_comentarios(),viewFactory   );
+        _verComentarios = new VerComentariosdeAdministrador( iAdministrador, video.getTiene_comentarios(), video.getId(), viewFactory   );
         comentarios.add(_verComentarios);
 
     }

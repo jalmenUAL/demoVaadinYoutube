@@ -26,8 +26,8 @@ public class YoutuberViewFactory implements ViewFactory {
     }
 
     @Override
-    public com.example.demo.views.VerComentarios createVerComentarios(Set<Comentario> comentarios, int idvideo) {
-        return new VerComentariosdeYoutuber(comentarios, idvideo, this);
+    public com.example.demo.views.VerComentarios createVerComentarios(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory) {
+        return new VerComentariosdeYoutuber(comentarios, idvideo, viewFactory);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class YoutuberViewFactory implements ViewFactory {
         return com.example.demo.views.UltimosVideosdeYoutuber_item.class;
     }
     @Override
-    public VerComentarios_item createVerComentariosItem(Comentario comentario) {
-        return new com.example.demo.views.VerComentariosdeYoutuber_item(comentario, this);
+    public VerComentarios_item createVerComentariosItem(Comentario comentario, ViewFactoryProvider viewFactory) {
+        return new com.example.demo.views.VerComentariosdeYoutuber_item(comentario, viewFactory);
     }
 
    

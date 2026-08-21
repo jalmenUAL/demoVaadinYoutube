@@ -1,5 +1,7 @@
 package com.example.demo.factories;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 
 import com.example.demo.services.iAdministrador;
@@ -35,16 +37,16 @@ public class AdministradorViewFactory implements ViewFactory {
     }
 
     @Override
-    public Class<? extends VerComentarios> createVerComentarios() {
-        return VerComentariosdeAdministrador.class;
+    public VerComentarios createVerComentarios(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory) {
+        return new VerComentariosdeAdministrador(_iAdministrador, comentarios, idvideo, viewFactory);
     }
     @Override
     public Class<? extends UltimosVideos_item> createGaleriaItem() {
         return UltimosVideosdeAdministrador_item.class;
     }
     @Override
-    public VerComentarios_item createComentarioItem(Comentario comentario) {
-        return new VerComentariosdeAdministrador_item(_iAdministrador, comentario, this);
+    public VerComentarios_item createVerComentariosItem(Comentario comentario, ViewFactoryProvider viewFactory) {
+        return new VerComentariosdeAdministrador_item(_iAdministrador, comentario, viewFactory);
     }
 
        

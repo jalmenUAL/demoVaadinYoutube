@@ -19,11 +19,11 @@ import com.vaadin.flow.router.Route;
 public class VerComentarios_item extends BaseItemView<Comentario> {
     public VerComentarios _verComentarios;
     public PerfilAjeno _perfilAjeno;
-    ViewFactory viewFactory;
+    ViewFactoryProvider viewFactory;
 
     Image avatar;
 
-    public VerComentarios_item(Comentario comentario, ViewFactory viewFactory) {
+    public VerComentarios_item(Comentario comentario, ViewFactoryProvider viewFactory) {
         super(comentario);
         this.viewFactory = viewFactory;
          initView();
@@ -31,7 +31,7 @@ public class VerComentarios_item extends BaseItemView<Comentario> {
 
     public void PerfilAjeno() {
         UI.getCurrent().navigate(
-            viewFactory.createPerfilAjeno(),model.getEscrito_por().getLogin());
+            viewFactory.getFactory().createPerfilAjeno(),model.getEscrito_por().getLogin());
         
     }
 

@@ -18,12 +18,13 @@ public class VerComentarios extends BaseListView<Comentario> {
     public VerVideo _verVideo;
     public List<VerComentarios_item> _item = new ArrayList<>();
     protected ViewFactoryProvider factory;
+    protected int idvideo;
 
-    public VerComentarios(Set<Comentario> comentarios, ViewFactoryProvider factory) {
+    public VerComentarios(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider factory) {
         super(comentarios);
         this.factory = factory;
-         initView();
-
+        this.idvideo = idvideo;
+        initView();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class VerComentarios extends BaseListView<Comentario> {
 
             for (Comentario e : elements) {
 
-                VerComentarios_item comentario = factory.getFactory().createComentarioItem(e);
+                VerComentarios_item comentario = factory.getFactory().createVerComentariosItem(e, factory);
                 add(comentario);
             }
 

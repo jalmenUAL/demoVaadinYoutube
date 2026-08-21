@@ -15,7 +15,7 @@ public class VerComentariosdeAdministrador_item extends VerComentarios_item {
     public Button eliminarButton;
 
     public VerComentariosdeAdministrador_item(iAdministrador iAdministrador, Comentario comentario,
-            ViewFactory viewFactory) {
+            ViewFactoryProvider viewFactory) {
         super(comentario, viewFactory);
         this.iAdministrador = iAdministrador;
         

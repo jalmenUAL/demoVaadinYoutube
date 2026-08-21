@@ -13,9 +13,9 @@ import com.vaadin.flow.router.Route;
 public class VerComentariosdeAdministrador extends VerComentarios {
 
     public VerComentariosdeAdministrador(iAdministrador iAdministrador,
-            Set<Comentario> comentarios, ViewFactoryProvider viewFactory) {
+            Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory) {
 
-        super(comentarios, viewFactory);
+        super(comentarios, idvideo, viewFactory);
          
 
     }
