@@ -7,6 +7,7 @@ import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Youtuber;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.router.BeforeEvent;
@@ -88,7 +89,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
                     _usuario.getLogin(),
                     seguidor.getLogin());
 
-            btnSeguir.setText("Dejar de seguir");
+            UI.getCurrent().getPage().reload();
 
         } else {
 
@@ -96,7 +97,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
                     _usuario.getLogin(),
                     seguidor.getLogin());
 
-            btnSeguir.setText("Seguir");
+             UI.getCurrent().getPage().reload();
         }
     }
 
@@ -112,7 +113,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
                     _usuario.getLogin(),
                     seguidor.getLogin());
 
-            btnDenunciar.setText("Quitar denuncia");
+            UI.getCurrent().getPage().reload();
 
         } else {
 
@@ -120,7 +121,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
                     _usuario.getLogin(),
                     seguidor.getLogin());
 
-            btnDenunciar.setText("Denunciar");
+             UI.getCurrent().getPage().reload();
         }
     }
 }

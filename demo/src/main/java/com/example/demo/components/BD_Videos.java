@@ -83,9 +83,20 @@ public class BD_Videos {
         videorepository.findAll().forEach(usuario -> {
             if (usuario.getLe_gusta_a().contains(video)) {
                 usuario.getLe_gusta_a().remove(video);
-
             }
         });
     }
+ public void likeVideo(Youtuber usuario, Video video) {
+         if (!video.getLe_gusta_a().contains(usuario)) {
+       video.getLe_gusta_a().add(usuario);   
+       videorepository.save(video);
+        
+    }
+}
 
+    public void dislikeVideo(Youtuber usuario, Video video) {
+         if (video.getLe_gusta_a().contains(video)) {
+        video.getLe_gusta_a().remove(usuario);
+        videorepository.save(video);}
+         }
 }

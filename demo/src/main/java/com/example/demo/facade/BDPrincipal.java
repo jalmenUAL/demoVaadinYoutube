@@ -74,12 +74,12 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
 
     @Override
     public void actualizarConfiguracion(String login,
-        String password,
-        InputStream avatar,
-        String avatarNombre,
-        InputStream fondo,
-        String fondoNombre) {
-         
+            String password,
+            InputStream avatar,
+            String avatarNombre,
+            InputStream fondo,
+            String fondoNombre) {
+
         _youtubers.actualizarConfiguracion(login, password, avatar, avatarNombre, fondo, fondoNombre);
     }
 
@@ -152,33 +152,17 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
 
     @Override
     public void likeVideo(String loginYoutuber, Integer idVideo) {
+        Youtuber usuario = _youtubers.findYoutuberById(loginYoutuber);
+        Video video = _videos.findVideoById(idVideo);
+        _videos.likeVideo(usuario, video);
 
-    Youtuber usuario =
-            _youtubers.findYoutuberById(loginYoutuber);
-
-    Video video =
-            _videos.findVideoById(idVideo);
-
-    if (!usuario.getLe_gusta().contains(video)) {
-
-        usuario.getLe_gusta().add(video);
-        
-        repositorioYoutuber.save(usuario);
-        
     }
-}
 
     @Override
     public void dislikeVideo(String loginYoutuber, Integer idVideo) {
         Youtuber usuario = _youtubers.findYoutuberById(loginYoutuber);
         Video video = _videos.findVideoById(idVideo);
-       if (!usuario.getLe_gusta().contains(video)) {
-
-        usuario.getLe_gusta().remove(video);
-        
-        repositorioYoutuber.save(usuario);
-        
-    }
+        _videos.dislikeVideo(usuario, video);
     }
 
     @Override

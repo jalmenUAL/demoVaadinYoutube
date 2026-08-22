@@ -58,7 +58,17 @@ public abstract class Inicio extends BaseAppView {
         _buscar.setOnResultado(resultados -> {
 
             body.removeAll();
-
+            if (resultados.isEmpty()) {
+                Div noResultsDiv = new Div();
+                noResultsDiv.getStyle()
+                        .set("font-size", "1.7em")
+                        .set("color", "#555")
+                        .set("padding", "20px")
+                        .set("text-align", "center");
+                noResultsDiv.setText("No se encontraron resultados.");
+                body.add(noResultsDiv);
+                return;
+            } 
             ResultadodeBusqueda vista = new ResultadodeBusqueda(
                     resultados,
                     viewFactory);

@@ -7,6 +7,7 @@ import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Video;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -32,28 +33,20 @@ public class VerVideodeYoutuber extends VerVideo {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
-        if (likeButton.getText().equals("Me Gusta")) {
-            likeButton.setText("Quitar Me Gusta");
+        if (!video.getLe_gusta_a().contains(usuario)) {
+
+           
 
             iYoutuber.likeVideo(usuario.getLogin(), video.getId());
-            likeButton.getStyle()
-                    .set("background-color", "#0d6efd") // negro
-                    .set("color", "white")
-                    .set("border-radius", "8px")
-                    .set("padding", "10px 20px")
-                    .set("font-weight", "bold");
+            UI.getCurrent().getPage().reload();
 
         } else {
-            likeButton.setText("Me Gusta");
+            
             iYoutuber.dislikeVideo(usuario.getLogin(), video.getId());
-            likeButton.getStyle()
-                    .set("background-color", "#0d6efd") // azul
-                    .set("color", "white")
-                    .set("border-radius", "8px")
-                    .set("padding", "10px 20px")
-                    .set("font-weight", "bold");
+              UI.getCurrent().getPage().reload();
 
         }
+         
 
     }
 
@@ -65,6 +58,8 @@ public class VerVideodeYoutuber extends VerVideo {
 
     public void setParameter(BeforeEvent event, Integer parameter) {
         super.setParameter(event, parameter);
+        
+        
         // Crear botón de Like
         likeButton = new Button("", event2 -> like());
         likeButton.setIcon(new Icon(VaadinIcon.THUMBS_UP));
@@ -73,7 +68,8 @@ public class VerVideodeYoutuber extends VerVideo {
 
         com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
-        legusta = usuario.getLe_gusta().stream().anyMatch(v -> ((Video) v).getId() == video.getId());
+        //legusta = usuario.getLe_gusta().stream().anyMatch(v -> ((Video) v).getId() == video.getId());
+        legusta = video.getLe_gusta_a().contains(usuario);
 
         if (!legusta) {
             likeButton.setText("Me Gusta");

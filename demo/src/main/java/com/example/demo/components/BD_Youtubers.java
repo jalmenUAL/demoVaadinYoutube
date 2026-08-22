@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioYoutuber;
+import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
 @Service
@@ -213,4 +214,8 @@ private String guardarImagen(
         repository.save(denunciante);
     }
 
+   
+
+
+    
 }

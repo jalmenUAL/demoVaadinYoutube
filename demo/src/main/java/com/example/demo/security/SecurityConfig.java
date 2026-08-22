@@ -22,8 +22,17 @@ public class SecurityConfig extends VaadinWebSecurity {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Abre endpoints/recursos de Vaadin y protege el resto
+
+
+        http.authorizeHttpRequests(auth -> auth
+            .requestMatchers("/uploads/**").permitAll()
+    );
+
+        // Configuración de seguridad de Vaadin
         super.configure(http);
+
+        
+
         // Indica que tu vista Login es la pantalla de login
         setLoginView(http, com.example.demo.views.Login.class);
     }

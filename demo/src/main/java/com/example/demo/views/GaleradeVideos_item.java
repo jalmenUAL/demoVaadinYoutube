@@ -7,11 +7,13 @@ import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
+import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("GaleriadeVideos_item")
@@ -20,6 +22,7 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
         public VerVideo _verVideo;
         private Image thumbnail;
         protected ViewFactoryProvider viewFactory;
+        protected ClickNotifier<VerticalLayout> propietarioAvatar;
 
         public GaleradeVideos_item(Video video, ViewFactoryProvider viewFactory) {
                 super(video);
@@ -98,6 +101,8 @@ public class GaleradeVideos_item extends BaseItemView<Video> {
         protected void bindEvents() {
 
                 thumbnail.addClickListener(e -> VerVideo());
+
+              
 
         }
 

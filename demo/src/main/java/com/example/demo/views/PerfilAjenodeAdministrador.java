@@ -3,6 +3,7 @@ package com.example.demo.views;
 import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iAdministrador;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.router.BeforeEvent;
@@ -56,15 +57,17 @@ public class PerfilAjenodeAdministrador extends PerfilAjeno {
 
         if (btnBloquear.getText().equals("Bloquear")) {
 
-            btnBloquear.setText("Quitar bloqueo");
+            
 
             iAdministrador.bloquearUsuario(_usuario.getLogin());
+              UI.getCurrent().getPage().reload();
 
         } else {
 
-            btnBloquear.setText("Bloquear");
+           
 
             iAdministrador.desbloquearUsuario(_usuario.getLogin());
+              UI.getCurrent().getPage().reload();
 
         }
     }
