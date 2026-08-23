@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,6 +17,7 @@ import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioYoutuber;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
+import com.vaadin.flow.component.notification.Notification;
 
 @Service
 public class BD_Youtubers {
@@ -173,20 +175,42 @@ private String guardarImagen(
                 .toList();
     }
 
-    public void seguirUsuario(String loginSeguidor, String loginSeguido) {
-        Youtuber seguidor = findYoutuberById(loginSeguidor);
-        Youtuber seguido = findYoutuberById(loginSeguido);
+   public void seguirUsuario(String loginSeguidor, String loginSeguido) {
+
+    Youtuber seguidor = findYoutuberById(loginSeguidor);
+    Youtuber seguido = findYoutuberById(loginSeguido);
+
+    boolean yaSigue = seguido.getSeguido_por()
+            .stream()
+            .anyMatch(o ->
+                    ((Youtuber) o)
+                            .getLogin()
+                            .equals(loginSeguidor));
+
+    if (!yaSigue) {
         seguido.getSeguido_por().add(seguidor);
         repository.save(seguido);
     }
+}
 
-    public void dejardeseguirUsuario(String loginSeguidor, String loginSeguido) {
-        Youtuber seguidor = findYoutuberById(loginSeguidor);
-        Youtuber seguido = findYoutuberById(loginSeguido);
-        seguido.getSeguido_por().remove(seguidor);
-        repository.save(seguido);
+    public void dejardeseguirUsuario(
+        String loginSeguidor,
+        String loginSeguido) {
 
-    }
+    Youtuber seguidor =
+            findYoutuberById(loginSeguidor);
+
+    Youtuber seguido =
+            findYoutuberById(loginSeguido);
+
+    seguido.getSeguido_por().removeIf(
+        o -> ((Youtuber) o)
+                .getLogin()
+                .equals(loginSeguidor)
+    );
+
+    repository.save(seguido);
+}
 
     public void bloquearUsuario(String loginYoutuber) {
         Youtuber usuario = findYoutuberById(loginYoutuber);
@@ -214,8 +238,35 @@ private String guardarImagen(
         repository.save(denunciante);
     }
 
-   
+   public void likeVideo(Youtuber usuario, Video video) {
 
+     // Hay que utilizar este código para añadir!
+    
+       if (usuario.getLe_gusta()
+            .stream()
+            .noneMatch(o ->
+                ((Video) o).getId() == video.getId())) {
 
+        usuario.getLe_gusta().add(video);
+        repository.save(usuario);
+        
+    }
+}
+
+    public void dislikeVideo(Youtuber usuario, Video video) {
+          
+        // Hay que utilizar este código para borrar!
+      
+      usuario.getLe_gusta()
+            .removeIf(o ->
+                ((Video) o).getId() == video.getId());
+
+    repository.save(usuario);
+
+    
+        
+    
+
+    }
     
 }

@@ -83,7 +83,7 @@ public class PerfilAjenodeYoutuber extends PerfilAjeno {
 
         Youtuber seguidor = (Youtuber) auth.getPrincipal();
 
-        if (btnSeguir.getText().equals("Seguir")) {
+        if (!_usuario.getSeguido_por().contains(seguidor)) {
 
             iYoutuber.seguirUsuario(
                     _usuario.getLogin(),

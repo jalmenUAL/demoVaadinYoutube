@@ -154,7 +154,7 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
     public void likeVideo(String loginYoutuber, Integer idVideo) {
         Youtuber usuario = _youtubers.findYoutuberById(loginYoutuber);
         Video video = _videos.findVideoById(idVideo);
-        _videos.likeVideo(usuario, video);
+        _youtubers.likeVideo(usuario, video);
 
     }
 
@@ -162,7 +162,7 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
     public void dislikeVideo(String loginYoutuber, Integer idVideo) {
         Youtuber usuario = _youtubers.findYoutuberById(loginYoutuber);
         Video video = _videos.findVideoById(idVideo);
-        _videos.dislikeVideo(usuario, video);
+        _youtubers.dislikeVideo(usuario, video);
     }
 
     @Override

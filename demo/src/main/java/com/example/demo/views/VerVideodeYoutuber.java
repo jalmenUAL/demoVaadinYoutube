@@ -11,6 +11,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
@@ -30,20 +31,27 @@ public class VerVideodeYoutuber extends VerVideo {
     }
 
     public void like() {
+
+ 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+         
 
         com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
         if (!video.getLe_gusta_a().contains(usuario)) {
 
-           
-
+             
             iYoutuber.likeVideo(usuario.getLogin(), video.getId());
-            UI.getCurrent().getPage().reload();
+            UI.getCurrent().getPage().reload(); 
+            
 
         } else {
+
+            
             
             iYoutuber.dislikeVideo(usuario.getLogin(), video.getId());
               UI.getCurrent().getPage().reload();
+             
 
         }
          

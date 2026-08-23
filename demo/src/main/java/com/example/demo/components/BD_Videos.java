@@ -10,6 +10,7 @@ import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioVideo;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
+import com.vaadin.flow.component.notification.Notification;
 
 @Service
 
@@ -86,17 +87,5 @@ public class BD_Videos {
             }
         });
     }
- public void likeVideo(Youtuber usuario, Video video) {
-         if (!video.getLe_gusta_a().contains(usuario)) {
-       video.getLe_gusta_a().add(usuario);   
-       videorepository.save(video);
-        
-    }
-}
-
-    public void dislikeVideo(Youtuber usuario, Video video) {
-         if (video.getLe_gusta_a().contains(video)) {
-        video.getLe_gusta_a().remove(usuario);
-        videorepository.save(video);}
-         }
+ 
 }
