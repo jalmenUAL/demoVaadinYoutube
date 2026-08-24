@@ -28,9 +28,9 @@ public class Videosrelacionados_item extends BaseItemView<Video> {
 
     public void VerVideo() {
 
-        UI.getCurrent().navigate(viewFactory.getFactory().createVideo(), model.getId());
+        UI.getCurrent().navigate(viewFactory.getFactory().createVideo(), model.getId());}
 
-    }
+    
 
     @Override
     protected void build() {
