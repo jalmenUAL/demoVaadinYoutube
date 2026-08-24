@@ -9,7 +9,7 @@ public abstract class BaseItemView<T>
 
         this.model = model;
 
-        //initView();
+         
 
     }
 

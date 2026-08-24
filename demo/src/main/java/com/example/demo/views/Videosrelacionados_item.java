@@ -16,18 +16,19 @@ import com.vaadin.flow.router.Route;
 public class Videosrelacionados_item extends BaseItemView<Video> {
     
     public VerVideo _verVideo;
-    protected ViewFactory viewFactory;
+    protected ViewFactoryProvider viewFactory;
     protected Image thumbnail;
 
     public Videosrelacionados_item(Video video, ViewFactoryProvider viewFactory) {
         super(video);
+        this.viewFactory = viewFactory;
          initView();
 
     }
 
     public void VerVideo() {
 
-        UI.getCurrent().navigate(viewFactory.createVideo(), model.getId());
+        UI.getCurrent().navigate(viewFactory.getFactory().createVideo(), model.getId());
 
     }
 

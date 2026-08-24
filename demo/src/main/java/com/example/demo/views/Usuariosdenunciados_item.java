@@ -54,21 +54,15 @@ public class Usuariosdenunciados_item extends BaseItemView<com.example.demo.tabl
 
         }
 
-        // CAMBIOS PARA NAVEGAR AL PERFIL DEL YOUTUBER DENUNCIADO DESDE EL ADMINISTRADOR
+      
 
         @Override
         protected void bindEvents() {
 
                 avatar.addClickListener(
-                                event -> navegarAlPerfil());
+                                event -> UI.getCurrent().navigate(PerfilAjenodeAdministrador.class, model.getLogin() )) ; 
 
         }
-
-        private void navegarAlPerfil() {
-
-                  UI.getCurrent().navigate(PerfilAjenodeAdministrador.class, model.getLogin());
-               
-
-        }
+ 
 
 }

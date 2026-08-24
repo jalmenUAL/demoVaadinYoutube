@@ -29,22 +29,26 @@ public class Administrador extends Registrado {
         initView();
     }
 
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
+    @Override 
+    protected void build(){
+        super.build();
+         
         Usuariosdenunciados();
     }
+ 
 
     @Override
     protected void UltimosVideos() {
         List<Video> ultimosVideos = iAdministrador.getAllVideos();
         _ultimosVideos = new UltimosVideos(ultimosVideos, viewFactory);
+         
         body.add(_ultimosVideos);
     }
 
     private void Usuariosdenunciados() {
         List<com.example.demo.tables.Youtuber> denunciados = iAdministrador.buscarDenunciados();
         _usuariosdenunciados = new Usuariosdenunciados(denunciados);
+         
         body.add(_usuariosdenunciados);
     }
 

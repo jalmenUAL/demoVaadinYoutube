@@ -1,7 +1,7 @@
 package com.example.demo.views;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.patterns.BaseAppView;
+import com.example.demo.patterns.BaseActorView;
 import com.example.demo.services.iInicio;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.Div;
@@ -12,7 +12,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route("Inicio")
 @AnonymousAllowed
 
-public abstract class Inicio extends BaseAppView {
+public abstract class Inicio extends BaseActorView {
 
     protected final iInicio iInicio;
 

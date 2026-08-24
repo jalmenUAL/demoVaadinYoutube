@@ -65,7 +65,8 @@ public class Youtubersseguidos_item extends BaseItemView<com.example.demo.tables
 
         add(fila);
 
-        getStyle().set("padding", "10px").set("border", "1px solid #ddd").set("border-radius", "10px");
+        getStyle().set("padding", "10px").set("border", "1px solid #ddd").set("border-radius", 
+        "10px");
 
     }
 

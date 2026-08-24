@@ -3,10 +3,16 @@ package com.example.demo.views;
 import java.util.Set;
 import java.util.Vector;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
+import com.example.demo.patterns.BaseListParameterizedView;
 import com.example.demo.patterns.BaseListView;
+import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.iInicio;
+import com.example.demo.tables.Video;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -20,7 +26,7 @@ import jakarta.annotation.security.RolesAllowed;
 @Route("Youtuberseguidos")
 @RolesAllowed({ "ROLE_YOUTUBER", "ROLE_ADMINISTRADOR" })
 
-public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Youtuber> implements HasUrlParameter<String> {
+public class Youtubersseguidos   extends BaseListParameterizedView<String> {
     public Perfil _perfil;
     public Vector<Youtubersseguidos_item> _item = new Vector<Youtubersseguidos_item>();
 
@@ -30,77 +36,24 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
     iInicio _iInicio;
     protected ViewFactoryProvider viewFactory;
 
-    public Youtubersseguidos(iInicio iInicio,Set<com.example.demo.tables.Youtuber> youtubers, ViewFactoryProvider viewFactory) {
-        super(youtubers);
+    public Youtubersseguidos(iInicio iInicio, ViewFactoryProvider viewFactory) {
+        super();
         this._iInicio = iInicio;
         this.viewFactory = viewFactory;
-        initView();
-    }
-
-
-       
-
-    
-
-    @Override
-    public void setParameter(BeforeEvent event, String parameter) {
-
-        if (youtubers == null) {
-
-        } else {
-
-            FlexLayout gridContainer = new FlexLayout();
-
-            gridContainer.setFlexWrap(FlexLayout.FlexWrap.WRAP);
-
-            gridContainer.getStyle().set("gap", "1em");
-
-            for (com.example.demo.tables.Youtuber youtuber : youtubers) {
-
-                Youtubersseguidos_item youtuberItem = new Youtubersseguidos_item(youtuber, viewFactory);
-
-                this._item.add(youtuberItem);
-
-                gridContainer.add(youtuberItem);
-            }
-
-            add(gridContainer);
-
-            setHorizontalComponentAlignment(Alignment.CENTER, gridContainer);
-        }
+        
     }
 
     @Override
-    protected void buildContainer() {
-         setPadding(true);
-        setSpacing(true);
-
-        H1 titulo = new H1("Youtubers Seguidos");
-        titulo.getStyle().set("text-align", "center");
-        add(titulo);
-         if (youtubers == null) {
-
-        } else {
-
-           
-
-            gridContainer.setFlexWrap(FlexLayout.FlexWrap.WRAP);
-
-            gridContainer.getStyle().set("gap", "1em");
-
-            
-
-            add(gridContainer);
-
-            setHorizontalComponentAlignment(Alignment.CENTER, gridContainer);
-        }
+    protected void bindEvents() {
+         
     }
 
-    
 
     @Override
-    protected void buildItems() {
-
+    protected void buildList(String parameter) {
+         com.example.demo.tables.Youtuber _youtuber = _iInicio.findYoutuberById(String.valueOf(parameter));
+          Set<com.example.demo.tables.Youtuber> youtubers = _youtuber.getSeguidor_de();         
+        
        if (youtubers == null) {
 
         } else  
@@ -112,7 +65,8 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
 
                 gridContainer.add(youtuberItem);
             }
-        
+
+            add(gridContainer);
     }
 
 
@@ -120,8 +74,7 @@ public class Youtubersseguidos extends BaseListView<com.example.demo.tables.Yout
 
 
 
-    @Override
-    protected void bindEvents() {
-         
-    }
+
+
+ 
 }

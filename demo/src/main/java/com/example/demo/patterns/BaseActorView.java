@@ -1,23 +1,40 @@
 package com.example.demo.patterns;
 
-public abstract class BaseActorView
-        extends BaseView {
+import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-    @Override
-    protected final void build() {
+public abstract class BaseActorView extends AppLayout {
 
-        buildHeader();
+    protected HorizontalLayout header = new HorizontalLayout();
+    protected VerticalLayout body;
 
-        buildActions();
-
-        buildContent();
-
+    public BaseActorView() {
+        
     }
 
-    protected abstract void buildHeader();
+    public void initView() {
+        buildLayout();
+        build();
+        bindEvents();
+    }
 
-    protected abstract void buildActions();
+    private void buildLayout() {
+        header = new HorizontalLayout();
+        header.setWidthFull();
+        header.setAlignItems(Alignment.CENTER);
 
-    protected abstract void buildContent();
+        addToNavbar(header);
 
+        body = new VerticalLayout();
+        body.setSizeFull();
+
+        setContent(body);
+    }
+
+    protected abstract void build();
+
+    protected void bindEvents() {
+    }
 }
