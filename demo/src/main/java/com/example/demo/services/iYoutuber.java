@@ -20,9 +20,9 @@ public interface iYoutuber extends iRegistrado {
         InputStream fondo,
         String fondoNombre);
 
-    void seguirUsuario(String loginSeguidor, String loginSeguido);
+    void seguirUsuario(String loginSeguido, String loginSeguidor);
 
-    void dejardeseguirUsuario(String loginSeguidor, String loginSeguido);
+    void dejardeseguirUsuario(String loginSeguido, String loginSeguidor);
 
     void likeVideo(String loginYoutuber, Integer idVideo);
 

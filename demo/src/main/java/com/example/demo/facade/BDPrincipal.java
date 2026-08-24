@@ -141,13 +141,13 @@ public class BDPrincipal implements iNoLogueado, iYoutuber, iAdministrador, iReg
     }
 
     @Override
-    public void seguirUsuario(String loginSeguidor, String loginSeguido) {
-        _youtubers.seguirUsuario(loginSeguidor, loginSeguido);
+    public void seguirUsuario(String loginSeguido, String loginSeguidor) {
+        _youtubers.seguirUsuario(loginSeguido, loginSeguidor);
     }
 
     @Override
-    public void dejardeseguirUsuario(String loginSeguidor, String loginSeguido) {
-        _youtubers.dejardeseguirUsuario(loginSeguidor, loginSeguido);
+    public void dejardeseguirUsuario(String loginSeguido, String loginSeguidor) {
+        _youtubers.dejardeseguirUsuario(loginSeguido, loginSeguidor);
     }
 
     @Override

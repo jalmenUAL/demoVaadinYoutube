@@ -19,6 +19,8 @@ import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 import com.vaadin.flow.component.notification.Notification;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class BD_Youtubers {
     public BDPrincipal _en;
@@ -174,28 +176,29 @@ private String guardarImagen(
                 .filter(youtuber -> youtuber.getDenunciado_por().size() > 0)
                 .toList();
     }
+     
+public void seguirUsuario(
+        String loginSeguido,
+        String loginSeguidor) {
 
-   public void seguirUsuario(String loginSeguidor, String loginSeguido) {
+    Youtuber seguidor =
+            findYoutuberById(loginSeguidor);
 
-    Youtuber seguidor = findYoutuberById(loginSeguidor);
-    Youtuber seguido = findYoutuberById(loginSeguido);
+    Youtuber seguido =
+            findYoutuberById(loginSeguido);
 
-    boolean yaSigue = seguido.getSeguido_por()
-            .stream()
-            .anyMatch(o ->
-                    ((Youtuber) o)
-                            .getLogin()
-                            .equals(loginSeguidor));
-
-    if (!yaSigue) {
-        seguido.getSeguido_por().add(seguidor);
-        repository.save(seguido);
-    }
+    
+            seguido.getSeguido_por().add(seguidor);
+            repository.save(seguido);
+    
+    
 }
 
     public void dejardeseguirUsuario(
-        String loginSeguidor,
-        String loginSeguido) {
+        String loginSeguido,
+        String loginSeguidor) {
+
+       /* seguido_por es el mapped by */
 
     Youtuber seguidor =
             findYoutuberById(loginSeguidor);
@@ -206,7 +209,7 @@ private String guardarImagen(
     seguido.getSeguido_por().removeIf(
         o -> ((Youtuber) o)
                 .getLogin()
-                .equals(loginSeguidor)
+                .equals(seguidor.getLogin())
     );
 
     repository.save(seguido);
@@ -225,48 +228,52 @@ private String guardarImagen(
     }
 
     public void denunciarUsuario(String loginDenunciante, String loginDenunciado) {
+
+         /* denunciado_por es el mappedby */
         Youtuber denunciante = findYoutuberById(loginDenunciante);
         Youtuber denunciado = findYoutuberById(loginDenunciado);
         denunciante.getDenunciado_por().add(denunciado);
         repository.save(denunciante);
     }
 
+      /* denunciado_por es el mappedby */
     public void quitardenunciaUsuario(String loginDenunciante, String loginDenunciado) {
         Youtuber denunciante = findYoutuberById(loginDenunciante);
         Youtuber denunciado = findYoutuberById(loginDenunciado);
-        denunciante.getDenunciado_por().remove(denunciado);
+
+         /* denunciado_por es el mappedby */
+         /* login es un String y se usa equals */
+        denunciante.getDenunciado_por()
+            .removeIf(o -> 
+                ((Youtuber) o).getLogin().equals(denunciado.getLogin())); 
+         
         repository.save(denunciante);
     }
 
    public void likeVideo(Youtuber usuario, Video video) {
 
-     // Hay que utilizar este código para añadir!
-    
-       if (usuario.getLe_gusta()
-            .stream()
-            .noneMatch(o ->
-                ((Video) o).getId() == video.getId())) {
-
+        /* legusta es el mappedby */
         usuario.getLe_gusta().add(video);
         repository.save(usuario);
         
-    }
+    
 }
 
     public void dislikeVideo(Youtuber usuario, Video video) {
-          
-        // Hay que utilizar este código para borrar!
+           /* legusta es el mappedby */
+         /* Id es un entero y se usa == */
       
-      usuario.getLe_gusta()
+       usuario.getLe_gusta()
             .removeIf(o ->
-                ((Video) o).getId() == video.getId());
+                ((Video) o).getId() == video.getId()); 
 
+    
     repository.save(usuario);
 
     
         
-    
-
     }
+
+    
     
 }
