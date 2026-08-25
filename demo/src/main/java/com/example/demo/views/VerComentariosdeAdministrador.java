@@ -16,7 +16,6 @@ public class VerComentariosdeAdministrador extends VerComentarios {
             Set<Comentario> comentarios, int idvideo, ViewFactoryProvider viewFactory) {
 
         super(comentarios, idvideo, viewFactory);
-         
 
     }
 

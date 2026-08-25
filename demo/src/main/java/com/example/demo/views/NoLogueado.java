@@ -2,13 +2,9 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-import com.example.demo.factories.NoLogueadoViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.iNoLogueado;
 import com.example.demo.tables.Video;
-import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -20,87 +16,198 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("NoLogueado")
 @AnonymousAllowed
- 
 
 public class NoLogueado extends Inicio {
 
-        public iNoLogueado _iNoLogueado;
+    /*
+     * Servicio que contiene las operaciones disponibles para un
+     * usuario que todavía no ha iniciado sesión.
+     *
+     * Al heredar de Inicio, esta clase también dispone de las
+     * operaciones generales de iInicio.
+     */
+    private final iNoLogueado iNoLogueado;
 
-        public Login _login;
-        public Registrar _registrar;
+    /*
+     * Botones específicos de esta vista.
+     *
+     * Un usuario no autenticado puede:
+     * - iniciar sesión
+     * - registrarse
+     */
+    private Button loginButton;
+    private Button registrarButton;
 
-        private Button loginButton;
-        private Button registrarButton;
+    public NoLogueado(
+            iNoLogueado iNoLogueado,
+            ViewFactoryProvider viewFactory) {
 
-        public NoLogueado(iNoLogueado iNoLogueado, ViewFactoryProvider viewFactory) {
+        /*
+         * El constructor de Inicio recibe el servicio iInicio y
+         * la factoría de vistas.
+         *
+         * Como iNoLogueado hereda de iInicio, podemos pasarlo
+         * directamente al constructor de la clase padre.
+         */
+        super(iNoLogueado, viewFactory);
 
-                super(iNoLogueado, viewFactory);
-                this._iNoLogueado = iNoLogueado;
-                  initView();
-                
+        this.iNoLogueado = iNoLogueado;
 
-        }
+        /*
+         * Inicializamos la vista una vez que todos sus atributos
+         * necesarios han sido inicializados.
+         */
+        initView();
+    }
 
-        @Override
-        protected void build() {
-                super.build();
-                loginButton = new Button(
-                                "Login",
-                                new Icon(VaadinIcon.SIGN_IN));
+    /*
+     * ============================================================
+     * CONSTRUCCIÓN DE LA VISTA
+     * ============================================================
+     */
+    @Override
+    protected void build() {
 
-                loginButton.addThemeVariants(
-                                ButtonVariant.LUMO_PRIMARY);
-                registrarButton = new Button(
-                                "Registrar",
-                                new Icon(VaadinIcon.USER_CARD));
+        /*
+         * MUY IMPORTANTE:
+         *
+         * Inicio ya construye:
+         * - el logo
+         * - el buscador
+         * - el header
+         *
+         * Por eso primero llamamos a super.build().
+         *
+         * Después añadimos únicamente los componentes propios
+         * de NoLogueado.
+         */
+        super.build();
 
-                registrarButton.addThemeVariants(
-                                ButtonVariant.LUMO_SUCCESS);
+        /*
+         * Botón para acceder a la pantalla de Login.
+         */
+        loginButton = new Button(
+                "Login",
+                new Icon(VaadinIcon.SIGN_IN));
 
-                HorizontalLayout botones = new HorizontalLayout(
-                                loginButton,
-                                registrarButton);
+        loginButton.addThemeVariants(
+                ButtonVariant.LUMO_PRIMARY);
 
-                header.add(botones);
-                
-        }
+        /*
+         * Botón para acceder al registro.
+         */
+        registrarButton = new Button(
+                "Registrar",
+                new Icon(VaadinIcon.USER_CARD));
 
-         
+        registrarButton.addThemeVariants(
+                ButtonVariant.LUMO_SUCCESS);
 
-        @Override
-        protected void bindEvents() {
+        /*
+         * Agrupamos los dos botones horizontalmente.
+         */
+        HorizontalLayout botones =
+                new HorizontalLayout(
+                        loginButton,
+                        registrarButton);
 
-               super.bindEvents();
+        /*
+         * El header ya fue creado por BaseActorView
+         * y configurado por Inicio.
+         *
+         * Aquí simplemente añadimos nuestros botones.
+         */
+        header.add(botones);
+    }
 
-                loginButton.addClickListener(e -> Login());
+    /*
+     * ============================================================
+     * EVENTOS
+     * ============================================================
+     */
+    @Override
+    protected void bindEvents() {
 
-                registrarButton.addClickListener(e -> Registrar());
+        /*
+         * Inicio también tiene eventos propios:
+         *
+         * - evento del botón Buscar
+         *
+         * Por eso debemos llamar a super.bindEvents().
+         *
+         * Si no lo hiciéramos, el buscador que hemos heredado
+         * dejaría de funcionar.
+         */
+        super.bindEvents();
 
-        }
+        /*
+         * Al pulsar Login navegamos a la vista de autenticación.
+         */
+        loginButton.addClickListener(
+                e -> Login());
 
-        @Override
-        public void UltimosVideos() {
+        /*
+         * Al pulsar Registrar navegamos a la vista de registro.
+         */
+        registrarButton.addClickListener(
+                e -> Registrar());
+    }
 
-                List<Video> videos = _iNoLogueado.getUltimosVideos();
+    /*
+     * ============================================================
+     * CONTENIDO ESPECÍFICO DEL INICIO
+     * ============================================================
+     *
+     * Inicio declara UltimosVideos() como abstracto porque cada
+     * tipo de usuario puede decidir cómo obtener o mostrar los
+     * vídeos iniciales.
+     */
+    @Override
+    protected void UltimosVideos() {
 
-                _ultimosVideos = new UltimosVideos(videos, viewFactory);
+        /*
+         * iNoLogueado hereda de iInicio, por lo que tiene acceso
+         * a getUltimosVideos().
+         */
+        List<Video> videos =
+                iNoLogueado.getUltimosVideos();
 
-                body.add(_ultimosVideos);
+        /*
+         * Creamos el componente que representa la lista de
+         * últimos vídeos.
+         *
+         * La factoría se pasa para que los elementos sepan qué
+         * tipo de vista deben abrir al pulsar sobre ellos.
+         */
+        _ultimosVideos =
+                new UltimosVideos(
+                        videos,
+                        viewFactory);
 
-        }
+        body.add(_ultimosVideos);
+    }
 
-        public void Login() {
+    /*
+     * ============================================================
+     * NAVEGACIÓN
+     * ============================================================
+     */
 
-                UI.getCurrent().navigate(Login.class);
+    /*
+     * Navegar al Login.
+     */
+    private void Login() {
 
-        }
+        UI.getCurrent()
+                .navigate(Login.class);
+    }
 
-        public void Registrar() {
+    /*
+     * Navegar al Registro.
+     */
+    private void Registrar() {
 
-                UI.getCurrent().navigate(Registrar.class);
-
-        }
-
-        
-
+        UI.getCurrent()
+                .navigate(Registrar.class);
+    }
 }

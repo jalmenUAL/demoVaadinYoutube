@@ -101,16 +101,7 @@ public class BD_Administradores {
             String login,
             String rawPassword) {
 
-        /*
-         * IMPORTANTE:
-         *
-         * No debemos mostrar nunca una contraseña por consola ni por logs
-         * en una aplicación real.
-         *
-         * Esta línea puede ser útil durante las primeras pruebas para ver
-         * qué valor llega al método, pero debe eliminarse posteriormente.
-         */
-        System.out.println(rawPassword);
+        
 
         /*
          * findById() devuelve un Optional porque el administrador puede

@@ -8,61 +8,57 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("Usuariosdenunciados_item")
-public class Usuariosdenunciados_item extends BaseItemView<com.example.demo.tables.Youtuber> {
+public class Usuariosdenunciados_item
+        extends BaseItemView<com.example.demo.tables.Youtuber> {
 
-        public Usuariosdenunciados _usuariosdenunciados;
+    private Image avatar;
+    private Span nombreSpan;
 
-        private Image avatar;
-        private Span nombreSpan;
+    public Usuariosdenunciados_item(
+            com.example.demo.tables.Youtuber youtuber) {
 
-        public Usuariosdenunciados_item(
-                        com.example.demo.tables.Youtuber youtuber) {
+        super(youtuber);
+        initView();
+    }
 
-                super(youtuber);
-                 initView();
+    @Override
+    protected void build() {
 
-        }
+        avatar = new Image(
+                model.getFotoPerfil(),
+                model.getLogin());
 
-        @Override
-        protected void build() {
+        avatar.setWidth("50px");
+        avatar.setHeight("50px");
 
-                avatar = new Image(
-                                model.getFotoPerfil(),
-                                model.getLogin());
+        avatar.getStyle()
+                .set("border-radius", "50%")
+                .set("cursor", "pointer");
 
-                avatar.setWidth("50px");
-                avatar.setHeight("50px");
+        nombreSpan = new Span(
+                model.getLogin());
 
-                avatar.getStyle()
-                                .set("border-radius", "50%");
+        nombreSpan.getStyle()
+                .set("font-weight", "bold")
+                .set("font-size", "1.1em");
 
-                nombreSpan = new Span(
-                                model.getLogin());
+        HorizontalLayout infoLayout =
+                new HorizontalLayout(
+                        avatar,
+                        nombreSpan);
 
-                nombreSpan.getStyle()
-                                .set("font-weight", "bold")
-                                .set("font-size", "1.1em");
+        infoLayout.setAlignItems(
+                Alignment.CENTER);
 
-                HorizontalLayout infoLayout = new HorizontalLayout(
-                                avatar,
-                                nombreSpan);
+        add(infoLayout);
+    }
 
-                infoLayout.setAlignItems(
-                                Alignment.CENTER);
+    @Override
+    protected void bindEvents() {
 
-                add(infoLayout);
-
-        }
-
-      
-
-        @Override
-        protected void bindEvents() {
-
-                avatar.addClickListener(
-                                event -> UI.getCurrent().navigate(PerfilAjenodeAdministrador.class, model.getLogin() )) ; 
-
-        }
- 
-
+        avatar.addClickListener(
+                event -> UI.getCurrent().navigate(
+                        PerfilAjenodeAdministrador.class,
+                        model.getLogin()));
+    }
 }

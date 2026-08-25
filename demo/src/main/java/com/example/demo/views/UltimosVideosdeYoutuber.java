@@ -8,19 +8,22 @@ import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
 @Route("UltimosVideosdeYoutuber")
-public class UltimosVideosdeYoutuber extends UltimosVideos {
+public class UltimosVideosdeYoutuber
+        extends UltimosVideos {
 
-public UltimosVideosdeYoutuber(List<Video> videos, ViewFactoryProvider viewFactory) {
-	super(videos, viewFactory);	 
-	  
-	
-}
+    public UltimosVideosdeYoutuber(
+            List<Video> videos,
+            ViewFactoryProvider viewFactory) {
 
-public void build() {
-		
-		super.build();
-		tituloGaleria.setText("Videos Propios o de Youtubers que sigues");
-		
-	}
-	 
+        super(videos, viewFactory);
+    }
+
+    @Override
+    protected void build() {
+
+        super.build();
+
+        tituloGaleria.setText(
+                "Videos Propios o de Youtubers que sigues");
+    }
 }

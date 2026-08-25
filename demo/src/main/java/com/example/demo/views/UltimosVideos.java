@@ -8,22 +8,43 @@ import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
 
 @Route("UltimosVideos")
-public class UltimosVideos extends GaleradeVideos {
+public class UltimosVideos
+        extends GaleradeVideos {
+
+    /*
+     * Esta clase reutiliza toda la estructura de GaleradeVideos:
+     *
+     *  - el contenedor de la galería
+     *  - el título
+     *  - el carrusel
+     *  - la construcción de los elementos
+     *  - los elementos GaleradeVideos_item
+     *
+     * Solo necesitamos modificar el título para indicar
+     * que estamos mostrando los últimos vídeos.
+     */
 
     public Inicio _inicio;
 
-    public UltimosVideos(List<Video> videos, ViewFactoryProvider viewFactory) {
+    public UltimosVideos(
+            List<Video> videos,
+            ViewFactoryProvider viewFactory) {
+
         super(videos, viewFactory);
-        
     }
 
     @Override
     protected void build() {
 
-       
-
+        /*
+         * Construimos primero la vista de la clase padre.
+         */
         super.build();
-         tituloGaleria.setText("Últimos Videos");
 
+        /*
+         * Especializamos la vista cambiando únicamente
+         * el título.
+         */
+        tituloGaleria.setText("Últimos Videos");
     }
 }

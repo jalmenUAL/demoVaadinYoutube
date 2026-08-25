@@ -4,13 +4,10 @@ import java.util.Vector;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.factories.YoutuberViewFactory;
 import com.example.demo.services.iYoutuber;
 import com.example.demo.tables.Video;
-import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -25,83 +22,212 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_YOUTUBER")
 public class Youtuber extends Registrado {
 
-        protected final iYoutuber iYoutuber;
+    // Servicio específico para las operaciones del Youtuber.
+    //
+    // La clase hereda de Registrado, por lo que ya tiene además
+    // acceso a las funcionalidades comunes de un usuario registrado.
+    protected final iYoutuber iYoutuber;
 
-        protected PerfilPropio _PerfilPropio;
 
-        private Button perfilBtn;
+    // Referencia a la vista del perfil propio.
+    //
+    // Actualmente NO se utiliza directamente, por lo que podría
+    // eliminarse.
+    protected PerfilPropio _PerfilPropio;
 
-        public Youtuber(iYoutuber iYoutuber, ViewFactoryProvider viewFactory) {
-                super(iYoutuber, viewFactory);
-                this.iYoutuber = iYoutuber;
-                   initView();
-                 
+
+    // Botón que permite acceder al perfil del Youtuber.
+    private Button perfilBtn;
+
+
+    // ============================================================
+    // CONSTRUCTOR
+    // ============================================================
+
+    public Youtuber(
+            iYoutuber iYoutuber,
+            ViewFactoryProvider viewFactory) {
+
+        // Llamamos al constructor de Registrado.
+        //
+        // Registrado, a su vez, llama al constructor de Inicio.
+        super(iYoutuber, viewFactory);
+
+        // Guardamos el servicio específico del Youtuber.
+        this.iYoutuber = iYoutuber;
+
+        // Inicializamos la vista.
+        initView();
+    }
+
+
+    // ============================================================
+    // CARGAR ÚLTIMOS VÍDEOS
+    // ============================================================
+
+    @Override
+    public void UltimosVideos() {
+
+        // Obtenemos la autenticación actual de Spring Security.
+        Authentication auth =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+
+        // El principal contiene la entidad Youtuber que ha iniciado
+        // sesión, porque CustomAuthProvider la estableció como
+        // principal al autenticar al usuario.
+        com.example.demo.tables.Youtuber usuario =
+                (com.example.demo.tables.Youtuber)
+                        auth.getPrincipal();
+
+
+        // Vector donde almacenaremos los vídeos que queremos mostrar.
+        Vector<Video> videos = new Vector<>();
+
+
+        // --------------------------------------------------------
+        // VÍDEOS DE LOS YOUTUBERS SEGUIDOS
+        // --------------------------------------------------------
+
+        // usuario.getSeguidor_de() contiene los Youtubers que
+        // sigue el usuario actual.
+        //
+        // Recorremos todos ellos.
+        for (Object obj : usuario.getSeguidor_de()) {
+
+            // Convertimos el objeto a Youtuber.
+            com.example.demo.tables.Youtuber seguido =
+                    (com.example.demo.tables.Youtuber) obj;
+
+
+            // Añadimos todos los vídeos publicados por ese Youtuber.
+            videos.addAll(
+                    seguido.getHa_publicado());
         }
 
-        @Override
-        public void UltimosVideos() {
 
-                Authentication auth = SecurityContextHolder
-                                .getContext()
-                                .getAuthentication();
+        // --------------------------------------------------------
+        // VÍDEOS PROPIOS
+        // --------------------------------------------------------
 
-                com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
+        // Además de los vídeos de los usuarios seguidos,
+        // añadimos los vídeos publicados por el propio usuario.
+        videos.addAll(
+                usuario.getHa_publicado());
 
-                Vector<Video> videos = new Vector<>();
 
-                for (Object obj : usuario.getSeguidor_de()) {
-                        com.example.demo.tables.Youtuber seguido = (com.example.demo.tables.Youtuber) obj;
+        // --------------------------------------------------------
+        // CREAR LA VISTA
+        // --------------------------------------------------------
 
-                        videos.addAll(seguido.getHa_publicado());
-                }
+        // Creamos la vista especializada para Youtubers.
+        //
+        // Aquí se aprovecha la especialización de las vistas:
+        //
+        // UltimosVideosdeYoutuber
+        //        extends UltimosVideos
+        //
+        _ultimosVideos =
+                new UltimosVideosdeYoutuber(
+                        videos,
+                        viewFactory);
 
-                
 
-                videos.addAll(usuario.getHa_publicado());
+        // Añadimos la galería al cuerpo de la página.
+        body.add(_ultimosVideos);
+    }
 
-                _ultimosVideos = new UltimosVideosdeYoutuber(videos, viewFactory);
 
-                body.add(_ultimosVideos);
-        }
+    // ============================================================
+    // ACCEDER AL PERFIL PROPIO
+    // ============================================================
 
-        public void PerfilPropio() {
+    public void PerfilPropio() {
 
-                Authentication auth = SecurityContextHolder
-                                .getContext()
-                                .getAuthentication();
+        // Obtenemos la autenticación actual.
+        Authentication auth =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
 
-                com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
 
-                UI.getCurrent().navigate(
-                                PerfilPropio.class,
-                                usuario.getLogin());
-        }
+        // Recuperamos al Youtuber autenticado.
+        com.example.demo.tables.Youtuber usuario =
+                (com.example.demo.tables.Youtuber)
+                        auth.getPrincipal();
 
-        @Override
-        protected void build() {
-                super.build();
 
-                perfilBtn = new Button(
-                                "Mi Perfil",
-                                new Icon(VaadinIcon.USER));
+        // Navegamos al perfil propio.
+        //
+        // Se pasa el login como parámetro.
+        UI.getCurrent().navigate(
+                PerfilPropio.class,
+                usuario.getLogin());
+    }
 
-                perfilBtn.addThemeVariants(
-                                ButtonVariant.LUMO_PRIMARY);
 
-                perfilBtn.getStyle()
-                                .set("margin", "10px")
-                                .set("border-radius", "8px");
-                header.add(perfilBtn);
-                header.setJustifyContentMode(JustifyContentMode.END);
-                
-        }
+    // ============================================================
+    // CONSTRUCCIÓN DE LA VISTA
+    // ============================================================
 
-        @Override
-        protected void bindEvents() {
-                super.bindEvents();
+    @Override
+    protected void build() {
 
-                perfilBtn.addClickListener(
-                                e -> PerfilPropio());
-        }
- 
+        // Primero ejecutamos la construcción de Registrado.
+        //
+        // Registrado llama a Inicio y añade:
+        // - Logo
+        // - Buscador
+        // - Botón de cerrar sesión
+        super.build();
+
+
+        // Creamos el botón "Mi Perfil".
+        perfilBtn =
+                new Button(
+                        "Mi Perfil",
+                        new Icon(VaadinIcon.USER));
+
+
+        // Aplicamos el estilo primario de Vaadin.
+        perfilBtn.addThemeVariants(
+                ButtonVariant.LUMO_PRIMARY);
+
+
+        // Aplicamos algunos estilos personalizados.
+        perfilBtn.getStyle()
+                .set("margin", "10px")
+                .set("border-radius", "8px");
+
+
+        // Añadimos el botón al header.
+        header.add(perfilBtn);
+
+
+        // Colocamos los elementos del header hacia la derecha.
+        header.setJustifyContentMode(
+                JustifyContentMode.END);
+    }
+
+
+    // ============================================================
+    // EVENTOS
+    // ============================================================
+
+    @Override
+    protected void bindEvents() {
+
+        // Primero registramos los eventos heredados.
+        //
+        // Registrado registra el evento del botón "Cerrar sesión".
+        // Inicio registra el evento del buscador.
+        super.bindEvents();
+
+
+        // Cuando se pulsa "Mi Perfil", llamamos a PerfilPropio().
+        perfilBtn.addClickListener(
+                e -> PerfilPropio());
+    }
 }

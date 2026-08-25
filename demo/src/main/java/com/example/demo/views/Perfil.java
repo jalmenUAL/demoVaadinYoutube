@@ -1,6 +1,5 @@
 package com.example.demo.views;
 
-import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.iInicio;

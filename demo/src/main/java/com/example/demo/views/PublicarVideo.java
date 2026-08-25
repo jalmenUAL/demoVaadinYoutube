@@ -14,97 +14,191 @@ import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
 
-//@Route("PublicarVideo")
+ 
 @Route("PublicarVideo")
 @RolesAllowed("ROLE_YOUTUBER")
 public class PublicarVideo extends BaseView {
 
-        public PerfilPropio _perfilPropio;
+    /*
+     * Vista encargada de publicar un nuevo vídeo.
+     *
+     * Hereda de BaseView, por lo que seguimos el patrón:
+     *
+     *     initView()
+     *        ├── build()
+     *        └── bindEvents()
+     *
+     * Además, @RolesAllowed garantiza que solamente los usuarios
+     * con ROLE_YOUTUBER puedan acceder a esta vista.
+     */
 
-        private final iYoutuber _iYoutuber;
+    private final iYoutuber _iYoutuber;
 
-        private TextField introduzcaLaUrl;
-        private TextField introduzcaEltitulo;
+    private TextField introduzcaLaUrl;
+    private TextField introduzcaEltitulo;
 
-        private Button publicarButton;
+    private Button publicarButton;
 
-        public PublicarVideo(iYoutuber iYoutuber) {
-                super();
-                this._iYoutuber = iYoutuber;
-                initView();
+    public PublicarVideo(iYoutuber iYoutuber) {
 
-        }
+        super();
 
-        @Override
-        protected void build() {
+        /*
+         * La vista no accede directamente al repositorio ni a las
+         * entidades para realizar operaciones de negocio.
+         *
+         * Utiliza la interfaz iYoutuber, que representa las operaciones
+         * que un Youtuber puede realizar.
+         */
+        this._iYoutuber = iYoutuber;
 
-                setWidthFull();
-                setAlignItems(Alignment.CENTER);
-                setJustifyContentMode(JustifyContentMode.CENTER);
-                setSpacing(true);
-                setPadding(true);
+        /*
+         * Inicializamos la vista mediante el patrón BaseView.
+         *
+         * Esto ejecutará:
+         *      build();
+         *      bindEvents();
+         */
+        initView();
+    }
 
-                H2 titulo = new H2("📹 Publicar nuevo video");
+    /*
+     * Construcción de la interfaz.
+     *
+     * En build() solamente construimos y configuramos los componentes.
+     * Los eventos se registran posteriormente en bindEvents().
+     */
+    @Override
+    protected void build() {
 
-                titulo.getStyle()
-                                .set("color", "#2c3e50");
+        setWidthFull();
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(
+                JustifyContentMode.CENTER);
 
-                introduzcaEltitulo = new TextField("Título del Video");
+        setSpacing(true);
+        setPadding(true);
 
-                introduzcaLaUrl = new TextField("URL del Video");
+        // -------------------------------------------------
+        // Título
+        // -------------------------------------------------
 
-                introduzcaEltitulo.setPlaceholder(
-                                "Ej. Cómo cocinar arroz");
+        H2 titulo =
+                new H2("📹 Publicar nuevo video");
 
-                introduzcaLaUrl.setPlaceholder(
-                                "Ej. https://youtube.com/...");
+        titulo.getStyle()
+                .set("color", "#2c3e50");
 
-                introduzcaEltitulo.setWidth("60%");
-                introduzcaLaUrl.setWidth("60%");
+        // -------------------------------------------------
+        // Campo título
+        // -------------------------------------------------
 
-                publicarButton = new Button("Publicar Video");
+        introduzcaEltitulo =
+                new TextField("Título del Video");
 
-                publicarButton.addThemeVariants(
-                                ButtonVariant.LUMO_PRIMARY);
+        introduzcaEltitulo.setPlaceholder(
+                "Ej. Cómo cocinar arroz");
 
-                publicarButton.getStyle()
-                                .set("border-radius", "8px")
-                                .set("font-weight", "bold")
-                                .set("margin-top", "10px");
+        introduzcaEltitulo.setWidth("60%");
 
-                add(
-                                titulo,
-                                introduzcaEltitulo,
-                                introduzcaLaUrl,
-                                publicarButton);
+        // -------------------------------------------------
+        // Campo URL
+        // -------------------------------------------------
 
-        }
+        introduzcaLaUrl =
+                new TextField("URL del Video");
 
-        @Override
-        protected void bindEvents() {
+        introduzcaLaUrl.setPlaceholder(
+                "Ej. https://youtube.com/...");
 
-                publicarButton.addClickListener(
-                                e -> PublicarVideo());
+        introduzcaLaUrl.setWidth("60%");
 
-        }
+        // -------------------------------------------------
+        // Botón publicar
+        // -------------------------------------------------
 
-        public void PublicarVideo() {
+        publicarButton =
+                new Button("Publicar Video");
 
-                Authentication auth = SecurityContextHolder.getContext()
-                                .getAuthentication();
- 
-                com.example.demo.tables.Youtuber usuario = (com.example.demo.tables.Youtuber) auth.getPrincipal();
+        publicarButton.addThemeVariants(
+                ButtonVariant.LUMO_PRIMARY);
 
-                _iYoutuber.publicarVideo(
-                                usuario.getLogin(),
-                                introduzcaEltitulo.getValue(),
-                                introduzcaLaUrl.getValue());
+        publicarButton.getStyle()
+                .set("border-radius", "8px")
+                .set("font-weight", "bold")
+                .set("margin-top", "10px");
 
-                UI.getCurrent()
-                                .getPage()
-                                .getHistory()
-                                .back();
+        // -------------------------------------------------
+        // Añadir componentes
+        // -------------------------------------------------
 
-        }
+        add(
+                titulo,
+                introduzcaEltitulo,
+                introduzcaLaUrl,
+                publicarButton);
+    }
 
+    /*
+     * Registro de los eventos de la vista.
+     *
+     * Separamos la construcción de la interfaz de la lógica de
+     * los eventos gracias al patrón BaseView.
+     */
+    @Override
+    protected void bindEvents() {
+
+        publicarButton.addClickListener(
+                e -> publicarVideo());
+    }
+
+    /*
+     * Publica el vídeo perteneciente al usuario autenticado.
+     */
+    public void publicarVideo() {
+
+        /*
+         * Obtenemos el Authentication que Spring Security ha creado
+         * después de realizar correctamente el login.
+         */
+        Authentication auth =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        /*
+         * En nuestro CustomAuthProvider establecimos la entidad
+         * Youtuber como principal:
+         *
+         * new UsernamePasswordAuthenticationToken(
+         *      r,
+         *      r.getPassword(),
+         *      ...
+         * )
+         *
+         * Por eso podemos recuperar aquí el Youtuber autenticado.
+         */
+        com.example.demo.tables.Youtuber usuario =
+                (com.example.demo.tables.Youtuber)
+                        auth.getPrincipal();
+
+        /*
+         * La vista conoce la interfaz iYoutuber, pero no necesita saber
+         * cómo se guarda el vídeo en la base de datos.
+         *
+         * La operación se delega en la capa de servicio/fachada.
+         */
+        _iYoutuber.publicarVideo(
+                usuario.getLogin(),
+                introduzcaEltitulo.getValue(),
+                introduzcaLaUrl.getValue());
+
+        /*
+         * Una vez publicado el vídeo, volvemos a la vista anterior.
+         */
+        UI.getCurrent()
+                .getPage()
+                .getHistory()
+                .back();
+    }
 }

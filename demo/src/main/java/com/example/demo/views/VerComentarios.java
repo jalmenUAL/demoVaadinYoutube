@@ -1,43 +1,43 @@
 package com.example.demo.views;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
-import com.example.demo.services.iAdministrador;
 import com.example.demo.tables.Comentario;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
 
 @Route("VerComentarios")
 
-public class VerComentarios extends BaseListView<Comentario> {
-    public VerVideo _verVideo;
-    public List<VerComentarios_item> _item = new ArrayList<>();
-    protected ViewFactoryProvider factory;
-    protected int idvideo;
+public class VerComentarios
+        extends BaseListView<Comentario> {
 
-    public VerComentarios(Set<Comentario> comentarios, int idvideo, ViewFactoryProvider factory) {
+    protected final ViewFactoryProvider viewFactory;
+    int idvideo;
+
+    public VerComentarios(
+            Set<Comentario> comentarios,
+            int idvideo,
+            ViewFactoryProvider viewFactory) {
+
         super(comentarios);
-        this.factory = factory;
+
+        this.viewFactory = viewFactory;
+
         this.idvideo = idvideo;
+
         initView();
     }
 
     @Override
-    protected void bindEvents() {
-
-    }
-
-    @Override
     protected void buildContainer() {
+
         setWidthFull();
         setPadding(true);
         setSpacing(false);
-        setAlignItems(Alignment.STRETCH);
+        setAlignItems(
+                Alignment.STRETCH);
     }
 
     @Override
@@ -45,26 +45,43 @@ public class VerComentarios extends BaseListView<Comentario> {
 
         if (elements.isEmpty()) {
 
-            Div noComments = new Div();
-            noComments.setText("No hay comentarios disponibles.");
+            Div noComments =
+                    new Div();
+
+            noComments.setText(
+                    "No hay comentarios disponibles.");
+
             add(noComments);
+
         } else {
 
-            for (Comentario e : elements) {
+            for (Comentario comentario : elements) {
 
-                VerComentarios_item comentario = factory.getFactory().createVerComentariosItem(e, factory);
-                add(comentario);
+                VerComentarios_item item =
+                        viewFactory
+                                .getFactory()
+                                .createVerComentariosItem(
+                                        comentario,
+                                        viewFactory);
+
+                add(item);
             }
-
         }
 
-        Div separator = new Div();
+        Div separator =
+                new Div();
+
         separator.getStyle()
                 .set("height", "1px")
                 .set("background-color", "#ddd")
                 .set("width", "100%")
                 .set("margin", "8px 0");
+
         add(separator);
     }
 
+    @Override
+    protected void bindEvents() {
+        // No tiene eventos propios.
+    }
 }
