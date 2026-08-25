@@ -5,7 +5,6 @@ import com.example.demo.services.iAdministrador;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
 @Route("PerfilAjenodeAdministrador")
@@ -140,46 +139,8 @@ public class PerfilAjenodeAdministrador extends PerfilAjeno {
          */
         btnBloquear.addClickListener(
                 e -> Bloquear());
-    }
 
-
-    /*
-     * ============================================================
-     * PARÁMETRO DE LA URL
-     * ============================================================
-     *
-     * Sobrescribimos setParameter() porque necesitamos realizar
-     * una acción adicional después de que Perfil haya recibido
-     * el parámetro.
-     */
-    @Override
-    public void setParameter(
-            BeforeEvent event,
-            String parameter) {
-
-        /*
-         * MUY IMPORTANTE:
-         *
-         * Primero dejamos que BaseParameterizedView/Perfil
-         * procese el parámetro.
-         *
-         * Como consecuencia de ello, Perfil obtiene el usuario:
-         *
-         *     _usuario = findYoutuberById(parameter)
-         *
-         * Por tanto, después de super.setParameter() podemos
-         * consultar _usuario.
-         */
-        super.setParameter(
-                event,
-                parameter);
-
-
-        /*
-         * Una vez que sabemos qué usuario estamos mostrando,
-         * configuramos el texto del botón según su estado.
-         */
-        if (_usuario.getBloqueado()) {
+                 if (_usuario.getBloqueado()) {
 
             btnBloquear.setText(
                     "Quitar bloqueo");
@@ -191,6 +152,8 @@ public class PerfilAjenodeAdministrador extends PerfilAjeno {
         }
     }
 
+
+     
 
     /*
      * ============================================================

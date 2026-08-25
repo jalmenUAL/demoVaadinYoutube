@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,9 +16,6 @@ import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioYoutuber;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
-import com.vaadin.flow.component.notification.Notification;
-
-import jakarta.transaction.Transactional;
 
 @Service
 /**
@@ -47,13 +43,7 @@ import jakarta.transaction.Transactional;
  */
 public class BD_Youtubers {
 
-    /*
-     * Elementos procedentes de la estructura generada por Visual Paradigm.
-     *
-     * En esta implementación el acceso real a la base de datos se realiza
-     * mediante repository.
-     */
-    public BDPrincipal _en;
+     
 
     public Vector<Youtuber> _youtubers =
             new Vector<Youtuber>();

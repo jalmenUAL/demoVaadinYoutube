@@ -69,13 +69,9 @@ public class VerVideodeAdministrador extends VerVideo {
      * que carga el vídeo y construye la vista base.
      */
     @Override
-    public void setParameter(
-            BeforeEvent event,
-            Integer parameter) {
+    protected void build(Integer parameter) {
 
-        super.setParameter(
-                event,
-                parameter);
+        super.build(parameter);
 
 
         /*

@@ -32,52 +32,66 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
  * La clase base controla la estructura general y la clase hija
  * decide cómo construir concretamente la lista.
  */
+/**
+ * Clase base para las vistas parametrizadas que muestran
+ * una lista de elementos.
+ *
+ * <p>
+ * El parámetro {@code T} permite que la vista reciba un dato
+ * necesario para construir la lista.
+ *
+ * <p>
+ * Por ejemplo:
+ *
+ * <pre>
+ *     BaseListParameterizedView&lt;String&gt;
+ * </pre>
+ *
+ * puede recibir un identificador de usuario para construir
+ * la lista de elementos asociados a dicho usuario.
+ *
+ * @param <T> tipo del parámetro recibido por la vista
+ */
 public abstract class BaseListParameterizedView<T>
         extends BaseParameterizedView<T> {
 
 
     /**
-     * Contenedor donde se mostrarán los elementos de la lista.
+     * Contenedor principal de la lista.
      *
      * <p>
-     * Las clases hijas pueden utilizar este layout para añadir
+     * Las clases hijas pueden utilizarlo para añadir
      * los elementos que correspondan.
      */
     protected VerticalLayout body;
 
 
     /**
-     * Constructor.
+     * Constructor de la vista.
      *
      * <p>
-     * No necesitamos hacer nada especial porque la inicialización
-     * se realizará cuando Vaadin entregue el parámetro mediante
-     * setParameter().
+     * La construcción de la interfaz se realizará cuando
+     * Vaadin proporcione el parámetro de la vista.
      */
-    public BaseListParameterizedView() {
+    protected BaseListParameterizedView() {
         super();
     }
 
 
     /**
-     * Construye la estructura general de la vista.
+     * Construye la estructura común de la vista.
      *
      * <p>
-     * Este método sobrescribe el build(T parameter) de
-     * BaseParameterizedView.
+     * Primero se crea el contenedor de la lista y después
+     * se delega en la clase hija la construcción de sus elementos.
      *
-     * <p>
-     * El proceso es:
-     *
-     *     1. Crear el contenedor.
-     *     2. Añadirlo a la vista.
-     *     3. Dejar que la clase hija construya la lista.
+     * @param parameter parámetro recibido por la vista
      */
     @Override
     protected void build(T parameter) {
 
         // ---------------------------------------------------------
-        // Crear el contenedor de la lista
+        // CONTENEDOR DE LA LISTA
         // ---------------------------------------------------------
 
         body = new VerticalLayout();
@@ -86,33 +100,28 @@ public abstract class BaseListParameterizedView<T>
 
 
         // ---------------------------------------------------------
-        // Añadir el contenedor a la vista
+        // AÑADIR CONTENEDOR A LA VISTA
         // ---------------------------------------------------------
 
         add(body);
 
 
         // ---------------------------------------------------------
-        // Construir el contenido específico
+        // CONSTRUIR CONTENIDO ESPECÍFICO
         // ---------------------------------------------------------
 
-        /*
-         * La clase hija decide qué elementos debe mostrar
-         * utilizando el parámetro recibido.
-         */
         buildList(parameter);
     }
 
 
     /**
-     * Construye la lista concreta de la vista.
+     * Construye el contenido específico de la lista.
      *
      * <p>
-     * Cada clase hija debe implementar este método.
+     * Cada clase hija debe implementar este método para decidir
+     * qué elementos se muestran a partir del parámetro recibido.
      *
-     * Por ejemplo, si el parámetro es un ID de vídeo,
-     * podría utilizarlo para obtener los comentarios
-     * relacionados con ese vídeo y mostrarlos dentro de body.
+     * @param parameter parámetro recibido por la vista
      */
     protected abstract void buildList(T parameter);
 }

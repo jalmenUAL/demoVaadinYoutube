@@ -45,43 +45,33 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
  */
 public abstract class BaseActorView extends AppLayout {
 
-
     /**
-     * Cabecera común de las vistas.
+     * Cabecera común de todas las vistas.
      *
-     * protected permite que las clases hijas puedan utilizarla.
+     * Las clases hijas pueden utilizarla para añadir
+     * botones, buscadores, títulos, etc.
      */
-    protected HorizontalLayout header =
-            new HorizontalLayout();
-
+    protected HorizontalLayout header;
 
     /**
      * Contenido principal de la vista.
-     *
-     * Todas las vistas que hereden de esta clase tendrán
-     * automáticamente este contenedor.
      */
     protected VerticalLayout body;
 
 
     /**
-     * Constructor de la clase base.
+     * Constructor de la vista.
      *
-     * No necesitamos realizar aquí la inicialización porque
-     * se hace mediante initView().
+     * La inicialización se realiza mediante initView().
      */
-    public BaseActorView() {
-
+    protected BaseActorView() {
     }
 
 
     /**
-     * Método que inicializa completamente la vista.
+     * Inicializa completamente la vista.
      *
-     * Este método establece el orden en el que se construye
-     * cualquier vista hija.
-     *
-     * Es importante que el orden sea:
+     * El orden de inicialización es siempre:
      *
      *     buildLayout()
      *          ↓
@@ -89,11 +79,10 @@ public abstract class BaseActorView extends AppLayout {
      *          ↓
      *     bindEvents()
      *
-     * Primero creamos los componentes comunes,
-     * después construimos el contenido y finalmente
-     * conectamos los eventos.
+     * Este método es final para impedir que una clase hija
+     * pueda alterar el ciclo de construcción de la vista.
      */
-    public void initView() {
+    public final void initView() {
 
         buildLayout();
 
@@ -106,8 +95,8 @@ public abstract class BaseActorView extends AppLayout {
     /**
      * Construye la estructura común de la vista.
      *
-     * Esta parte es igual para todas las clases hijas,
-     * por lo que no tiene sentido repetirla en cada una.
+     * Esta parte pertenece a la clase base y no debe
+     * repetirse en las clases hijas.
      */
     private void buildLayout() {
 
@@ -122,10 +111,9 @@ public abstract class BaseActorView extends AppLayout {
         header.setAlignItems(
                 Alignment.CENTER);
 
-
         /*
-         * AppLayout permite colocar componentes en la barra
-         * superior mediante addToNavbar().
+         * AppLayout permite colocar el header
+         * en la barra superior.
          */
         addToNavbar(header);
 
@@ -138,47 +126,27 @@ public abstract class BaseActorView extends AppLayout {
 
         body.setSizeFull();
 
-
         /*
-         * El body será el contenido principal del AppLayout.
+         * El body será el contenido principal
+         * de la vista.
          */
         setContent(body);
     }
 
 
     /**
-     * Método abstracto que deben implementar las clases hijas.
+     * Construye los componentes específicos de la vista.
      *
-     * Aquí se construyen los componentes específicos de cada vista.
-     *
-     * Al ser abstracto, BaseActorView no sabe qué contenido tendrá
-     * cada pantalla.
-     *
-     * Por ejemplo:
-     *
-     *     @Override
-     *     protected void build() {
-     *         Button boton = new Button("Aceptar");
-     *         body.add(boton);
-     *     }
+     * Es obligatorio que cada clase hija implemente este método.
      */
     protected abstract void build();
 
 
     /**
-     * Método para registrar los eventos de los componentes.
+     * Registra los eventos de los componentes.
      *
-     * No todas las vistas necesitan eventos, por eso no es abstracto.
-     *
-     * Las clases que necesiten eventos pueden sobrescribirlo:
-     *
-     *     @Override
-     *     protected void bindEvents() {
-     *         boton.addClickListener(...);
-     *     }
-     *
-     * Si una vista no tiene eventos, simplemente no hace nada.
+     * Es obligatorio implementarlo, aunque una vista no tenga
+     * eventos. En ese caso simplemente se deja vacío.
      */
-    protected void bindEvents() {
-    }
+    protected abstract void bindEvents();
 }

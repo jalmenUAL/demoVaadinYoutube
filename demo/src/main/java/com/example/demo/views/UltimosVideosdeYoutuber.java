@@ -19,9 +19,9 @@ public class UltimosVideosdeYoutuber
     }
 
     @Override
-    protected void build() {
+    protected void buildContainer() {
 
-        super.build();
+        super.buildContainer();
 
         tituloGaleria.setText(
                 "Videos Propios o de Youtubers que sigues");

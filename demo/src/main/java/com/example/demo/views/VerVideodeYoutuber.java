@@ -138,19 +138,12 @@ public class VerVideodeYoutuber extends VerVideo {
      * de construir la vista base.
      */
     @Override
-    public void setParameter(
-            BeforeEvent event,
-            Integer parameter) {
+    protected void build(Integer parameter) {
 
-        /*
-         * Primero se ejecuta la implementación de VerVideo.
-         *
-         * Esto carga el vídeo y construye todos los
-         * componentes comunes.
-         */
-        super.setParameter(
-                event,
-                parameter);
+        super.build(parameter);
+
+
+        
 
 
         /*

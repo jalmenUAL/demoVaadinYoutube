@@ -5,7 +5,6 @@ import java.util.Vector;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioAdministrador;
 import com.example.demo.tables.Administrador;
 
@@ -38,14 +37,7 @@ import com.example.demo.tables.Administrador;
  */
 public class BD_Administradores {
 
-    /*
-     * Referencia a la clase que representa la base de datos principal.
-     *
-     * Esta variable parece proceder del modelo generado por Visual Paradigm.
-     * En esta clase concreta no la estamos utilizando, pero se mantiene
-     * porque forma parte de la estructura generada del proyecto.
-     */
-    public BDPrincipal _en;
+    
 
     /*
      * Colección generada por Visual Paradigm.

@@ -101,32 +101,7 @@ public class GaleradeVideos
     }
 
 
-    /**
-     * Construye la vista completa.
-     */
-    @Override
-    protected void build() {
-
-        /*
-         * Llamar a super.build() es importante.
-         *
-         * BaseListView.build() se encarga de ejecutar:
-         *
-         *     buildContainer()
-         *     buildItems()
-         */
-        super.build();
-
-
-        /*
-         * El título también podría establecerse directamente
-         * en buildContainer(). Aquí simplemente se modifica
-         * después de construir el contenedor.
-         */
-        tituloGaleria.setText(
-                "Galería de Videos");
-    }
-
+     
 
     /**
      * Esta vista no necesita eventos propios.

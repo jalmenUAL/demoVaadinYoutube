@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioComentario;
 import com.example.demo.tables.Comentario;
 import com.example.demo.tables.Video;
@@ -27,14 +26,7 @@ import com.example.demo.tables.Youtuber;
  */
 public class BD_Comentarios {
 
-    /*
-     * Referencia a la base de datos principal.
-     *
-     * Esta propiedad procede de la estructura generada por Visual Paradigm.
-     * En esta clase no la utilizamos directamente porque el acceso real a
-     * la BD se realiza mediante el repositorio de Spring Data.
-     */
-    public BDPrincipal _en;
+    
 
     /*
      * Colección generada por Visual Paradigm.

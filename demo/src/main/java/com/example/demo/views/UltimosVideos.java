@@ -2,7 +2,6 @@ package com.example.demo.views;
 
 import java.util.List;
 
-import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.tables.Video;
 import com.vaadin.flow.router.Route;
@@ -34,12 +33,12 @@ public class UltimosVideos
     }
 
     @Override
-    protected void build() {
+    protected void buildContainer() {
 
         /*
          * Construimos primero la vista de la clase padre.
          */
-        super.build();
+        super.buildContainer();
 
         /*
          * Especializamos la vista cambiando únicamente

@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.facade.BDPrincipal;
 import com.example.demo.repositories.RepositorioVideo;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
@@ -29,14 +28,7 @@ import com.example.demo.tables.Youtuber;
  */
 public class BD_Videos {
 
-    /*
-     * Propiedades procedentes de la estructura generada por Visual Paradigm.
-     *
-     * En esta implementación el acceso real a la base de datos se realiza
-     * mediante el repositorio, por lo que _en y _videos no son necesarios
-     * para estas operaciones.
-     */
-    public BDPrincipal _en;
+     
 
     public Vector<Video> _videos =
             new Vector<Video>();
@@ -102,12 +94,6 @@ public class BD_Videos {
     /**
      * Obtiene como máximo los 10 primeros vídeos.
      *
-     * <p>
-     * Es importante tener en cuenta que findAll() devuelve los vídeos
-     * en el orden definido por la consulta/repositorio. Si queremos que
-     * sean realmente "los últimos" por fecha, sería mejor ordenar la
-     * consulta por fecha de forma explícita.
-     * </p>
      */
     public java.util.List<Video> getUltimosVideos() {
 

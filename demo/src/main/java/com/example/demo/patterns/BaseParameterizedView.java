@@ -27,21 +27,46 @@ import com.vaadin.flow.router.HasUrlParameter;
  * Implementa HasUrlParameter<T>, una interfaz de Vaadin que permite
  * recibir un parámetro asociado a la navegación.
  */
+/**
+ * Clase base para las vistas que reciben un parámetro en la URL.
+ *
+ * <p>
+ * Define un ciclo de vida común para todas las vistas parametrizadas:
+ *
+ * <pre>
+ *     setParameter()
+ *          ↓
+ *     initView(parameter)
+ *          ↓
+ *     build(parameter)
+ *          ↓
+ *     bindEvents()
+ * </pre>
+ *
+ * <p>
+ * Los métodos que controlan el ciclo de vida son {@code final},
+ * evitando que las clases hijas puedan modificar el orden.
+ *
+ * @param <T> tipo del parámetro recibido desde la URL
+ */
 public abstract class BaseParameterizedView<T>
         extends VerticalLayout
         implements HasUrlParameter<T> {
 
 
     /**
-     * Método de Vaadin que se ejecuta cuando se navega hasta
-     * esta vista proporcionando un parámetro en la URL.
+     * Recibe el parámetro proporcionado por Vaadin.
      *
      * <p>
-     * No construimos directamente la vista aquí.
-     * Delegamos la construcción en initView(parameter).
+     * Este método es llamado automáticamente por Vaadin
+     * cuando se navega a una vista parametrizada.
+     *
+     * <p>
+     * Es {@code final} para impedir que las clases hijas
+     * modifiquen el ciclo de inicialización.
      */
     @Override
-    public void setParameter(
+    public final void setParameter(
             BeforeEvent event,
             T parameter) {
 
@@ -53,39 +78,48 @@ public abstract class BaseParameterizedView<T>
      * Inicializa la vista utilizando el parámetro recibido.
      *
      * <p>
-     * El orden de construcción es:
+     * El orden de construcción queda garantizado:
      *
-     *     1. Construir la vista utilizando el parámetro.
-     *     2. Asociar los eventos.
+     * <pre>
+     *     build(parameter)
+     *          ↓
+     *     bindEvents()
+     * </pre>
      *
      * <p>
-     * Este funcionamiento sigue la misma idea del patrón
-     * Template Method utilizado en BaseView.
+     * Es {@code final} para que ninguna clase hija pueda
+     * alterar este orden.
      */
-    public void initView(T parameter) {
+    protected final void initView(T parameter) {
 
-        // Construir la interfaz utilizando el parámetro.
+        // Primero construimos los componentes.
         build(parameter);
 
-        // Asociar los eventos.
+        // Después conectamos los eventos.
         bindEvents();
     }
 
 
     /**
-     * Construye la interfaz utilizando el parámetro recibido.
+     * Construye los componentes específicos de la vista.
      *
      * <p>
-     * Cada clase hija decide qué hacer con dicho parámetro.
+     * Cada clase hija debe implementar este método.
+     *
+     * @param parameter parámetro recibido desde la URL
      */
     protected abstract void build(T parameter);
 
 
     /**
-     * Asocia los eventos de la vista.
+     * Registra los eventos de los componentes.
      *
      * <p>
-     * Cada clase hija debe implementar este método.
+     * Todas las clases hijas deben implementar este método.
+     *
+     * <p>
+     * Si una vista no tiene eventos propios, deberá proporcionar
+     * una implementación vacía.
      */
     protected abstract void bindEvents();
 }

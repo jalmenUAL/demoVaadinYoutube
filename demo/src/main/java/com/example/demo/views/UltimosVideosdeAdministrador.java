@@ -24,9 +24,9 @@ public class UltimosVideosdeAdministrador
      * del administrador realmente se muestran todos los vídeos.
      */
     @Override
-    protected void build() {
+    protected void buildContainer() {
 
-        super.build();
+        super.buildContainer();
 
         tituloGaleria.setText("Todos los videos");
     }

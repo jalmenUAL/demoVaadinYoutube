@@ -37,79 +37,89 @@ import java.util.Collection;
  *     1. Construir el contenedor.
  *     2. Construir los elementos.
  */
+/**
+ * Clase base para las vistas que muestran una colección
+ * de elementos.
+ *
+ * <p>
+ * La clase define el ciclo de construcción de una lista:
+ *
+ * <pre>
+ *     build()
+ *        ↓
+ *     buildContainer()
+ *        ↓
+ *     buildItems()
+ * </pre>
+ *
+ * <p>
+ * La clase hija solamente debe definir cómo se construye
+ * el contenedor y cómo se representan los elementos.
+ *
+ * @param <T> tipo de elemento que contiene la lista
+ */
 public abstract class BaseListView<T>
         extends BaseView {
 
 
     /**
-     * Colección de elementos que mostrará la lista.
+     * Elementos que mostrará la lista.
      *
      * <p>
-     * T representa el tipo de elemento.
-     *
-     * Por ejemplo:
-     *
-     *     Collection<Video>
-     *
-     * o:
-     *
-     *     Collection<Youtuber>
-     *
-     * <p>
-     * Se utiliza Collection en lugar de una implementación concreta
-     * como List porque la vista solamente necesita recorrer
-     * los elementos y no depende de cómo se almacenen.
+     * Se utiliza {@link Collection} porque la vista solamente
+     * necesita recorrer los elementos y no depende de una
+     * implementación concreta como {@link java.util.List}
+     * o {@link java.util.Set}.
      */
     protected final Collection<T> elements;
 
 
     /**
-     * Constructor.
+     * Crea una vista de lista.
      *
      * @param elements colección de elementos que debe mostrar
-     *                 la vista.
+     *                 la vista
      */
-    public BaseListView(Collection<T> elements) {
+    protected BaseListView(Collection<T> elements) {
 
-        /*
-         * Guardamos la colección para que las clases hijas
-         * puedan utilizarla al construir los elementos.
-         */
         this.elements = elements;
     }
 
 
     /**
-     * Construye la vista.
+     * Construye la lista siguiendo siempre el mismo orden.
      *
      * <p>
-     * Este método sobrescribe el build() de BaseView.
+     * El método es {@code final} para impedir que una clase hija
+     * altere el orden de construcción.
      *
-     * <p>
-     * La clase base establece el orden:
-     *
+     * <pre>
      *     buildContainer()
      *          ↓
      *     buildItems()
-     *
-     * Las clases hijas solamente tienen que indicar
-     * cómo realizar cada una de esas operaciones.
+     * </pre>
      */
     @Override
-    protected void build() {
+    protected final void build() {
+
+        // ---------------------------------------------------------
+        // CONSTRUIR CONTENEDOR
+        // ---------------------------------------------------------
 
         /*
-         * Primero se crea el contenedor de la lista.
-         *
-         * Por ejemplo, un VerticalLayout, HorizontalLayout,
-         * Grid, etc.
+         * La clase hija decide qué componente utilizar
+         * como contenedor de la lista.
          */
         buildContainer();
 
 
+        // ---------------------------------------------------------
+        // CONSTRUIR ELEMENTOS
+        // ---------------------------------------------------------
+
         /*
-         * Una vez creado el contenedor, se añaden
-         * los elementos de la colección.
+         * Una vez creado el contenedor, la clase hija
+         * construye y añade los elementos.
          */
         buildItems();
     }
@@ -119,21 +129,17 @@ public abstract class BaseListView<T>
      * Construye el contenedor donde se mostrarán los elementos.
      *
      * <p>
-     * Cada tipo de lista puede necesitar un contenedor diferente.
-     *
-     * Por eso este método es abstracto.
+     * Puede ser, por ejemplo, un VerticalLayout,
+     * HorizontalLayout, FlexLayout, Grid, etc.
      */
     protected abstract void buildContainer();
 
 
     /**
-     * Construye y añade los elementos de la lista.
+     * Construye y añade los elementos de la colección.
      *
      * <p>
-     * La clase hija decide cómo representar cada objeto de T.
-     *
-     * Por ejemplo, una lista de vídeos podría crear
-     * un Videos_item para cada Video.
+     * La clase hija decide cómo representar cada elemento.
      */
     protected abstract void buildItems();
 }

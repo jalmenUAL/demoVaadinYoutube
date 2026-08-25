@@ -18,8 +18,8 @@ public class VerComentariosdeYoutuber extends VerComentarios {
     }
 
     @Override
-    protected void build() {
-        super.build();
+    protected void buildContainer() {
+        super.buildContainer();
         Button comentarButton = new Button("Comentar");
         comentarButton.getStyle()
                 .set("background-color", "#FF0000")

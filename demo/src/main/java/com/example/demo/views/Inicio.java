@@ -3,7 +3,6 @@ package com.example.demo.views;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseActorView;
 import com.example.demo.services.iInicio;
-import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.router.Route;
@@ -143,6 +142,8 @@ public abstract class Inicio extends BaseActorView {
                         viewFactory);
 
         header.add(_buscar);
+
+        
     }
 
 
@@ -216,33 +217,11 @@ public abstract class Inicio extends BaseActorView {
 
             body.add(vista);
         });
+         
     }
 
 
-    /**
-     * Se ejecuta cuando la vista se añade a la interfaz de Vaadin.
-     *
-     * <p>
-     * Aquí cargamos los últimos vídeos.
-     *
-     * <p>
-     * Se utiliza el evento de Attach porque en este momento
-     * la vista ya está incorporada a la interfaz de usuario.
-     */
-    @Override
-    protected void onAttach(
-            AttachEvent attachEvent) {
-
-        super.onAttach(attachEvent);
-
-        /*
-         * La implementación concreta decide cómo obtener y mostrar
-         * los últimos vídeos.
-         */
-        UltimosVideos();
-    }
-
-
+     
     /**
      * Carga y muestra los últimos vídeos.
      *

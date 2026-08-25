@@ -52,8 +52,7 @@ public class BDPrincipal
                    iRegistrado,
                    iInicio {
 
-    private final RepositorioYoutuber repositorioYoutuber;
-
+ 
     /*
      * Clases encargadas de cada grupo de operaciones.
      *
@@ -78,15 +77,13 @@ public class BDPrincipal
             BD_Videos videos,
             BD_Comentarios comentarios,
             BD_Youtubers youtubers,
-            BD_Administradores administradores,
-            RepositorioYoutuber repositorioYoutuber) {
+            BD_Administradores administradores) {
 
         this._youtubers = youtubers;
         this._administradores = administradores;
         this._videos = videos;
         this._comentarios = comentarios;
-        this.repositorioYoutuber = repositorioYoutuber;
-    }
+     }
 
 
     // ============================================================

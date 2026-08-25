@@ -29,47 +29,56 @@ package com.example.demo.patterns;
  *        ↓
  *     bindEvents()
  */
-public abstract class BaseItemView<T>
-        extends BaseView {
+/**
+ * Clase base para las vistas que representan un elemento de un modelo.
+ *
+ * <p>
+ * Permite crear vistas genéricas para distintos tipos de objetos.
+ *
+ * <p>
+ * Por ejemplo:
+ *
+ * <pre>
+ *     BaseItemView&lt;Video&gt;
+ * </pre>
+ *
+ * representa un elemento cuyo modelo es un {@code Video}.
+ *
+ * <p>
+ * Del mismo modo:
+ *
+ * <pre>
+ *     BaseItemView&lt;Youtuber&gt;
+ * </pre>
+ *
+ * representa un elemento cuyo modelo es un {@code Youtuber}.
+ *
+ * @param <T> tipo de objeto que representa el elemento
+ */
+public abstract class BaseItemView<T> extends BaseView {
 
 
     /**
-     * Objeto que representa los datos que muestra esta vista.
+     * Modelo representado por esta vista.
      *
      * <p>
-     * T es el tipo genérico de la clase.
-     *
-     * Si tenemos:
-     *
-     *     BaseItemView<Video>
-     *
-     * entonces model será un Video.
-     *
-     * Si tenemos:
-     *
-     *     BaseItemView<Youtuber>
-     *
-     * entonces model será un Youtuber.
+     * Las clases hijas pueden utilizarlo durante las fases
+     * {@link #build()} y {@link #bindEvents()}.
      *
      * <p>
-     * Es final porque una vez creada la vista no queremos
-     * sustituir el objeto que representa.
+     * Es {@code final} porque la vista representa al mismo
+     * elemento durante todo su ciclo de vida.
      */
     protected final T model;
 
 
     /**
-     * Constructor.
+     * Crea una vista para el modelo indicado.
      *
      * @param model objeto que representa los datos del elemento
-     *              que mostrará la vista.
      */
-    public BaseItemView(T model) {
+    protected BaseItemView(T model) {
 
-        /*
-         * Guardamos el objeto recibido para que las clases hijas
-         * puedan utilizarlo en build() y bindEvents().
-         */
         this.model = model;
     }
 }

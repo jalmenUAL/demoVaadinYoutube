@@ -45,9 +45,9 @@ public class ResultadodeBusqueda
      * Después modificamos solamente el título.
      */
     @Override
-    protected void build() {
+    protected void buildContainer() {
 
-        super.build();
+        super.buildContainer();
 
         tituloGaleria.setText(
                 "Resultados de la búsqueda");
