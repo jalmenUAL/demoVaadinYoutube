@@ -103,16 +103,18 @@ public class Administrador extends Registrado {
     @Override
     protected void build() {
 
+
+        /*
+         * Añadir la lista de usuarios denunciados.
+         */
+        Usuariosdenunciados();
+
         /*
          * Construir primero la estructura común de Registrado.
          */
         super.build();
 
 
-        /*
-         * Añadir la lista de usuarios denunciados.
-         */
-        Usuariosdenunciados();
     }
 
 

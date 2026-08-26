@@ -143,6 +143,7 @@ public abstract class Inicio extends BaseActorView {
 
         header.add(_buscar);
 
+        UltimosVideos();
         
     }
 

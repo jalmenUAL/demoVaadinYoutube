@@ -1,5 +1,6 @@
 package com.example.demo.views;
 
+import java.util.Date;
 import java.util.List;
 
 import com.example.demo.factories.ViewFactory;
@@ -11,6 +12,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -276,6 +278,8 @@ public class VerVideo extends BaseParameterizedView<Integer> {
         String tituloVideo =
                 video.getTitulo();
 
+        Date fechaVideo = video.getFecha();
+
 
         /*
          * Nombre del propietario.
@@ -296,6 +300,9 @@ public class VerVideo extends BaseParameterizedView<Integer> {
         H2 titulo =
                 new H2(tituloVideo);
 
+        Span fecha = new Span(fechaVideo.toString());
+        
+
 
         /*
          * Cabecera formada por avatar y nombre
@@ -312,13 +319,15 @@ public class VerVideo extends BaseParameterizedView<Integer> {
         cabecera.setSpacing(true);
         cabecera.setWidthFull();
 
+        HorizontalLayout tituloconfecha = new HorizontalLayout(titulo, new Span(" Subido el...."), fecha);
+
 
         /*
          * Agrupamos título y propietario.
          */
         VerticalLayout cabeceraCompleta =
                 new VerticalLayout(
-                        titulo,
+                        tituloconfecha,
                         cabecera);
 
         cabeceraCompleta.setSpacing(false);

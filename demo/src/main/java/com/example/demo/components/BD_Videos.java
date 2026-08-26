@@ -1,6 +1,9 @@
 package com.example.demo.components;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -28,10 +31,7 @@ import com.example.demo.tables.Youtuber;
  */
 public class BD_Videos {
 
-     
-
-    public Vector<Video> _videos =
-            new Vector<Video>();
+    public Vector<Video> _videos = new Vector<Video>();
 
     /*
      * Repositorio de Spring Data JPA utilizado para acceder a los vídeos
@@ -73,9 +73,8 @@ public class BD_Videos {
                  * Esto evita devolver null y tener posteriormente un
                  * NullPointerException al intentar utilizar el vídeo.
                  */
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Video no encontrado"));
+                .orElseThrow(() -> new RuntimeException(
+                        "Video no encontrado"));
     }
 
     /**
@@ -100,8 +99,7 @@ public class BD_Videos {
         /*
          * Primero obtenemos todos los vídeos.
          */
-        java.util.List<Video> UltimosVideos =
-                videorepository.findAll();
+        java.util.List<Video> UltimosVideos = videorepository.findAll();
 
         /*
          * Si hay más de 10, nos quedamos solamente con los 10 primeros.
@@ -116,12 +114,11 @@ public class BD_Videos {
              *
              * Por tanto:
              *
-             *     subList(0, 10)
+             * subList(0, 10)
              *
              * significa "elementos 0, 1, 2, ..., 9".
              */
-            UltimosVideos =
-                    UltimosVideos.subList(0, 10);
+            UltimosVideos = UltimosVideos.subList(0, 10);
         }
 
         return UltimosVideos;
@@ -164,18 +161,16 @@ public class BD_Videos {
          * para que posteriormente la comparación no distinga entre
          * mayúsculas y minúsculas.
          */
-        List<String> palabras =
-                Arrays.stream(
-                        videob.getTitulo().split("\\s+"))
-                        .map(String::toLowerCase)
-                        .toList();
+        List<String> palabras = Arrays.stream(
+                videob.getTitulo().split("\\s+"))
+                .map(String::toLowerCase)
+                .toList();
 
         /*
          * Obtenemos todos los vídeos para poder buscar cuáles están
          * relacionados.
          */
-        List<Video> busqueda =
-                videorepository.findAll();
+        List<Video> busqueda = videorepository.findAll();
 
         /*
          * Stream permite procesar la colección de forma declarativa:
@@ -194,8 +189,7 @@ public class BD_Videos {
                  * Si fueran objetos Integer, normalmente utilizaríamos
                  * equals() para comparar sus valores.
                  */
-                .filter(video ->
-                        !(video.getId() == videob.getId()))
+                .filter(video -> !(video.getId() == videob.getId()))
 
                 /*
                  * Comprobamos si el título del vídeo contiene al menos
@@ -206,8 +200,7 @@ public class BD_Videos {
                  */
                 .filter(video -> {
 
-                    String titulo =
-                            video.getTitulo().toLowerCase();
+                    String titulo = video.getTitulo().toLowerCase();
 
                     return palabras.stream()
                             .anyMatch(titulo::contains);
@@ -231,8 +224,7 @@ public class BD_Videos {
          * Obtenemos los vídeos y utilizamos un Stream para filtrar
          * solamente aquellos cuyo título contiene el texto buscado.
          */
-        List<Video> busqueda =
-                videorepository.findAll();
+        List<Video> busqueda = videorepository.findAll();
 
         return busqueda.stream()
 
@@ -240,8 +232,7 @@ public class BD_Videos {
                  * filter() conserva únicamente los elementos para los
                  * que la condición devuelve true.
                  */
-                .filter(video ->
-                        video.getTitulo().contains(texto))
+                .filter(video -> video.getTitulo().contains(texto))
 
                 /*
                  * Convertimos el Stream de nuevo en una lista.
@@ -253,8 +244,8 @@ public class BD_Videos {
      * Publica un nuevo vídeo.
      *
      * @param usuario youtuber que publica el vídeo
-     * @param titulo título del vídeo
-     * @param url URL del vídeo
+     * @param titulo  título del vídeo
+     * @param url     URL del vídeo
      */
     public void publicarVideo(
             Youtuber usuario,
@@ -273,6 +264,10 @@ public class BD_Videos {
          */
         video.setTitulo(titulo);
         video.setUrl(url);
+        video.setFecha(Date.from(
+                LocalDate.now()
+                        .atStartOfDay(ZoneId.systemDefault())
+                        .toInstant()));
 
         /*
          * Indicamos qué Youtuber es el propietario del vídeo.
