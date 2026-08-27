@@ -2,10 +2,13 @@ package com.example.demo.services.mocks;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.services.interfaces.iAdministrador;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
-
+@Service
 public class AdmistradorMock extends RegistradoMock implements iAdministrador {
 
     public AdmistradorMock(DatosMock datos) {

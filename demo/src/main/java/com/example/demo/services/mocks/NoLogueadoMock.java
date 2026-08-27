@@ -3,6 +3,7 @@ package com.example.demo.services.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.services.interfaces.iNoLogueado;
@@ -10,6 +11,7 @@ import com.example.demo.tables.Registrado;
 import com.example.demo.tables.Youtuber;
 
 @Service
+
 public class NoLogueadoMock extends InicioMock
         implements iNoLogueado {
 

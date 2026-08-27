@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.services.interfaces.iInicio;
@@ -11,6 +12,8 @@ import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
 @Service
+
+@Primary
 public class InicioMock implements iInicio {
 
     protected Set<Video> videos;
@@ -76,7 +79,7 @@ public class InicioMock implements iInicio {
          * Para el prototipo simplemente devolvemos
          * los vídeos preparados como escenario.
          */
-        return (List<Video>) videos;
+        return  new ArrayList<>(videos);
     }
 
     @Override
