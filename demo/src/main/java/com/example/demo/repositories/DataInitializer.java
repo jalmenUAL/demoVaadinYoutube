@@ -1,10 +1,8 @@
-package com.example.demo.security;
+package com.example.demo.repositories;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.repositories.RepositorioAdministrador;
-import com.example.demo.repositories.RepositorioYoutuber;
 import com.example.demo.tables.Administrador;
 import com.example.demo.tables.Youtuber;
 
