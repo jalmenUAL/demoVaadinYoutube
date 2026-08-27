@@ -1,8 +1,8 @@
 package com.example.demo.services.mocks;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,7 @@ import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
 @Component
+
 public class DatosMock {
 
     /*
@@ -18,8 +19,8 @@ public class DatosMock {
      * =========================================================
      */
 
-    public final List<Youtuber> youtubers;
-    public final List<Video> videos;
+    public final Set<Youtuber> youtubers;
+    public final Set<Video> videos;
 
     /**
      * Crea el escenario inicial utilizado durante
@@ -27,8 +28,8 @@ public class DatosMock {
      */
     public DatosMock() {
 
-        youtubers = new ArrayList<>();
-        videos = new ArrayList<>();
+        youtubers = new HashSet<>();
+        videos = new HashSet<>();
 
         cargarDatos();
     }
@@ -152,7 +153,6 @@ public class DatosMock {
          * María indica que le gusta un vídeo de Ana.
          */
         maria.getLe_gusta().add(video1);
-
         video1.getLe_gusta_a().add(maria);
 
         // =========================================================
@@ -183,6 +183,9 @@ public class DatosMock {
         /*
          * ID ficticio utilizado únicamente durante
          * el prototipado.
+         *
+         * No se establece porque el ID es generado
+         * automáticamente por JPA.
          */
         // video.setId(id);
 
@@ -193,5 +196,4 @@ public class DatosMock {
 
         return video;
     }
-
 }

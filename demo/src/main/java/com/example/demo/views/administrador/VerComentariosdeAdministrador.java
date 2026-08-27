@@ -2,7 +2,6 @@ package com.example.demo.views.administrador;
 
 import java.util.Set;
 
-import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.interfaces.iAdministrador;
 import com.example.demo.tables.Comentario;

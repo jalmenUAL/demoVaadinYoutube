@@ -12,41 +12,14 @@ import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
 @Service
-public class YoutuberMock extends InicioMock implements iYoutuber {
+public class YoutuberMock extends RegistradoMock implements iYoutuber {
 
     public YoutuberMock(DatosMock datosMock) {
         super(datosMock);
 
     }
 
-    /**
-     * Crea los datos iniciales utilizados por el prototipo.
-     */
-
-    /**
-     * Crea un vídeo para el escenario del prototipo.
-     */
-    private Video crearVideo(
-            int id,
-            String titulo,
-            String url,
-            Youtuber youtuber) {
-
-        Video video = new Video();
-
-        /*
-         * Si el setter de id se hace público únicamente para
-         * facilitar el prototipo, podemos asignar IDs conocidos.
-         */
-        // video.setId(id);
-
-        video.setTitulo(titulo);
-        video.setUrl(url);
-        video.setFecha(new Date());
-        video.setEs_de(youtuber);
-
-        return video;
-    }
+    
 
     @Override
     public Video findVideoById(int idVideo) {
@@ -74,10 +47,10 @@ public class YoutuberMock extends InicioMock implements iYoutuber {
         /*
          * En el mock generamos un identificador ficticio.
          */
-        int nuevoId = videos.stream()
+        /*int nuevoId = videos.stream()
                 .mapToInt(Video::getId)
                 .max()
-                .orElse(0) + 1;
+                .orElse(0) + 1;*/
 
         // video.setId(nuevoId);
         video.setTitulo(titulo);
@@ -296,7 +269,7 @@ public class YoutuberMock extends InicioMock implements iYoutuber {
     @Override
     public List<Video> getUltimosVideos() {
 
-        return videos;
+        return (List<Video>) videos;
     }
 
     @Override

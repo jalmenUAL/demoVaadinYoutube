@@ -5,7 +5,6 @@ import com.example.demo.services.interfaces.iAdministrador;
 import com.example.demo.views.common.VerVideo;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
 @Route("VerVideodeAdministrador")

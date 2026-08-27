@@ -2,6 +2,7 @@ package com.example.demo.services.mocks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,12 @@ import com.example.demo.tables.Youtuber;
 @Service
 public class InicioMock implements iInicio {
 
-    protected List<Video> videos;
-    protected List<Youtuber> youtubers;
+    protected Set<Video> videos;
+    protected Set<Youtuber> youtubers;
 
     public InicioMock(DatosMock datos) {
 
-        videos = new ArrayList<>();
-        youtubers = new ArrayList<>();
+         
         this.videos = datos.videos;
         this.youtubers = datos.youtubers;
 
@@ -76,7 +76,7 @@ public class InicioMock implements iInicio {
          * Para el prototipo simplemente devolvemos
          * los vídeos preparados como escenario.
          */
-        return videos;
+        return (List<Video>) videos;
     }
 
     @Override

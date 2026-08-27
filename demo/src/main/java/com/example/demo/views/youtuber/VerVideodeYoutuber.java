@@ -10,7 +10,6 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
 @Route("VerVideodeYoutuber")

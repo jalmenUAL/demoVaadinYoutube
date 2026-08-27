@@ -1,6 +1,5 @@
 package com.example.demo.views.youtuber;
 
-import com.example.demo.factories.ViewFactory;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.tables.Comentario;
 import com.example.demo.views.common.VerComentarios_item;

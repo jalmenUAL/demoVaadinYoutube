@@ -1,7 +1,6 @@
 package com.example.demo.views.common;
 
 import java.util.List;
-import java.util.Vector;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseListView;
