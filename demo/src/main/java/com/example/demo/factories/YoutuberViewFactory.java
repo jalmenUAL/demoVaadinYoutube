@@ -5,10 +5,10 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.tables.Comentario;
-import com.example.demo.views.UltimosVideos_item;
-import com.example.demo.views.VerComentarios_item;
-import com.example.demo.views.VerComentariosdeYoutuber;
-import com.example.demo.views.VerComentariosdeYoutuber_item;
+import com.example.demo.views.common.VerComentarios_item;
+import com.example.demo.views.inicio.UltimosVideos_item;
+import com.example.demo.views.youtuber.VerComentariosdeYoutuber;
+import com.example.demo.views.youtuber.VerComentariosdeYoutuber_item;
 
  
 @Component
@@ -53,9 +53,9 @@ public class YoutuberViewFactory implements ViewFactory {
      * de Vaadin necesita conocer la clase de destino.
      */
     @Override
-    public Class<? extends com.example.demo.views.VerVideo> createVideo() {
+    public Class<? extends com.example.demo.views.common.VerVideo> createVideo() {
 
-        return com.example.demo.views.VerVideodeYoutuber.class;
+        return com.example.demo.views.youtuber.VerVideodeYoutuber.class;
     }
 
 
@@ -64,9 +64,9 @@ public class YoutuberViewFactory implements ViewFactory {
      * de otro usuario desde la perspectiva de un Youtuber.
      */
     @Override
-    public Class<? extends com.example.demo.views.PerfilAjeno> createPerfilAjeno() {
+    public Class<? extends com.example.demo.views.common.PerfilAjeno> createPerfilAjeno() {
 
-        return com.example.demo.views.PerfilAjenodeYoutuber.class;
+        return com.example.demo.views.youtuber.PerfilAjenodeYoutuber.class;
     }
 
 
@@ -85,7 +85,7 @@ public class YoutuberViewFactory implements ViewFactory {
      * @return vista de comentarios para un Youtuber
      */
     @Override
-    public com.example.demo.views.VerComentarios createVerComentarios(
+    public com.example.demo.views.common.VerComentarios createVerComentarios(
             Set<Comentario> comentarios,
             int idvideo,
             ViewFactoryProvider viewFactory) {
@@ -108,7 +108,7 @@ public class YoutuberViewFactory implements ViewFactory {
     @Override
     public Class<? extends UltimosVideos_item> createGaleriaItem() {
 
-        return com.example.demo.views.UltimosVideosdeYoutuber_item.class;
+        return com.example.demo.views.youtuber.UltimosVideosdeYoutuber_item.class;
     }
 
 

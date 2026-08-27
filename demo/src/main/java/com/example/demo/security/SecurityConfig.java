@@ -102,7 +102,7 @@ public class SecurityConfig extends VaadinWebSecurity {
          */
         setLoginView(
                 http,
-                com.example.demo.views.Login.class);
+                com.example.demo.views.nologueado.Login.class);
     }
 
 

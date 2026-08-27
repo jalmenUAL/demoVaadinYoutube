@@ -5,9 +5,9 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.tables.Comentario;
-import com.example.demo.views.UltimosVideos_item;
-import com.example.demo.views.VerComentarios;
-import com.example.demo.views.VerComentarios_item;
+import com.example.demo.views.common.VerComentarios;
+import com.example.demo.views.common.VerComentarios_item;
+import com.example.demo.views.inicio.UltimosVideos_item;
 
  
 @Component
@@ -42,9 +42,9 @@ public class NoLogueadoViewFactory implements ViewFactory {
      * No se crea todavía una instancia de la vista.
      */
     @Override
-    public Class<? extends com.example.demo.views.VerVideo> createVideo() {
+    public Class<? extends com.example.demo.views.common.VerVideo> createVideo() {
 
-        return com.example.demo.views.VerVideo.class;
+        return com.example.demo.views.common.VerVideo.class;
     }
 
 
@@ -57,9 +57,9 @@ public class NoLogueadoViewFactory implements ViewFactory {
      * Vaadin para realizar la navegación.
      */
     @Override
-    public Class<? extends com.example.demo.views.PerfilAjeno> createPerfilAjeno() {
+    public Class<? extends com.example.demo.views.common.PerfilAjeno> createPerfilAjeno() {
 
-        return com.example.demo.views.PerfilAjeno.class;
+        return com.example.demo.views.common.PerfilAjeno.class;
     }
 
 
@@ -79,7 +79,7 @@ public class NoLogueadoViewFactory implements ViewFactory {
      * para realizar nuevas navegaciones dentro de la aplicación.
      */
     @Override
-    public com.example.demo.views.VerComentarios createVerComentarios(
+    public com.example.demo.views.common.VerComentarios createVerComentarios(
             Set<Comentario> comentarios,
             int idvideo,
             ViewFactoryProvider viewFactory) {
@@ -102,7 +102,7 @@ public class NoLogueadoViewFactory implements ViewFactory {
     @Override
     public Class<? extends UltimosVideos_item> createGaleriaItem() {
 
-        return com.example.demo.views.UltimosVideos_item.class;
+        return com.example.demo.views.inicio.UltimosVideos_item.class;
     }
 
 
@@ -119,7 +119,7 @@ public class NoLogueadoViewFactory implements ViewFactory {
             Comentario comentario,
             ViewFactoryProvider viewFactory) {
 
-        return new com.example.demo.views.VerComentarios_item(
+        return new com.example.demo.views.common.VerComentarios_item(
                 comentario,
                 viewFactory);
     }

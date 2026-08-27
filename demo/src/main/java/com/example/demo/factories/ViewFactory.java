@@ -3,11 +3,11 @@ package com.example.demo.factories;
 import java.util.Set;
 
 import com.example.demo.tables.Comentario;
-import com.example.demo.views.GaleradeVideos_item;
-import com.example.demo.views.PerfilAjeno;
-import com.example.demo.views.VerComentarios;
-import com.example.demo.views.VerComentarios_item;
-import com.example.demo.views.VerVideo;
+import com.example.demo.views.common.GaleradeVideos_item;
+import com.example.demo.views.common.PerfilAjeno;
+import com.example.demo.views.common.VerComentarios;
+import com.example.demo.views.common.VerComentarios_item;
+import com.example.demo.views.common.VerVideo;
 
 /**
  * Interfaz común para las factorías de vistas.
