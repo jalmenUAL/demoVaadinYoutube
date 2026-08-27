@@ -3,7 +3,7 @@ package com.example.demo.views.nologueado;
 import java.util.List;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.services.iNoLogueado;
+import com.example.demo.services.interfaces.iNoLogueado;
 import com.example.demo.tables.Video;
 import com.example.demo.views.inicio.Inicio;
 import com.example.demo.views.inicio.UltimosVideos;

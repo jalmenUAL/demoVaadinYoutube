@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.services.iNoLogueado;
+import com.example.demo.services.interfaces.iNoLogueado;
 import com.example.demo.tables.Registrado;
 
 @Component

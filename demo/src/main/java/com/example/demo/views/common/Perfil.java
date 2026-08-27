@@ -2,7 +2,7 @@ package com.example.demo.views.common;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseParameterizedView;
-import com.example.demo.services.iInicio;
+import com.example.demo.services.interfaces.iInicio;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;

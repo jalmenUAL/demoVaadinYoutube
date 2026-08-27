@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import com.example.demo.services.iAdministrador;
+import com.example.demo.services.interfaces.iAdministrador;
 import com.example.demo.tables.Comentario;
 import com.example.demo.views.administrador.PerfilAjenodeAdministrador;
 import com.example.demo.views.administrador.UltimosVideosdeAdministrador_item;

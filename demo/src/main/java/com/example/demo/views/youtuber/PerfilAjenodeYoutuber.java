@@ -4,7 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.services.iYoutuber;
+import com.example.demo.services.interfaces.iYoutuber;
 import com.example.demo.tables.Youtuber;
 import com.example.demo.views.common.PerfilAjeno;
 import com.vaadin.flow.component.UI;

@@ -3,7 +3,7 @@ package com.example.demo.views.registrado;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.services.iRegistrado;
+import com.example.demo.services.interfaces.iRegistrado;
 import com.example.demo.views.inicio.Inicio;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

@@ -3,7 +3,7 @@ package com.example.demo.views.administrador;
 import java.util.List;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.services.iAdministrador;
+import com.example.demo.services.interfaces.iAdministrador;
 import com.example.demo.tables.Video;
 import com.example.demo.views.inicio.UltimosVideos;
 import com.example.demo.views.registrado.Registrado;

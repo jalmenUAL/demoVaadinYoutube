@@ -1,7 +1,7 @@
 package com.example.demo.views.administrador;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.services.iAdministrador;
+import com.example.demo.services.interfaces.iAdministrador;
 import com.example.demo.tables.Comentario;
 import com.example.demo.views.common.VerComentarios_item;
 import com.vaadin.flow.component.UI;

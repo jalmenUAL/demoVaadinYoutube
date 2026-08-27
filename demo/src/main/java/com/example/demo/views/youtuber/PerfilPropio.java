@@ -1,7 +1,7 @@
 package com.example.demo.views.youtuber;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.services.iYoutuber;
+import com.example.demo.services.interfaces.iYoutuber;
 import com.example.demo.views.common.Perfil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
