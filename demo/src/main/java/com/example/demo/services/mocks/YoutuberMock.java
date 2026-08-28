@@ -49,12 +49,12 @@ public class YoutuberMock extends RegistradoMock implements iYoutuber {
         /*
          * En el mock generamos un identificador ficticio.
          */
-        /*int nuevoId = videos.stream()
+        int nuevoId = videos.stream()
                 .mapToInt(Video::getId)
                 .max()
-                .orElse(0) + 1;*/
+                .orElse(0) + 1;
 
-        // video.setId(nuevoId);
+        video.setId(nuevoId);
         video.setTitulo(titulo);
         video.setUrl(url);
         video.setFecha(new Date());

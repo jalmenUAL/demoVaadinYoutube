@@ -21,7 +21,7 @@ import com.example.demo.tables.Youtuber;
 
 import jakarta.transaction.Transactional;
 
-@Service
+//@Service
 /**
  * Clase principal de acceso a la lógica de negocio de la aplicación.
  *

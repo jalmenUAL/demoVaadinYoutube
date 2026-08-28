@@ -29,17 +29,21 @@ public class NoLogueadoMock extends InicioMock
      */
 
     @Override
-    public Registrado Login(
-            String login,
-            String password) {
+public Registrado Login(String login, String password) {
 
-        return usuarios.stream()
-                .filter(usuario -> usuario.getLogin().equals(login)
-                        &&
-                        usuario.getPassword().equals(password))
-                .findFirst()
-                .orElse(null);
+    DatosMock datos = new DatosMock();
+
+    for (Youtuber y : datos.youtubers){
+
+        if (y.getLogin().equals(login)
+                && y.getPassword().equals(password)) {
+
+            return y;
+        }
     }
+
+    return null;
+}
 
     @Override
     public void registrar(

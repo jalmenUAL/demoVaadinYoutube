@@ -9,7 +9,7 @@ import com.example.demo.tables.Comentario;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
-@Service
+//@Service
 /**
  * Clase encargada de gestionar las operaciones relacionadas con los comentarios.
  *

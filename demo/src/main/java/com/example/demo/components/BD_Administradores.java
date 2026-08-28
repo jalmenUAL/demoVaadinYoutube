@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.repositories.RepositorioAdministrador;
 import com.example.demo.tables.Administrador;
 
-@Service
+//@Service
 /**
  * Clase encargada de las operaciones relacionadas con los administradores.
  *

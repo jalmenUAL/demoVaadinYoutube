@@ -77,7 +77,7 @@ public class Video implements Serializable {
 		return fecha;
 	}
 	
-	private void setId(int value) {
+	public void setId(int value) {
 		this.id = value;
 	}
 	
