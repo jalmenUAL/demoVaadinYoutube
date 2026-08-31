@@ -3,14 +3,18 @@ package com.example.demo.services.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.services.interfaces.iNoLogueado;
+import com.example.demo.tables.Administrador;
 import com.example.demo.tables.Registrado;
 import com.example.demo.tables.Youtuber;
 
+ 
+
 @Service
+@Profile("mock")
 
 public class NoLogueadoMock extends InicioMock
         implements iNoLogueado {
@@ -29,21 +33,30 @@ public class NoLogueadoMock extends InicioMock
      */
 
     @Override
-public Registrado Login(String login, String password) {
+    public Registrado Login(String login, String password) {
 
-    DatosMock datos = new DatosMock();
+        DatosMock datos = new DatosMock();
 
-    for (Youtuber y : datos.youtubers){
+        for (Administrador y : datos.administradores) {
 
-        if (y.getLogin().equals(login)
-                && y.getPassword().equals(password)) {
+            if (y.getLogin().equals(login)
+                    && y.getPassword().equals(password)) {
 
-            return y;
+                return y;
+            }
         }
-    }
 
-    return null;
-}
+        for (Youtuber y : datos.youtubers) {
+
+            if (y.getLogin().equals(login)
+                    && y.getPassword().equals(password)) {
+
+                return y;
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public void registrar(

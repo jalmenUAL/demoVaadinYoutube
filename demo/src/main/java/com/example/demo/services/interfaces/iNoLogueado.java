@@ -1,5 +1,7 @@
 package com.example.demo.services.interfaces;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.tables.Registrado;
 
 /**
@@ -18,6 +20,8 @@ import com.example.demo.tables.Registrado;
  *     - Iniciar sesión.
  *     - Registrarse.
  */
+
+
 public interface iNoLogueado extends iInicio {
 
 

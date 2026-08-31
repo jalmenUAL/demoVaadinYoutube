@@ -49,7 +49,7 @@ public class Comentario implements Serializable {
 		return texto;
 	}
 	
-	private void setId(int value) {
+	public void setId(int value) {
 		this.id = value;
 	}
 	

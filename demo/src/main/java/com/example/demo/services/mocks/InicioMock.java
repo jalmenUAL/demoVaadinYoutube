@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.services.interfaces.iInicio;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
-@Service
-@Primary
  
+ @Service
+ @Profile("mock")
+@Primary
 public class InicioMock implements iInicio {
 
     protected Set<Video> videos;

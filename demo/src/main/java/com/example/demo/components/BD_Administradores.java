@@ -2,13 +2,16 @@ package com.example.demo.components;
 
 import java.util.Vector;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repositories.RepositorioAdministrador;
 import com.example.demo.tables.Administrador;
 
-//@Service
+@Service
+@Profile("real")
 /**
  * Clase encargada de las operaciones relacionadas con los administradores.
  *

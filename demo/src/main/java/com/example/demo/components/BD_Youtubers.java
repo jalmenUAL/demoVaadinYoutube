@@ -9,6 +9,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,9 @@ import com.example.demo.repositories.RepositorioYoutuber;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
-//@Service
+@Service
+@Profile("real")
+
 /**
  * Clase encargada de gestionar las operaciones relacionadas con los
  * Youtubers.

@@ -3,6 +3,7 @@ package com.example.demo.facade;
 import java.io.InputStream;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.components.BD_Administradores;
@@ -44,6 +45,9 @@ import jakarta.transaction.Transactional;
  * De esta forma, las vistas no necesitan conocer directamente
  * cómo se almacenan o modifican los datos.
  */
+@Service
+@Profile("real")
+
 public class BDPrincipal
         implements iNoLogueado,
                    iYoutuber,

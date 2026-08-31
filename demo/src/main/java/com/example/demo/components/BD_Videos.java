@@ -7,13 +7,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repositories.RepositorioVideo;
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
-//@Service
+@Service
+@Profile("real")
 
 /**
  * Clase encargada de gestionar las operaciones relacionadas con los vídeos.

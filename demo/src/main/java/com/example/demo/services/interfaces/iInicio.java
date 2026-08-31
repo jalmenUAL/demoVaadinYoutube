@@ -2,6 +2,8 @@ package com.example.demo.services.interfaces;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.tables.Video;
 import com.example.demo.tables.Youtuber;
 
@@ -20,6 +22,8 @@ import com.example.demo.tables.Youtuber;
  * <p>
  * La implementación se encuentra en BDPrincipal.
  */
+
+
 public interface iInicio {
 
 

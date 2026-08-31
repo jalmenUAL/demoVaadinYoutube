@@ -2,6 +2,8 @@ package com.example.demo.services.interfaces;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.tables.Video;
 
 /**
@@ -17,6 +19,8 @@ import com.example.demo.tables.Video;
  * Administrador. La implementación real se encuentra en
  * BDPrincipal.
  */
+
+
 public interface iAdministrador extends iRegistrado {
 
 
