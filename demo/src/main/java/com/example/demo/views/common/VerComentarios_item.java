@@ -19,6 +19,8 @@ public class VerComentarios_item
 
     private Image avatar;
 
+    PerfilAjeno _perfilAjeno;
+
     public VerComentarios_item(
             Comentario comentario,
             ViewFactoryProvider viewFactory) {

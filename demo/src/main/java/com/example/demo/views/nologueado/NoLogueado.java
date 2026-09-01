@@ -39,6 +39,8 @@ public class NoLogueado extends Inicio {
      */
     private Button loginButton;
     private Button registrarButton;
+    Registrar _registrar;
+    Login _login;
 
     public NoLogueado(
             iNoLogueado iNoLogueado,

@@ -37,6 +37,8 @@ public class PerfilPropio extends Perfil {
 
     private Button publicarButton;
     private Button configButton;
+    Configuracion _configuracion;
+    PublicarVideo _publicarVideo;
 
     public PerfilPropio(
             iYoutuber iYoutuber,
