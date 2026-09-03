@@ -1,6 +1,7 @@
 package com.example.demo.views.common;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import com.example.demo.factories.ViewFactoryProvider;
@@ -73,7 +74,7 @@ public class GaleradeVideos
      * @param factory proveedor de factorías de vistas
      */
     public GaleradeVideos(
-            List<Video> videos,
+           List<Video> videos,
             ViewFactoryProvider factory) {
 
         /*

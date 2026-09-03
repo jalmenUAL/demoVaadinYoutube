@@ -1,6 +1,7 @@
 package com.example.demo.views.nologueado;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.interfaces.iNoLogueado;
@@ -173,7 +174,7 @@ public class NoLogueado extends Inicio {
          * iNoLogueado hereda de iInicio, por lo que tiene acceso
          * a getUltimosVideos().
          */
-        List<Video> videos =
+       List<Video> videos =
                 iNoLogueado.getUltimosVideos();
 
         /*

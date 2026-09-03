@@ -1,4 +1,4 @@
-package com.example.demo.external;
+package com.example.demo.views.common;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -38,4 +38,5 @@ public class ServidordeCorreo {
             throw new RuntimeException("Error al enviar el correo: " + e.getMessage());
         }
     }
+ 
 }

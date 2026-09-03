@@ -1,8 +1,10 @@
-package com.example.demo.views.common;
+package com.example.demo.views.inicio;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.interfaces.iInicio;
+import com.example.demo.views.common.Videosgustados;
+import com.example.demo.views.common.Videospublicados;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;

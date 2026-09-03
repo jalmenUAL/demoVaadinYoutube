@@ -2,6 +2,8 @@ package com.example.demo.views.common;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
+import com.example.demo.views.inicio.PerfilAjeno;
+import com.example.demo.views.inicio.Youtubersseguidos;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;

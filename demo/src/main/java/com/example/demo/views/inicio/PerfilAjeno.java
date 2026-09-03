@@ -1,4 +1,4 @@
-package com.example.demo.views.common;
+package com.example.demo.views.inicio;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.interfaces.iInicio;

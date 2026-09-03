@@ -2,7 +2,7 @@ package com.example.demo.views.youtuber;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.interfaces.iYoutuber;
-import com.example.demo.views.common.Perfil;
+import com.example.demo.views.inicio.Perfil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;

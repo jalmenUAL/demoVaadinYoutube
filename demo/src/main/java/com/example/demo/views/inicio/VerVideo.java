@@ -1,4 +1,4 @@
-package com.example.demo.views.common;
+package com.example.demo.views.inicio;
 
 import java.util.Date;
 import java.util.List;
@@ -7,6 +7,8 @@ import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseParameterizedView;
 import com.example.demo.services.interfaces.iInicio;
 import com.example.demo.tables.Video;
+import com.example.demo.views.common.VerComentarios;
+import com.example.demo.views.common.Videosrelacionados;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;

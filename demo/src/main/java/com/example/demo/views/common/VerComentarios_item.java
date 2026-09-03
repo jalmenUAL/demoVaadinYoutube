@@ -3,6 +3,7 @@ package com.example.demo.views.common;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Comentario;
+import com.example.demo.views.inicio.PerfilAjeno;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;

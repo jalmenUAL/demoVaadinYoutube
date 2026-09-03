@@ -11,11 +11,11 @@ import com.example.demo.views.administrador.UltimosVideosdeAdministrador_item;
 import com.example.demo.views.administrador.VerComentariosdeAdministrador;
 import com.example.demo.views.administrador.VerComentariosdeAdministrador_item;
 import com.example.demo.views.administrador.VerVideodeAdministrador;
-import com.example.demo.views.common.PerfilAjeno;
 import com.example.demo.views.common.VerComentarios;
 import com.example.demo.views.common.VerComentarios_item;
-import com.example.demo.views.common.VerVideo;
+import com.example.demo.views.inicio.PerfilAjeno;
 import com.example.demo.views.inicio.UltimosVideos_item;
+import com.example.demo.views.inicio.VerVideo;
 
  @Component
  /**

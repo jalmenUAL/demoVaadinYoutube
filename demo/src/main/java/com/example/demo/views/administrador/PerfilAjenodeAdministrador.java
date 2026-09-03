@@ -2,7 +2,7 @@ package com.example.demo.views.administrador;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.services.interfaces.iAdministrador;
-import com.example.demo.views.common.PerfilAjeno;
+import com.example.demo.views.inicio.PerfilAjeno;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

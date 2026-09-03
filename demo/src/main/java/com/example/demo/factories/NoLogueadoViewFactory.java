@@ -42,9 +42,9 @@ public class NoLogueadoViewFactory implements ViewFactory {
      * No se crea todavía una instancia de la vista.
      */
     @Override
-    public Class<? extends com.example.demo.views.common.VerVideo> createVideo() {
+    public Class<? extends com.example.demo.views.inicio.VerVideo> createVideo() {
 
-        return com.example.demo.views.common.VerVideo.class;
+        return com.example.demo.views.inicio.VerVideo.class;
     }
 
 
@@ -57,9 +57,9 @@ public class NoLogueadoViewFactory implements ViewFactory {
      * Vaadin para realizar la navegación.
      */
     @Override
-    public Class<? extends com.example.demo.views.common.PerfilAjeno> createPerfilAjeno() {
+    public Class<? extends com.example.demo.views.inicio.PerfilAjeno> createPerfilAjeno() {
 
-        return com.example.demo.views.common.PerfilAjeno.class;
+        return com.example.demo.views.inicio.PerfilAjeno.class;
     }
 
 

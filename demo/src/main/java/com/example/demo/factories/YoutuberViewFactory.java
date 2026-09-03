@@ -53,7 +53,7 @@ public class YoutuberViewFactory implements ViewFactory {
      * de Vaadin necesita conocer la clase de destino.
      */
     @Override
-    public Class<? extends com.example.demo.views.common.VerVideo> createVideo() {
+    public Class<? extends com.example.demo.views.inicio.VerVideo> createVideo() {
 
         return com.example.demo.views.youtuber.VerVideodeYoutuber.class;
     }
@@ -64,7 +64,7 @@ public class YoutuberViewFactory implements ViewFactory {
      * de otro usuario desde la perspectiva de un Youtuber.
      */
     @Override
-    public Class<? extends com.example.demo.views.common.PerfilAjeno> createPerfilAjeno() {
+    public Class<? extends com.example.demo.views.inicio.PerfilAjeno> createPerfilAjeno() {
 
         return com.example.demo.views.youtuber.PerfilAjenodeYoutuber.class;
     }

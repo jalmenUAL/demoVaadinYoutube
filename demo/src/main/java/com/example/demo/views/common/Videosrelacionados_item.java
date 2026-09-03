@@ -3,6 +3,7 @@ package com.example.demo.views.common;
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseItemView;
 import com.example.demo.tables.Video;
+import com.example.demo.views.inicio.VerVideo;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.html.Image;
