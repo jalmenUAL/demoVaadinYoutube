@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -297,33 +298,40 @@ public class DemoApplicationTests extends VisualParadigmModel {
 
                         Constructor<?> constructor = constructores[0];
 
-                        // Si no recibe parámetros (ej: vistas genéricas de la carpeta common que no
-                        // requieren dependencias)
-                        if (constructor.getParameterCount() == 0) {
-                                // Es válido que una vista genérica no reciba nada en el constructor
+                        Class<?>[] parametros = constructor.getParameterTypes();
+
+                        // 1. Si no recibe parámetros (vistas genéricas/estáticas en common), es válido
+                        if (parametros.length == 0) {
                                 continue;
                         }
 
                         // Validar que CADA parámetro recibido corresponda a un tipo permitido en la
                         // arquitectura
-                        for (Class<?> parametro : constructor.getParameterTypes()) {
-                                boolean parametroValido = esParametroValido(parametro, constructor);
+                        for (int i = 0; i < parametros.length; i++) {
+                                boolean parametroValido = esParametroValido(parametros[i], i, constructor);
 
                                 if (!parametroValido) {
-                                        fail("El parámetro '" + parametro.getSimpleName() + "' en el constructor de "
+                                        fail("El parámetro '" + parametros[i].getSimpleName() + "' (posición " + (i + 1)
+                                                        + ") en el constructor de "
                                                         + nombreClase
-                                                        + " no cumple con las dependencias permitidas (Servicio, Factory, Table/Set, o Auth).");
+                                                        + " no cumple con las dependencias permitidas por la arquitectura.");
                                 }
                         }
                 }
         }
 
+         
         /**
          * Evalúa si un parámetro cumple con alguno de los roles arquitectónicos
          * válidos.
          */
-        private boolean esParametroValido(Class<?> parametro, Constructor<?> constructor) {
+        private boolean esParametroValido(Class<?> parametro, int indiceParametro, Constructor<?> constructor) {
                 String paqueteParam = parametro.getPackageName();
+
+                // 0. Tipos básicos, primitivos, wrappers, String e InputStream
+                if (TIPOS_BASICOS.contains(parametro)) {
+                        return true;
+                }
 
                 // 1. Interfaz de Servicio (Lógica de negocio / BD)
                 if (parametro.isInterface() && paqueteParam.equals("com.example.demo.services.interfaces")) {
@@ -340,9 +348,9 @@ public class DemoApplicationTests extends VisualParadigmModel {
                         return true;
                 }
 
-                // 4. Lista/Set de items de modelo (Vista de listado)
-                if (Set.class.isAssignableFrom(parametro)) {
-                        Type tipo = constructor.getGenericParameterTypes()[0];
+                // 4. Colecciones (Set, List, Collection) de items del modelo
+                if (Collection.class.isAssignableFrom(parametro)) {
+                        Type tipo = constructor.getGenericParameterTypes()[indiceParametro];
                         if (tipo instanceof ParameterizedType parameterizedType) {
                                 Type tipoGenerico = parameterizedType.getActualTypeArguments()[0];
                                 if (tipoGenerico instanceof Class<?> claseGenerica
@@ -352,7 +360,7 @@ public class DemoApplicationTests extends VisualParadigmModel {
                         }
                 }
 
-                // 5. Infraestructura y Seguridad (Spring Security)
+                // 5. Infraestructura y Seguridad (Spring Security / Framework)
                 if (parametro.getName().equals("org.springframework.security.authentication.AuthenticationManager")
                                 || paqueteParam.startsWith("org.springframework")) {
                         return true;
@@ -420,5 +428,66 @@ public class DemoApplicationTests extends VisualParadigmModel {
                 rule3.check(importedClasses);
                 rule4.check(importedClasses);
                 rule5.check(importedClasses);
+        }
+
+        @Test
+        void comprobarPatronEnViews() throws Exception {
+                // 1. Escanear recursivamente todas las clases dentro del paquete views
+                Map<String, String> mapaClasesViews = obtenerMapaClasesViews();
+
+                String paquetePatrones = "com.example.demo.patterns";
+
+                for (Map.Entry<String, String> entry : mapaClasesViews.entrySet()) {
+                        String nombreSimple = entry.getKey();
+                        String nombreCompleto = entry.getValue();
+
+                        Class<?> claseView = Class.forName(nombreCompleto);
+
+                        // Si es una interfaz o clase abstracta dentro de views, la ignoramos si solo
+                        // deseas validar componentes concretos.
+                        // Si deseas validar absolutamente TODO lo que esté en views, retira estas dos
+                        // líneas:
+                        if (claseView.isInterface()) {
+                                continue;
+                        }
+
+                        boolean heredaDePatron = tienePatronEnJerarquia(claseView, paquetePatrones);
+
+                        if (!heredaDePatron) {
+                                fail("La clase " + nombreSimple + " (" + nombreCompleto
+                                                + ") debe heredar de una clase o implementar una interfaz del paquete '"
+                                                + paquetePatrones + "'.");
+                        }
+                }
+        }
+
+        /**
+         * Recorre recursivamente las superclases e interfaces implementadas
+         * para verificar si alguna pertenece al paquete de patrones.
+         */
+        private boolean tienePatronEnJerarquia(Class<?> clase, String paquetePatrones) {
+                if (clase == null || clase.equals(Object.class)) {
+                        return false;
+                }
+
+                // 1. Comprobar la superclase directa
+                Class<?> superClase = clase.getSuperclass();
+                if (superClase != null && superClase.getPackageName().equals(paquetePatrones)) {
+                        return true;
+                }
+
+                // 2. Comprobar las interfaces implementadas directamente por esta clase
+                for (Class<?> interfaz : clase.getInterfaces()) {
+                        if (interfaz.getPackageName().equals(paquetePatrones)) {
+                                return true;
+                        }
+                        // Comprobación recursiva en interfaces padre
+                        if (tienePatronEnJerarquia(interfaz, paquetePatrones)) {
+                                return true;
+                        }
+                }
+
+                // 3. Subir de forma recursiva por la jerarquía de clases padre
+                return tienePatronEnJerarquia(superClase, paquetePatrones);
         }
 }

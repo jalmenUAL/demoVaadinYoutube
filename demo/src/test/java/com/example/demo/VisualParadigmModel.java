@@ -3,13 +3,13 @@ package com.example.demo;
 import java.util.Map;
 import java.util.Set;
 
+import com.example.demo.external.ServidordeCorreo;
 import com.example.demo.views.administrador.Administrador;
 import com.example.demo.views.administrador.PerfilAjenodeAdministrador;
 import com.example.demo.views.administrador.VerComentariosdeAdministrador_item;
 import com.example.demo.views.administrador.VerVideodeAdministrador;
 import com.example.demo.views.common.GaleradeVideos_item;
 import com.example.demo.views.common.ListadeVideos_item;
-import com.example.demo.views.common.ServidordeCorreo;
 import com.example.demo.views.common.VerComentarios_item;
 import com.example.demo.views.common.Videosrelacionados_item;
 import com.example.demo.views.common.Youtubersseguidos_item;
