@@ -231,4 +231,16 @@ public class Youtuber extends Registrado {
         perfilBtn.addClickListener(
                 e -> PerfilPropio());
     }
+
+
+    @Override
+    public com.example.demo.services.interfaces.iInicio getServicio() {
+       return iYoutuber;
+    }
+
+
+    @Override
+    public ViewFactoryProvider getViewFactory() {
+       return viewFactory;
+    }
 }

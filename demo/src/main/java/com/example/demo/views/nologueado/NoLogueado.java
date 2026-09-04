@@ -215,4 +215,14 @@ public class NoLogueado extends Inicio {
         UI.getCurrent()
                 .navigate(Registrar.class);
     }
+
+    @Override
+    public com.example.demo.services.interfaces.iInicio getServicio() {
+        return iNoLogueado;
+    }
+
+    @Override
+    public ViewFactoryProvider getViewFactory() {
+       return viewFactory;
+    }
 }

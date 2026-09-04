@@ -2,6 +2,8 @@ package com.example.demo.views.inicio;
 
 import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseActorView;
+import com.example.demo.patterns.Contracts.HasFactory;
+import com.example.demo.patterns.Contracts.HasService;
 import com.example.demo.services.interfaces.iInicio;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
@@ -28,7 +30,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
  * Las clases hijas son las responsables de implementar
  * UltimosVideos().
  */
-public abstract class Inicio extends BaseActorView {
+public abstract class Inicio extends BaseActorView implements HasService<iInicio>, HasFactory{
 
 
     /**

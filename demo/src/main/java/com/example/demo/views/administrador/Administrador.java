@@ -203,4 +203,16 @@ public class Administrador extends Registrado {
 
         super.bindEvents();
     }
+
+
+    @Override
+    public com.example.demo.services.interfaces.iInicio getServicio() {
+        return iAdministrador;
+    }
+
+
+    @Override
+    public ViewFactoryProvider getViewFactory() {
+       return viewFactory;
+    }
 }
