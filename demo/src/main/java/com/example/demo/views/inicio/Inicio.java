@@ -30,7 +30,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
  * Las clases hijas son las responsables de implementar
  * UltimosVideos().
  */
-public abstract class Inicio extends BaseActorView implements HasService<iInicio>, HasFactory{
+public abstract class Inicio extends BaseActorView {
 
 
     /**

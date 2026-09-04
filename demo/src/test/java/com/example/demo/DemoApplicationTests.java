@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,13 +21,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.classreading.MetadataReader;
 
 import com.example.demo.facade.BDPrincipal;
+import com.example.demo.factories.ViewFactoryProvider;
 import com.example.demo.patterns.BaseView;
+import com.example.demo.patterns.Contracts.HasService;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchRule;
@@ -502,4 +507,6 @@ public class DemoApplicationTests extends VisualParadigmModel {
                 // 3. Subir de forma recursiva por la jerarquía de clases padre
                 return tienePatronEnJerarquia(superClase, paquetePatrones);
         }
+
+        
 }

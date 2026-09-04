@@ -35,7 +35,7 @@ public abstract class Registrado extends Inicio {
      * "Cerrar sesión".
      */
 
-    protected final iRegistrado iRegistrado;
+    
 
     protected Button logoutButton;
 
@@ -49,7 +49,7 @@ public abstract class Registrado extends Inicio {
          */
         super(iRegistrado, viewFactory);
 
-        this.iRegistrado = iRegistrado;
+        
     }
 
     /*
