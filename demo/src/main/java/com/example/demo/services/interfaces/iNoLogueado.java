@@ -1,7 +1,5 @@
 package com.example.demo.services.interfaces;
 
-import org.springframework.stereotype.Service;
-
 import com.example.demo.tables.Registrado;
 
 /**

@@ -2,44 +2,12 @@ package com.example.demo.patterns;
 
 import java.util.Collection;
 
- /**
- * Clase base para las vistas que muestran una colección de elementos.
- *
- * <p>
- * Utiliza un tipo genérico T para indicar qué tipo de objetos
- * contiene la lista.
- *
- * <p>
- * Por ejemplo:
- *
- *     BaseListView<Video>
- *
- * representa una vista que muestra una colección de vídeos.
- *
- *     BaseListView<Youtuber>
- *
- * representa una vista que muestra una colección de Youtubers.
- *
- * <p>
- * Esta clase hereda de BaseView, por lo que también utiliza
- * el ciclo de inicialización:
- *
- *     initView()
- *        ↓
- *     build()
- *        ↓
- *     bindEvents()
- *
- * <p>
- * Además, build() establece un orden común para construir
- * cualquier lista:
- *
- *     1. Construir el contenedor.
- *     2. Construir los elementos.
- */
+import com.example.demo.factories.ViewFactoryProvider;
+
+ 
+
 /**
- * Clase base para las vistas que muestran una colección
- * de elementos.
+ * Clase base para las vistas que muestran una colección de elementos.
  *
  * <p>
  * La clase define el ciclo de construcción de una lista:
@@ -52,15 +20,10 @@ import java.util.Collection;
  *     buildItems()
  * </pre>
  *
- * <p>
- * La clase hija solamente debe definir cómo se construye
- * el contenedor y cómo se representan los elementos.
- *
- * @param <T> tipo de elemento que contiene la lista
+ * @param <T> tipo de elemento del modelo que contiene la lista (perteneciente a 'tables')
+ * @param <S> tipo de la interfaz del servicio asociado a la vista
  */
-public abstract class BaseListView<T>
-        extends BaseView {
-
+public abstract class BaseListView<T, S> extends BaseView<S> {
 
     /**
      * Elementos que mostrará la lista.
@@ -73,18 +36,22 @@ public abstract class BaseListView<T>
      */
     protected final Collection<T> elements;
 
-
     /**
-     * Crea una vista de lista.
+     * Crea una vista de lista con sus dependencias y colección de datos.
      *
-     * @param elements colección de elementos que debe mostrar
-     *                 la vista
+     * @param viewFactory proveedor de factorías de la aplicación
+     * @param servicio    interfaz del servicio de negocio
+     * @param elements    colección de elementos que debe mostrar la vista
      */
-    protected BaseListView(Collection<T> elements) {
+    protected BaseListView(ViewFactoryProvider viewFactory, S servicio, Collection<T> elements) {
+        super(viewFactory, servicio);
+
+        if (elements == null) {
+            throw new IllegalArgumentException("La colección de elementos no puede ser nula en BaseListView.");
+        }
 
         this.elements = elements;
     }
-
 
     /**
      * Construye la lista siguiendo siempre el mismo orden.
@@ -124,7 +91,6 @@ public abstract class BaseListView<T>
         buildItems();
     }
 
-
     /**
      * Construye el contenedor donde se mostrarán los elementos.
      *
@@ -133,7 +99,6 @@ public abstract class BaseListView<T>
      * HorizontalLayout, FlexLayout, Grid, etc.
      */
     protected abstract void buildContainer();
-
 
     /**
      * Construye y añade los elementos de la colección.

@@ -35,6 +35,7 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_ADMINISTRADOR")
 public class Administrador extends Registrado {
 
+    
 
     /**
      * Interfaz de servicios que proporciona las operaciones

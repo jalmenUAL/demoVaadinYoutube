@@ -2,9 +2,9 @@ package com.example.demo.views.nologueado;
 
 import java.io.InputStream;
 
-import com.example.demo.external.ServidordeCorreo;
 import com.example.demo.patterns.BaseView;
 import com.example.demo.services.interfaces.iNoLogueado;
+import com.example.demo.views.external.ServidordeCorreo;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

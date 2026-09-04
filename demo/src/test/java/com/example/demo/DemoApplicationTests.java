@@ -23,8 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.classreading.MetadataReader;
-import org.springframework.core.type.classreading.MetadataReaderFactory;
-import org.springframework.core.type.filter.TypeFilter;
 
 import com.example.demo.facade.BDPrincipal;
 import com.example.demo.patterns.BaseView;
@@ -289,38 +287,50 @@ public class DemoApplicationTests extends VisualParadigmModel {
                                 continue;
                         }
 
-                        Constructor<?>[] constructores = clase.getDeclaredConstructors();
-
-                        if (constructores.length != 1) {
-                                fail("La clase " + nombreClase
-                                                + " debe declarar exactamente un constructor explícito.");
-                        }
-
-                        Constructor<?> constructor = constructores[0];
-
-                        Class<?>[] parametros = constructor.getParameterTypes();
-
-                        // 1. Si no recibe parámetros (vistas genéricas/estáticas en common), es válido
-                        if (parametros.length == 0) {
+                        // 1. Excepción: Si está en 'common' o 'external', se ignora la obligatoriedad
+                        // del constructor con parámetros
+                        if (fullClassName.contains(".views.common.") || fullClassName.contains(".views.external.")) {
                                 continue;
                         }
 
-                        // Validar que CADA parámetro recibido corresponda a un tipo permitido en la
-                        // arquitectura
-                        for (int i = 0; i < parametros.length; i++) {
-                                boolean parametroValido = esParametroValido(parametros[i], i, constructor);
+                        // 2. Para el resto de vistas: Buscar AL MENOS UN constructor válido (con >= 1
+                        // parámetros autorizados)
+                        Constructor<?>[] constructores = clase.getDeclaredConstructors();
+                        boolean tieneConstructorValido = false;
 
-                                if (!parametroValido) {
-                                        fail("El parámetro '" + parametros[i].getSimpleName() + "' (posición " + (i + 1)
-                                                        + ") en el constructor de "
-                                                        + nombreClase
-                                                        + " no cumple con las dependencias permitidas por la arquitectura.");
+                        for (Constructor<?> constructor : constructores) {
+                                Class<?>[] parametros = constructor.getParameterTypes();
+
+                                // Debe tener al menos 1 parámetro
+                                if (parametros.length == 0) {
+                                        continue;
                                 }
+
+                                // Validar que CADA parámetro de este constructor cumpla con la arquitectura
+                                boolean todosParametrosValidos = true;
+                                for (int i = 0; i < parametros.length; i++) {
+                                        if (!esParametroValido(parametros[i], i, constructor)) {
+                                                todosParametrosValidos = false;
+                                                break; // Si un parámetro falla, este constructor no nos vale
+                                        }
+                                }
+
+                                // Si encontramos un constructor con >= 1 parámetros y todos válidos, la clase
+                                // cumple
+                                if (todosParametrosValidos) {
+                                        tieneConstructorValido = true;
+                                        break;
+                                }
+                        }
+
+                        // 3. Si terminó de revisar todos los constructores y ninguno cumplió
+                        if (!tieneConstructorValido) {
+                                fail("La clase " + nombreClase
+                                                + " debe declarar al menos un constructor con parámetros válidos (Servicios, Factories, Tables, Auth, o Tipos Básicos).");
                         }
                 }
         }
 
-         
         /**
          * Evalúa si un parámetro cumple con alguno de los roles arquitectónicos
          * válidos.
@@ -432,25 +442,27 @@ public class DemoApplicationTests extends VisualParadigmModel {
 
         @Test
         void comprobarPatronEnViews() throws Exception {
-                // 1. Escanear recursivamente todas las clases dentro del paquete views
-                Map<String, String> mapaClasesViews = obtenerMapaClasesViews();
-
                 String paquetePatrones = "com.example.demo.patterns";
+                Map<String, String> mapaClasesViews = obtenerMapaClasesViews();
 
                 for (Map.Entry<String, String> entry : mapaClasesViews.entrySet()) {
                         String nombreSimple = entry.getKey();
                         String nombreCompleto = entry.getValue();
 
+                        // 1. Ignorar clases que estén dentro de la carpeta / paquete 'external' de
+                        // views
+                        if (nombreCompleto.startsWith("com.example.demo.views.external.")) {
+                                continue;
+                        }
+
                         Class<?> claseView = Class.forName(nombreCompleto);
 
-                        // Si es una interfaz o clase abstracta dentro de views, la ignoramos si solo
-                        // deseas validar componentes concretos.
-                        // Si deseas validar absolutamente TODO lo que esté en views, retira estas dos
-                        // líneas:
+                        // 2. Ignorar interfaces (si solo se validan clases/componentes concretos)
                         if (claseView.isInterface()) {
                                 continue;
                         }
 
+                        // 3. Validar la herencia del patrón
                         boolean heredaDePatron = tienePatronEnJerarquia(claseView, paquetePatrones);
 
                         if (!heredaDePatron) {

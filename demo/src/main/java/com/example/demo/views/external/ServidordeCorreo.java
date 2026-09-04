@@ -1,4 +1,4 @@
-package com.example.demo.external;
+package com.example.demo.views.external;
 
 import javax.mail.*;
 import javax.mail.internet.*;

@@ -1,5 +1,6 @@
 package com.example.demo.patterns;
 
+import com.example.demo.factories.ViewFactoryProvider;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -43,110 +44,72 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
  * De esta forma evitamos repetir en todas las vistas la creación
  * del header, el body y la configuración básica del AppLayout.
  */
-public abstract class BaseActorView extends AppLayout {
+ 
 
-    /**
-     * Cabecera común de todas las vistas.
-     *
-     * Las clases hijas pueden utilizarla para añadir
-     * botones, buscadores, títulos, etc.
-     */
+/**
+ * Clase base abstracta para las vistas asociadas a un actor.
+ *
+ * @param <S> Tipo de la interfaz del servicio asociado a la vista.
+ */
+ 
+
+public abstract class BaseActorView<S> extends AppLayout implements iBaseView<S> {
+
+    protected final ViewFactoryProvider viewFactory;
+    protected final S servicio;
+
     protected HorizontalLayout header;
-
-    /**
-     * Contenido principal de la vista.
-     */
     protected VerticalLayout body;
 
+    protected BaseActorView(ViewFactoryProvider viewFactory, S servicio) {
+        if (viewFactory == null) {
+            throw new IllegalArgumentException("El ViewFactoryProvider no puede ser nulo.");
+        }
+        if (servicio == null) {
+            throw new IllegalArgumentException("El servicio no puede ser nulo.");
+        }
 
-    /**
-     * Constructor de la vista.
-     *
-     * La inicialización se realiza mediante initView().
-     */
-    protected BaseActorView() {
+        boolean esInterfaz = servicio.getClass().getInterfaces().length > 0;
+        if (!esInterfaz) {
+            throw new IllegalArgumentException(
+                "La vista " + getClass().getSimpleName() + 
+                " debe recibir una INTERFAZ de servicio en su constructor, no una clase concreta (" + 
+                servicio.getClass().getName() + ")."
+            );
+        }
+
+        this.viewFactory = viewFactory;
+        this.servicio = servicio;
     }
 
-
-    /**
-     * Inicializa completamente la vista.
-     *
-     * El orden de inicialización es siempre:
-     *
-     *     buildLayout()
-     *          ↓
-     *     build()
-     *          ↓
-     *     bindEvents()
-     *
-     * Este método es final para impedir que una clase hija
-     * pueda alterar el ciclo de construcción de la vista.
-     */
+    @Override
     public final void initView() {
-
         buildLayout();
-
         build();
-
         bindEvents();
     }
 
+    @Override
+    public ViewFactoryProvider getViewFactory() {
+        return viewFactory;
+    }
 
-    /**
-     * Construye la estructura común de la vista.
-     *
-     * Esta parte pertenece a la clase base y no debe
-     * repetirse en las clases hijas.
-     */
+    @Override
+    public S getServicio() {
+        return servicio;
+    }
+
     private void buildLayout() {
-
-        // ---------------------------------------------------------
-        // HEADER
-        // ---------------------------------------------------------
-
         header = new HorizontalLayout();
-
         header.setWidthFull();
-
-        header.setAlignItems(
-                Alignment.CENTER);
-
-        /*
-         * AppLayout permite colocar el header
-         * en la barra superior.
-         */
+        header.setAlignItems(Alignment.CENTER);
         addToNavbar(header);
 
-
-        // ---------------------------------------------------------
-        // BODY
-        // ---------------------------------------------------------
-
         body = new VerticalLayout();
-
         body.setSizeFull();
-
-        /*
-         * El body será el contenido principal
-         * de la vista.
-         */
         setContent(body);
     }
 
-
-    /**
-     * Construye los componentes específicos de la vista.
-     *
-     * Es obligatorio que cada clase hija implemente este método.
-     */
     protected abstract void build();
-
-
-    /**
-     * Registra los eventos de los componentes.
-     *
-     * Es obligatorio implementarlo, aunque una vista no tenga
-     * eventos. En ese caso simplemente se deja vacío.
-     */
     protected abstract void bindEvents();
 }

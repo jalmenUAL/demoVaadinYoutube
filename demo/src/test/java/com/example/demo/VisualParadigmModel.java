@@ -3,7 +3,6 @@ package com.example.demo;
 import java.util.Map;
 import java.util.Set;
 
-import com.example.demo.external.ServidordeCorreo;
 import com.example.demo.views.administrador.Administrador;
 import com.example.demo.views.administrador.PerfilAjenodeAdministrador;
 import com.example.demo.views.administrador.VerComentariosdeAdministrador_item;
@@ -13,6 +12,7 @@ import com.example.demo.views.common.ListadeVideos_item;
 import com.example.demo.views.common.VerComentarios_item;
 import com.example.demo.views.common.Videosrelacionados_item;
 import com.example.demo.views.common.Youtubersseguidos_item;
+import com.example.demo.views.external.ServidordeCorreo;
 import com.example.demo.views.inicio.Buscar;
 import com.example.demo.views.inicio.Inicio;
 import com.example.demo.views.inicio.Perfil;
