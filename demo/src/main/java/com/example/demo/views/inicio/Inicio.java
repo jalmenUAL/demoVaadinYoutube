@@ -28,10 +28,19 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
  * Las clases hijas son las responsables de implementar
  * UltimosVideos().
  */
-public abstract class Inicio extends BaseActorView<iInicio> {
+public abstract class Inicio extends BaseActorView {
 
 
-    
+    /**
+     * Interfaz de servicios utilizada para realizar operaciones
+     * relacionadas con la página de inicio.
+     *
+     * <p>
+     * Por ejemplo, realizar búsquedas.
+     */
+    protected final iInicio iInicio;
+
+
     /**
      * Componente de búsqueda que aparece en la cabecera.
      */
@@ -48,7 +57,11 @@ public abstract class Inicio extends BaseActorView<iInicio> {
     protected UltimosVideos _ultimosVideos;
 
 
-     
+    /**
+     * Proveedor de factorías utilizado por las vistas que necesitan
+     * crear o navegar hacia otras vistas.
+     */
+    protected ViewFactoryProvider viewFactory;
 
 
     /**
@@ -58,8 +71,10 @@ public abstract class Inicio extends BaseActorView<iInicio> {
             iInicio iInicio,
             ViewFactoryProvider viewFactory) {
 
-        super(viewFactory, iInicio);
- 
+        super();
+
+        this.iInicio = iInicio;
+        this.viewFactory = viewFactory;
     }
 
 
@@ -123,7 +138,7 @@ public abstract class Inicio extends BaseActorView<iInicio> {
          */
         _buscar =
                 new Buscar(
-                        servicio,
+                        iInicio,
                         viewFactory);
 
         header.add(_buscar);

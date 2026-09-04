@@ -24,8 +24,7 @@ import com.vaadin.flow.component.textfield.TextField;
  * incluso para usuarios que no han iniciado sesión.
  */
 
-
-public class Buscar extends BaseView<iInicio> {
+public class Buscar extends BaseView {
 
     /**
      * Interfaz que proporciona las operaciones generales de inicio.
@@ -34,10 +33,18 @@ public class Buscar extends BaseView<iInicio> {
      * Se utiliza para realizar la búsqueda sin acceder directamente
      * al repositorio.
      */
-    
+    private final iInicio _iInicio;
     ResultadodeBusqueda _resultadodeBusqueda;
 
-    
+    /**
+     * Proveedor de factorías de vistas.
+     *
+     * <p>
+     * Se recibe para mantener el mismo mecanismo de navegación
+     * utilizado por el resto de componentes.
+     */
+    private final ViewFactoryProvider viewFactory;
+
     /**
      * Campo de texto donde el usuario introduce el texto de búsqueda.
      */
@@ -73,8 +80,10 @@ public class Buscar extends BaseView<iInicio> {
             iInicio iInicio,
             ViewFactoryProvider viewFactory) {
 
-        super(viewFactory, iInicio);
- 
+        super();
+
+        this._iInicio = iInicio;
+        this.viewFactory = viewFactory;
 
         /*
          * Inicializa la vista:
@@ -165,7 +174,7 @@ public class Buscar extends BaseView<iInicio> {
                 e -> {/*
                        * Obtener el texto introducido por el usuario.
                        */
-                   List<Video> resultados = servicio.buscar(textoBuscar.getValue());
+                    List<Video> resultados = _iInicio.buscar(textoBuscar.getValue());
 
                     /*
                      * Comprobar si existe un consumidor de resultados.

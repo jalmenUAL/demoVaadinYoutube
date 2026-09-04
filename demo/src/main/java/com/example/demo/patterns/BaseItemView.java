@@ -1,8 +1,34 @@
 package com.example.demo.patterns;
 
-
-import com.example.demo.factories.ViewFactoryProvider;
-
+/**
+ * Clase base para las vistas que representan un único elemento
+ * de un modelo de datos.
+ *
+ * <p>
+ * Utiliza un tipo genérico T para poder trabajar con diferentes
+ * tipos de objetos sin tener que crear una clase base diferente
+ * para cada uno.
+ *
+ * <p>
+ * Por ejemplo:
+ *
+ *     BaseItemView<Video>
+ *
+ * representa una vista cuyo modelo es un Video.
+ *
+ *     BaseItemView<Youtuber>
+ *
+ * representa una vista cuyo modelo es un Youtuber.
+ *
+ * <p>
+ * Esta clase también hereda de BaseView, por lo que las vistas
+ * que hereden de BaseItemView dispondrán automáticamente del
+ * ciclo:
+ *
+ *     build()
+ *        ↓
+ *     bindEvents()
+ */
 /**
  * Clase base para las vistas que representan un elemento de un modelo.
  *
@@ -13,16 +39,24 @@ import com.example.demo.factories.ViewFactoryProvider;
  * Por ejemplo:
  *
  * <pre>
- *     BaseItemView&lt;Video, iVideoService&gt;
+ *     BaseItemView&lt;Video&gt;
  * </pre>
  *
- * representa un elemento cuyo modelo es un {@code Video} y utiliza
- * el servicio {@code iVideoService}.
+ * representa un elemento cuyo modelo es un {@code Video}.
  *
- * @param <T> tipo de objeto del modelo de datos (perteneciente a 'tables')
- * @param <S> tipo de la interfaz del servicio asociado a la vista
+ * <p>
+ * Del mismo modo:
+ *
+ * <pre>
+ *     BaseItemView&lt;Youtuber&gt;
+ * </pre>
+ *
+ * representa un elemento cuyo modelo es un {@code Youtuber}.
+ *
+ * @param <T> tipo de objeto que representa el elemento
  */
-public abstract class BaseItemView<T, S> extends BaseView<S> {
+public abstract class BaseItemView<T> extends BaseView {
+
 
     /**
      * Modelo representado por esta vista.
@@ -37,23 +71,13 @@ public abstract class BaseItemView<T, S> extends BaseView<S> {
      */
     protected final T model;
 
+
     /**
      * Crea una vista para el modelo indicado.
      *
-     * <p>
-     * Invocación delegada a {@code super(viewFactory, servicio)} para asegurar
-     * la consistencia arquitectónica de dependencias.
-     *
-     * @param viewFactory proveedor de factorías de la aplicación
-     * @param servicio    interfaz del servicio de negocio
-     * @param model       objeto que representa los datos del elemento
+     * @param model objeto que representa los datos del elemento
      */
-    protected BaseItemView(ViewFactoryProvider viewFactory, S servicio, T model) {
-        super(viewFactory, servicio);
-
-        if (model == null) {
-            throw new IllegalArgumentException("El modelo de datos T no puede ser nulo en BaseItemView.");
-        }
+    protected BaseItemView(T model) {
 
         this.model = model;
     }
