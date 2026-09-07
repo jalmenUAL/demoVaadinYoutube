@@ -6,8 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.patterns.Contracts.HasFactory;
-import com.example.demo.patterns.Contracts.HasService;
 import com.example.demo.services.interfaces.iYoutuber;
 import com.example.demo.tables.Video;
 import com.example.demo.views.registrado.Registrado;
@@ -23,7 +21,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @Route("Youtuber")
 @RolesAllowed("ROLE_YOUTUBER")
-public class Youtuber extends Registrado implements HasService<iYoutuber>, HasFactory {
+public class Youtuber extends Registrado  {
 
     // Servicio específico para las operaciones del Youtuber.
     //
@@ -234,15 +232,5 @@ public class Youtuber extends Registrado implements HasService<iYoutuber>, HasFa
                 e -> PerfilPropio());
     }
 
-
-    @Override
-    public com.example.demo.services.interfaces.iYoutuber getServicio() {
-       return iYoutuber;
-    }
-
-
-    @Override
-    public ViewFactoryProvider getViewFactory() {
-       return viewFactory;
-    }
+ 
 }

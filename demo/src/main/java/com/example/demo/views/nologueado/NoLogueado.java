@@ -1,12 +1,8 @@
 package com.example.demo.views.nologueado;
 
 import java.util.List;
-import java.util.Set;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.patterns.Contracts.HasFactory;
-import com.example.demo.patterns.Contracts.HasService;
-import com.example.demo.services.interfaces.iInicio;
 import com.example.demo.services.interfaces.iNoLogueado;
 import com.example.demo.tables.Video;
 import com.example.demo.views.inicio.Inicio;
@@ -23,7 +19,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route("NoLogueado")
 @AnonymousAllowed
 
-public class NoLogueado extends Inicio implements HasService<iInicio>, HasFactory {
+public class NoLogueado extends Inicio   {
 
     /*
      * Servicio que contiene las operaciones disponibles para un
@@ -219,13 +215,5 @@ public class NoLogueado extends Inicio implements HasService<iInicio>, HasFactor
                 .navigate(Registrar.class);
     }
 
-    @Override
-    public com.example.demo.services.interfaces.iInicio getServicio() {
-        return iNoLogueado;
-    }
-
-    @Override
-    public ViewFactoryProvider getViewFactory() {
-       return viewFactory;
-    }
+ 
 }

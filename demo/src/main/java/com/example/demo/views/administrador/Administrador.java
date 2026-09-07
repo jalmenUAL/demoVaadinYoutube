@@ -3,10 +3,7 @@ package com.example.demo.views.administrador;
 import java.util.List;
 
 import com.example.demo.factories.ViewFactoryProvider;
-import com.example.demo.patterns.Contracts.HasFactory;
-import com.example.demo.patterns.Contracts.HasService;
 import com.example.demo.services.interfaces.iAdministrador;
-import com.example.demo.services.interfaces.iInicio;
 import com.example.demo.tables.Video;
 import com.example.demo.views.inicio.UltimosVideos;
 import com.example.demo.views.registrado.Registrado;
@@ -36,7 +33,7 @@ import jakarta.annotation.security.RolesAllowed;
  */
 @Route("Administrador")
 @RolesAllowed("ROLE_ADMINISTRADOR")
-public class Administrador extends Registrado implements HasService<iAdministrador>, HasFactory {
+public class Administrador extends Registrado  {
 
     
 
@@ -207,15 +204,5 @@ public class Administrador extends Registrado implements HasService<iAdministrad
         super.bindEvents();
     }
 
-
-    @Override
-    public com.example.demo.services.interfaces.iAdministrador getServicio() {
-        return iAdministrador;
-    }
-
-
-    @Override
-    public ViewFactoryProvider getViewFactory() {
-       return viewFactory;
-    }
+ 
 }
