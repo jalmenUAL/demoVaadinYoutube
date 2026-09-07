@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,7 +37,9 @@ import com.tngtech.archunit.core.domain.properties.HasName;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.ConditionEvent;
 import com.tngtech.archunit.lang.ConditionEvents;
+import com.tngtech.archunit.lang.EvaluationResult;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
 
 public class DemoApplicationTests extends VisualParadigmModel {
@@ -440,5 +443,59 @@ public class DemoApplicationTests extends VisualParadigmModel {
                 return provider;
         }
  
+        private static final List<String> botonesSinEventos = new ArrayList<>();
 
+@Test
+void auditarEfectosEnBotones() {
+    // 1. Cargar las clases del proyecto localmente
+    JavaClasses clases = new ClassFileImporter().importPackages("com.example.demo");
+
+    ArchRule reglaBotones = classes()
+            .that().resideInAPackage("..views..")
+            .should(verificarListenersEnBotones());
+
+    EvaluationResult result = reglaBotones.evaluate(clases);
+    
+    result.getFailureReport().getDetails().stream()
+            .map(Object::toString)
+            .forEach(botonesSinEventos::add);
+}
+
+private ArchCondition<JavaClass> verificarListenersEnBotones() {
+    return new ArchCondition<>("registrar al menos un listener o efecto por cada Button declarado") {
+        @Override
+        public void check(JavaClass javaClass, ConditionEvents events) {
+            // 1. Contar cuántos campos de tipo Button tiene la vista
+            long cantidadBotones = javaClass.getFields().stream()
+                    .filter(field -> field.getRawType().isAssignableTo("com.vaadin.flow.component.button.Button"))
+                    .count();
+
+            if (cantidadBotones == 0) return;
+
+            // 2. Contar cuántas llamadas a métodos de eventos de Button se hacen desde esta clase
+            long llamadasAEventos = javaClass.getMethodCallsFromSelf().stream()
+                    .filter(call -> {
+                        String targetOwner = call.getTargetOwner().getName();
+                        String methodName = call.getTarget().getName();
+
+                        boolean esButton = targetOwner.contains("Button");
+                        boolean esMetodoEfecto = methodName.startsWith("add") 
+                                              || methodName.contains("Listener") 
+                                              || methodName.equals("setClickShortcut");
+
+                        return esButton && esMetodoEfecto;
+                    })
+                    .count();
+
+            // 3. Si hay más botones que listeners registrados, probablemente hay un botón "muerto"
+            if (llamadasAEventos < cantidadBotones) {
+                String detalle = String.format(
+                    "%s tiene %d Button(s) declarado(s) pero solo %d llamada(s) a listeners/efectos.",
+                    javaClass.getSimpleName(), cantidadBotones, llamadasAEventos
+                );
+                events.add(SimpleConditionEvent.violated(javaClass, detalle));
+            }
+        }
+    };
+}
 }
