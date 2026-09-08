@@ -29,18 +29,23 @@ import org.springframework.core.type.classreading.MetadataReader;
 
 import com.example.demo.facade.BDPrincipal;
 import com.example.demo.patterns.BaseView;
+import com.tngtech.archunit.core.domain.Dependency;
 import com.tngtech.archunit.core.domain.JavaCall;
 import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.domain.JavaConstructor;
-import com.tngtech.archunit.core.domain.properties.HasName;
+import com.tngtech.archunit.core.domain.JavaConstructorCall;
+import com.tngtech.archunit.core.domain.JavaField;
+import com.tngtech.archunit.core.domain.JavaFieldAccess;
+import com.tngtech.archunit.core.domain.JavaParameterizedType;
+import com.tngtech.archunit.core.domain.JavaType;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ArchRule;
-import com.tngtech.archunit.lang.ConditionEvent;
 import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.EvaluationResult;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.button.Button;
 
 public class DemoApplicationTests extends VisualParadigmModel {
 
@@ -442,60 +447,191 @@ public class DemoApplicationTests extends VisualParadigmModel {
                 provider.addIncludeFilter((metadataReader, metadataReaderFactory) -> true);
                 return provider;
         }
- 
+
         private static final List<String> botonesSinEventos = new ArrayList<>();
 
-@Test
-void auditarEfectosEnBotones() {
-    // 1. Cargar las clases del proyecto localmente
-    JavaClasses clases = new ClassFileImporter().importPackages("com.example.demo");
+        @Test
+        void auditarEfectosEnBotones() {
+                // 1. Cargar las clases del proyecto localmente
+                JavaClasses clases = new ClassFileImporter().importPackages("com.example.demo");
 
-    ArchRule reglaBotones = classes()
-            .that().resideInAPackage("..views..")
-            .should(verificarListenersEnBotones());
+                ArchRule reglaBotones = classes()
+                                .that().resideInAPackage("..views..")
+                                .should(verificarListenersEnBotones());
 
-    EvaluationResult result = reglaBotones.evaluate(clases);
-    
-    result.getFailureReport().getDetails().stream()
-            .map(Object::toString)
-            .forEach(botonesSinEventos::add);
-}
+                EvaluationResult result = reglaBotones.evaluate(clases);
 
-private ArchCondition<JavaClass> verificarListenersEnBotones() {
-    return new ArchCondition<>("registrar al menos un listener o efecto por cada Button declarado") {
-        @Override
-        public void check(JavaClass javaClass, ConditionEvents events) {
-            // 1. Contar cuántos campos de tipo Button tiene la vista
-            long cantidadBotones = javaClass.getFields().stream()
-                    .filter(field -> field.getRawType().isAssignableTo("com.vaadin.flow.component.button.Button"))
-                    .count();
-
-            if (cantidadBotones == 0) return;
-
-            // 2. Contar cuántas llamadas a métodos de eventos de Button se hacen desde esta clase
-            long llamadasAEventos = javaClass.getMethodCallsFromSelf().stream()
-                    .filter(call -> {
-                        String targetOwner = call.getTargetOwner().getName();
-                        String methodName = call.getTarget().getName();
-
-                        boolean esButton = targetOwner.contains("Button");
-                        boolean esMetodoEfecto = methodName.startsWith("add") 
-                                              || methodName.contains("Listener") 
-                                              || methodName.equals("setClickShortcut");
-
-                        return esButton && esMetodoEfecto;
-                    })
-                    .count();
-
-            // 3. Si hay más botones que listeners registrados, probablemente hay un botón "muerto"
-            if (llamadasAEventos < cantidadBotones) {
-                String detalle = String.format(
-                    "%s tiene %d Button(s) declarado(s) pero solo %d llamada(s) a listeners/efectos.",
-                    javaClass.getSimpleName(), cantidadBotones, llamadasAEventos
-                );
-                events.add(SimpleConditionEvent.violated(javaClass, detalle));
-            }
+                result.getFailureReport().getDetails().stream()
+                                .map(Object::toString)
+                                .forEach(botonesSinEventos::add);
         }
-    };
-}
+
+        private ArchCondition<JavaClass> verificarListenersEnBotones() {
+                return new ArchCondition<>("registrar al menos un listener o efecto por cada Button declarado") {
+                        @Override
+                        public void check(JavaClass javaClass, ConditionEvents events) {
+                                // 1. Obtener los campos que son explícitamente de tipo Button en esta clase
+                                List<JavaField> camposBotones = javaClass.getFields().stream()
+                                                .filter(field -> field.getRawType().isAssignableTo(
+                                                                "com.vaadin.flow.component.button.Button"))
+                                                .collect(Collectors.toList());
+
+                                if (camposBotones.isEmpty())
+                                        return;
+
+                                Set<String> botonesValidados = new HashSet<>();
+
+                                // 2. CASO A: Buscar llamadas directas a .addClickListener(), .add...() sobre un
+                                // campo específico
+                                for (JavaFieldAccess access : javaClass.getFieldAccessesFromSelf()) {
+                                        if (access.getTarget().getRawType()
+                                                        .isAssignableTo("com.vaadin.flow.component.button.Button")) {
+                                                String nombreCampo = access.getTarget().getName();
+
+                                                // Verificamos si en la misma línea o método de este acceso existe una
+                                                // llamada a un listener
+                                                boolean tieneMetodoListener = access.getOrigin()
+                                                                .getMethodCallsFromSelf().stream()
+                                                                .filter(call -> call.getLineNumber() == access
+                                                                                .getLineNumber())
+                                                                .anyMatch(call -> {
+                                                                        String methodName = call.getTarget().getName();
+                                                                        return call.getTargetOwner().isAssignableTo(
+                                                                                        "com.vaadin.flow.component.button.Button")
+                                                                                        && (methodName.startsWith("add")
+                                                                                                        || methodName.contains(
+                                                                                                                        "Listener")
+                                                                                                        || methodName.equals(
+                                                                                                                        "setClickShortcut"));
+                                                                });
+
+                                                if (tieneMetodoListener) {
+                                                        botonesValidados.add(nombreCampo);
+                                                }
+                                        }
+                                }
+
+                                // 3. CASO B: Buscar asignaciones especificas donde el constructor de Button
+                                // recibe un Listener en la MISMA LÍNEA
+                                for (JavaConstructorCall callConstructor : javaClass.getConstructorCallsFromSelf()) {
+                                        if (callConstructor.getTargetOwner()
+                                                        .isAssignableTo("com.vaadin.flow.component.button.Button")) {
+
+                                                // Comprobar si esta llamada específica al constructor recibe un
+                                                // Listener como parámetro
+                                                boolean constructorTieneListener = callConstructor.getTarget()
+                                                                .getRawParameterTypes().stream()
+                                                                .anyMatch(param -> param.isAssignableTo(
+                                                                                "com.vaadin.flow.component.ComponentEventListener")
+                                                                                || param.getName().contains(
+                                                                                                "EventListener")
+                                                                                || param.getName().contains(
+                                                                                                "ClickListener"));
+
+                                                if (constructorTieneListener) {
+                                                        // Vinculamos ÚNICAMENTE la variable asignada exactamente en el
+                                                        // número de línea de este constructor
+                                                        javaClass.getFieldAccessesFromSelf().stream()
+                                                                        .filter(access -> access
+                                                                                        .getLineNumber() == callConstructor
+                                                                                                        .getLineNumber())
+                                                                        .forEach(access -> botonesValidados.add(
+                                                                                        access.getTarget().getName()));
+                                                }
+                                        }
+                                }
+
+                                // 4. Reportar de forma aislada cada campo Button que no esté en la lista de
+                                // validados
+                                for (JavaField campoBoton : camposBotones) {
+                                        if (!botonesValidados.contains(campoBoton.getName())) {
+                                                String detalle = fail(String.format(
+                                                                "El botón '%s' en la clase '%s' no tiene registrado ningún listener o efecto.",
+                                                                campoBoton.getName(),
+                                                                javaClass.getSimpleName()));
+                                                events.add(SimpleConditionEvent.violated(javaClass, detalle));
+                                        }
+                                }
+                        }
+                };
+        }
+
+        @Test
+    void auditarDependenciasSinUsoEnVistas() {
+        JavaClasses clases = new ClassFileImporter().importPackages("com.example.demo");
+
+        ArchRule reglaDependencias = classes()
+                .that().resideInAPackage("..views..")
+                .should(noTenerImportsInutiles());
+
+        reglaDependencias.check(clases);
+    }
+
+    private static ArchCondition<JavaClass> noTenerImportsInutiles() {
+        return new ArchCondition<>("no declarar dependencias/imports no utilizados") {
+            @Override
+            public void check(JavaClass javaClass, ConditionEvents events) {
+                
+                for (Dependency dependency : javaClass.getDirectDependenciesFromSelf()) {
+                    JavaClass dep = dependency.getTargetClass();
+
+                    // 1. Ignorar paquetes base de Java, anotaciones y la propia clase
+                    if (dep.getPackageName().startsWith("java.") 
+                            || dep.getPackageName().startsWith("javax.") 
+                            || dep.getPackageName().startsWith("org.springframework.")
+                            || dep.isAnnotation() 
+                            || dep.equals(javaClass)) {
+                        continue;
+                    }
+
+                    // 2. Comprobar si la clase destino (ej. Video) conoce o registra que la vista la usa
+                    // ArchUnit mantiene la tabla global de constantes de referencias
+                    boolean esReferenciadaEnEstructura = 
+                            javaClass.getFields().stream().anyMatch(f -> contieneClase(f.getType(), dep))
+                            || javaClass.getMethods().stream().anyMatch(m -> contieneClase(m.getReturnType(), dep) 
+                                    || m.getRawParameterTypes().stream().anyMatch(p -> contieneClase(p, dep)))
+                            || javaClass.getConstructors().stream().anyMatch(c -> c.getRawParameterTypes().stream().anyMatch(p -> contieneClase(p, dep)))
+                            || javaClass.getSuperclass().map(s -> contieneClase(s, dep)).orElse(false)
+                            || javaClass.getInterfaces().stream().anyMatch(i -> contieneClase(i, dep))
+                            || javaClass.getMethodCallsFromSelf().stream().anyMatch(call -> call.getTargetOwner().equals(dep))
+                            || javaClass.getFieldAccessesFromSelf().stream().anyMatch(fa -> fa.getTargetOwner().equals(dep))
+                            || javaClass.getConstructorCallsFromSelf().stream().anyMatch(cc -> cc.getTargetOwner().equals(dep));
+
+                    if (esReferenciadaEnEstructura) {
+                        continue;
+                    }
+
+                    // 3. Red de seguridad para variables locales o firmas inferidas:
+                    // Si el bytecode de la vista contiene la cadena de la firma/paquete del tipo objetivo
+                    String patronBytecode = dep.getName().replace('.', '/');
+                    boolean existeEnConstantesDelClass = javaClass.getCodeUnits().stream()
+                            .anyMatch(cu -> cu.getDescriptor().contains(patronBytecode));
+
+                    if (existeEnConstantesDelClass) {
+                        continue;
+                    }
+
+                    // Si pasa todos los filtros y no se encuentra ninguna huella de la clase
+                    String mensaje = String.format(
+                        "La vista '%s' importa o depende de '%s' pero no se encuentra uso directo.",
+                        javaClass.getSimpleName(), dep.getSimpleName()
+                    );
+                    events.add(SimpleConditionEvent.violated(javaClass, mensaje));
+                }
+            }
+        };
+    }
+
+    private static boolean contieneClase(JavaType tipoEvaluado, JavaClass tipoBuscado) {
+        if (tipoEvaluado.equals(tipoBuscado)) {
+            return true;
+        }
+        // Inspección recursiva de los argumentos de los tipos genéricos.
+        if (tipoEvaluado instanceof JavaParameterizedType tipoParametrizado) {
+            return tipoParametrizado.getActualTypeArguments().stream()
+                    .anyMatch(tipo -> contieneClase(tipo, tipoBuscado));
+        }
+
+        return false;
+    }
 }

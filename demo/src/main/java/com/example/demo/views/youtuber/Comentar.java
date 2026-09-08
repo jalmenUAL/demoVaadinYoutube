@@ -139,12 +139,14 @@ public class Comentar extends BaseParameterizedView<String> {
          *     1. Se publica el comentario.
          *     2. Se limpia el campo de texto.
          */
-        btnPublicar.addClickListener(e -> {
+        /* 
+         btnPublicar.addClickListener(e -> {
 
             publicarComentario();
 
             campoComentario.clear();
-        });
+        }); 
+        */
     }
 
 
