@@ -11,6 +11,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.Route;
 
 /**
  * Componente visual que permite buscar vídeos por su título.
@@ -24,6 +25,7 @@ import com.vaadin.flow.component.textfield.TextField;
  * incluso para usuarios que no han iniciado sesión.
  */
 
+@Route("Buscar")
 public class Buscar extends BaseView {
 
     /**
