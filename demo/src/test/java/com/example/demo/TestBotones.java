@@ -22,7 +22,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 
-public class TestMetamorficoBotones {
+public class TestBotones {
 
     @BeforeEach
     public void setup() {
